@@ -1,0 +1,20 @@
+#!/bin/bash
+
+alias tmux='tmux -2'
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias ip='ip -c'
+
+alias setclip='xclip -selection c'
+alias getclip='xclip -selection c -o'
+
+alias con='ssh contabo'
+alias poof='poweroff'
+alias myip='curl ipinfo.io/ip'
+
+alias lelcat='bash -c "$(wget -O- https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
+cheat () { curl -s "cheat.sh/$1" | less; }
+timeout () { sleep "$1"; shift; bash -c "$*"; }
+
+alias sr='screen -r'
+alias sls='screen -ls'
