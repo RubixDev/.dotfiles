@@ -1,14 +1,17 @@
 #!/bin/bash
 
-[[ ! -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10ka ]] || git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/themes/powerlevel10k
-[[ ! -f ~/.zshrc ]] || mv ~/.zshrc ~/.zshrc.old
-[[ ! -L ~/.zshrc ]] || rm ~/.zshrc
-ln -s "$PWD/.zshrc" ~/
+install_file () {
+    [[ ! -f ~/"$1" ]] || mv ~/"$1" ~/"$1".old
+    [[ ! -L ~/"$1" ]] || rm ~/"$1"
+    ln -s "$PWD/$(basename "$1")" ~/"$(dirname "$1")"/
+}
 
-[[ ! -f ~/.p10k.zsh ]] || mv ~/.p10k.zsh ~/.p10k.zsh.old
-[[ ! -L ~/.p10k.zsh ]] || rm ~/.p10k.zsh
-ln -s "$PWD/.p10k.zsh" ~/
+# Install powerlevel10k theme, if not present yet
+[[ ! -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ]] || {
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/themes/powerlevel10k
+}
 
-[[ ! -f ~/.config/.aliasrc ]] || mv ~/.config/.aliasrc ~/.config/.aliasrc.old
-[[ ! -L ~/.config/.aliasrc ]] || rm ~/.config/.aliasrc
-ln -s "$PWD/.aliasrc" ~/.config/
+install_file .zshrc
+install_file .p10.zsh
+install_file .config/.aliasrc
+install_file .tmux.conf
