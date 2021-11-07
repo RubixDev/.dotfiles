@@ -12,6 +12,6 @@ install_file () {
 }
 
 install_file .zshrc
-install_file .p10.zsh
+install_file .p10k.zsh
 install_file .config/.aliasrc
 install_file .tmux.conf
