@@ -22,7 +22,7 @@ updaterc () {
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
 command -v wl-copy >/dev/null && { alias setclip='wl-copy'; alias getclip='wl-paste'; }
 
-alias root'sudo su -'
+alias root='sudo su -'
 alias con='ssh contabo'
 alias poof='poweroff'
 alias pubip='curl ipinfo.io/ip'
