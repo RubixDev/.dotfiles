@@ -42,12 +42,12 @@ ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=5
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=208,bold
 ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 
+source ~/.config/.aliasrc.zsh
+
 [[ $- != *i* ]] && return
 
 echo
 pfetch
-
-source ~/.config/.aliasrc.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
