@@ -3,7 +3,7 @@
 install_file () {
     [[ ! -f ~/"$1" ]] || mv ~/"$1" ~/"$1".old
     [[ ! -L ~/"$1" ]] || rm ~/"$1"
-    ln -s "$PWD/$(basename "$1")" ~/"$(dirname "$1")"/
+    ln -s "$PWD/$1" "$HOME/$1"
 }
 
 # Install powerlevel10k theme, if not present yet
@@ -13,5 +13,5 @@ install_file () {
 
 install_file .zshrc
 install_file .p10k.zsh
-install_file .config/.aliasrc
+install_file .config/.aliasrc.zsh
 install_file .tmux.conf

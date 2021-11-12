@@ -42,7 +42,7 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 echo
 pfetch
 
-source ~/.config/.aliasrc
+source ~/.config/.aliasrc.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

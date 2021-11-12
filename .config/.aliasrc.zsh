@@ -1,5 +1,3 @@
-#!/bin/bash
-
 alias tmux='tmux -2'
 alias cp='cpv -iv'
 alias mv='mv -iv'
@@ -33,6 +31,11 @@ alias wg1='sudo systemctl stop wg-quick@wg0 && sudo systemctl start wg-quick@wg1
 alias lelcat='bash -c "$(wget -O- https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
 cheat () { curl -s "cheat.sh/$1" | less; }
 timeout () { sleep "$1"; shift; bash -c "$*"; }
+colors () {
+    for i in {0..255}; do
+        print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}
+    done
+}
 
 alias sr='screen -r'
 alias sls='screen -ls'
