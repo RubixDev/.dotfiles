@@ -29,7 +29,7 @@ alias pubip='curl ipinfo.io/ip'
 alias wg0='sudo systemctl stop wg-quick@wg1 && sudo systemctl start wg-quick@wg0'
 alias wg1='sudo systemctl stop wg-quick@wg0 && sudo systemctl start wg-quick@wg1'
 
-alias lelcat='bash -c "$(wget -O- https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
+alias lelcat='bash -c "$(curl -fsSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
 cheat () { curl -s "cheat.sh/$1" | less; }
 timeout () { sleep "$1"; shift; bash -c "$*"; }
 colors () {
