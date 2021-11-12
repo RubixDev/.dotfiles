@@ -17,6 +17,13 @@ updaterc () {
     # Reload shell
     exec "$SHELL"
 }
+editrc () {
+    [[ -d "$HOME/.dotfiles" ]] || {
+        echo 'No .dotfiles folder at ~/.dotfiles'
+        return 2
+    }
+    code ~/.dotfiles
+}
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
 command -v wl-copy >/dev/null && { alias setclip='wl-copy'; alias getclip='wl-paste'; }
