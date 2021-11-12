@@ -4,6 +4,7 @@ alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'
 alias l='exa -lahg --icons --octal-permissions'
+alias ll='exa -lhg --icons --octal-permissions'
 
 updaterc () {
     current_dir="$PWD"
