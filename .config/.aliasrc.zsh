@@ -12,6 +12,7 @@ updaterc () {
         return 2
     }
     git pull
+    ./install.sh
     cd "$current_dir" || return 2
     # Reload shell
     exec "$SHELL"
