@@ -46,5 +46,8 @@ colors () {
     done
 }
 
+postclip () { curl -sSL https://clip.rubixdev.de/index.php -F data="$1" -o /dev/null; }
+alias fetchclip='curl -sSL https://clip.rubixdev.de/clipboard.txt'
+
 alias sr='screen -r'
 alias sls='screen -ls'
