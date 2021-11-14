@@ -83,11 +83,11 @@ remakeinvert () {
 }
 
 rewg () {
-    systemctl is-active wg-quick@wg0 && {
+    systemctl is-active wg-quick@wg0 > /dev/null && {
         sudo systemctl restart wg-quick@wg0
         return 0
     }
-    systemctl is-active wg-quick@wg1 && {
+    systemctl is-active wg-quick@wg1 > /dev/null && {
         sudo systemctl restart wg-quick@wg1
         return 0
     }
