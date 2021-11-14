@@ -35,6 +35,53 @@ alias poof='poweroff'
 alias pubip='curl ipinfo.io/ip'
 alias apdate='sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean'
 
+makeinvert () {
+    pwd="$PWD"
+
+    cd ~/Downloads || return 1
+    if [[ -d kwin-effect-smart-invert ]]; then
+        cd kwin-effect-smart-invert || return 2
+        git pull || {
+            cd "$pwd"
+            return 3
+        }
+    else
+        git clone https://github.com/natask/kwin-effect-smart-invert.git || {
+            cd "$pwd"
+            return 2
+        }
+        cd kwin-effect-smart-invert || return 3
+    fi
+
+    sed -i 's/m_allWindows(true)/m_allWindows(false)/' invert.cpp
+    mkdir -p build
+    cd build || return 4
+    cmake .. && make && sudo make install && (kwin_x11 --replace &)
+
+    cd "$pwd"
+}
+remakeinvert () {
+    pwd="$PWD"
+
+    cd ~/Downloads || return 1
+    [[ -d kwin-effect-smart-invert ]] || {
+        echo "Cloned repo not found at ~/Downloads/kwin-effect-smart-invert"
+        cd "$pwd"
+        return 2
+    }
+    cd kwin-effect-smart-invert || return 3
+    sed -i 's/m_allWindows(true)/m_allWindows(false)/' invert.cpp
+    [[ -d build ]] || {
+        echo "No previous build folder present"
+        cd "$pwd"
+        return 4
+    }
+    cd build
+    sudo make install && (kwin_x11 --replace &)
+
+    cd "$pwd"
+}
+
 rewg () {
     systemctl is-active wg-quick@wg0 && {
         sudo systemctl restart wg-quick@wg0
