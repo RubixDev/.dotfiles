@@ -35,6 +35,18 @@ alias poof='poweroff'
 alias pubip='curl ipinfo.io/ip'
 alias apdate='sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean'
 
+rewg () {
+    systemctl is-active wg-quick@wg0 && {
+        sudo systemctl restart wg-quick@wg0
+        return 0
+    }
+    systemctl is-active wg-quick@wg1 && {
+        sudo systemctl restart wg-quick@wg1
+        return 0
+    }
+    echo "No known wg service is running"
+    return 3
+}
 alias wg0='sudo systemctl stop wg-quick@wg1 && sudo systemctl start wg-quick@wg0'
 alias wg1='sudo systemctl stop wg-quick@wg0 && sudo systemctl start wg-quick@wg1'
 
