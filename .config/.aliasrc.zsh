@@ -109,5 +109,38 @@ colors () {
 postclip () { curl -sSL https://clip.rubixdev.de/index.php -F data="$1" -o /dev/null; }
 alias fetchclip='curl -sSL https://clip.rubixdev.de/clipboard.txt'
 
+untis () {
+    user="$1"
+    [[ -n "$user" ]] || {
+        echo "No user specified"
+        return 1
+    }
+    date="$2"
+    [[ -n "$date" ]] || {
+        echo "No date specified"
+        return 1
+    }
+
+    [[ -f ~/.untisusers.json ]] || {
+        echo "No '.untisusers.json' in home directory"
+        return 1
+    }
+
+    username="$(jq -r ".$user.username" ~/.untisusers.json)"
+    password="$(jq -r ".$user.password" ~/.untisusers.json)"
+    [[ "$username" != "null" ]] && [[ "$password" != "null" ]] || {
+        echo "User not found in ~/.untisusers.json"
+        return 1
+    }
+
+    if [[ -n "$3" ]]; then
+        filtered="true"
+    else
+        filtered="false"
+    fi
+
+    curl -X POST -H 'Content-Type: application/json' -d "{\"username\":\"$username\",\"password\":\"$password\",\"filtered\":$filtered}" "https://untis.rubixdev.de/timetable/$date" | jq
+}
+
 alias sr='screen -r'
 alias sls='screen -ls'
