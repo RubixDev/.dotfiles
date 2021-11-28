@@ -1,5 +1,5 @@
 alias tmux='tmux -2'
-alias cp='cpv -iv'
+alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'

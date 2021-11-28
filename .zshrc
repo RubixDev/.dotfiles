@@ -22,7 +22,6 @@ plugins=(
   history-substring-search
   zsh-syntax-highlighting
   sudo
-  cp
 )
 
 source $ZSH/oh-my-zsh.sh
