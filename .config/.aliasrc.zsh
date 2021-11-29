@@ -150,19 +150,7 @@ untis () {
         echo "$res" | jq
         return 1
     fi
-    res="$(echo "$res" | jq '.[]')"
-    echo
-
-    timetable=()
-    for lesson in $(echo "$res" | jq -r 'sort_by(.lesson)[] | @base64'); do
-        _jq () { echo "$lesson" | base64 -d | jq -r "$1"; }
-        timetable+=(
-            "$(_jq '.lesson')"
-            "$(_jq '.subject.longName')"
-            "$(_jq '.room.name')"
-            "$(_jq '.state')"
-        )
-    done
+    res="$(echo "$res" | jq 'to_entries | sort_by(.key) | from_entries')"
 
     color () {
         case "$1" in
@@ -177,18 +165,35 @@ untis () {
         esac
     }
 
-    last_lesson=-1
-    for (( i = 1; i <= ${#timetable[@]}; i += 4 )); do
-        current_lesson="${timetable[i]}"
-        for (( j = last_lesson + 1; j < current_lesson; j++ )); do
-            echo -e "\t$(printf "%2s" "$j"):"
+    for date in $(echo "$res" | jq -r '.[] | @base64'); do
+        echo "\n----------------------------------------------------------\n"
+        lessons="$(echo "$date" | base64 -d)"
+
+        timetable=()
+        for lesson in $(echo "$lessons" | jq -r 'sort_by(.lesson)[] | @base64'); do
+            _jq () { echo "$lesson" | base64 -d | jq -r "$1"; }
+            timetable+=(
+                "$(_jq '.lesson')"
+                "$(_jq '.subject.longName')"
+                "$(_jq '.room.name')"
+                "$(_jq '.state')"
+            )
         done
-        printf "\t%2s: \x1b[%sm   \x1b[0m   \x1b[1m%-20s\x1b[0m %s\n" "$current_lesson" "$(color "${timetable[i+3]}")" "${timetable[i+1]}" "${timetable[i+2]}"
-        last_lesson="$current_lesson"
+
+        last_lesson=-1
+        for (( i = 1; i <= ${#timetable[@]}; i += 4 )); do
+            current_lesson="${timetable[i]}"
+            for (( j = last_lesson + 1; j < current_lesson; j++ )); do
+                echo -e "\t$(printf "%2s" "$j"):"
+            done
+            printf "\t%2s: \x1b[%sm   \x1b[0m   \x1b[1m%-32s\x1b[0m %-8s \x1b[90m%s\x1b[0m\n" "$current_lesson" "$(color "${timetable[i+3]}")" "${timetable[i+1]}" "${timetable[i+2]}" "${timetable[i+3]}"
+            last_lesson="$current_lesson"
+        done
+        for (( i = last_lesson + 1; i <= 10; i++ )); do
+            echo -e "\t$(printf "%2s" "$i"):"
+        done
     done
-    for (( i = last_lesson + 1; i <= 10; i++ )); do
-        echo -e "\t$(printf "%2s" "$i"):"
-    done
+    echo "\n----------------------------------------------------------"
 }
 findfont () {
     [[ -n "$1" ]] || {
