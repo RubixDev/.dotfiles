@@ -139,7 +139,54 @@ untis () {
         filtered="false"
     fi
 
-    curl -X POST -H 'Content-Type: application/json' -d "{\"username\":\"$username\",\"password\":\"$password\",\"filtered\":$filtered}" "https://untis.rubixdev.de/timetable/$date" | jq
+    res="$(curl -X POST -H 'Content-Type: application/json' -d "{
+        \"username\": \"$username\",
+        \"password\": \"$password\",
+        \"filtered\": $filtered
+    }" "https://untis.rubixdev.de/timetable/$date")"
+    if [[ "$(echo "$res" | jq 'has("error")')" == "true" ]]; then
+        echo "$res" | jq
+        return 1
+    fi
+    res="$(echo "$res" | jq '.[]')"
+    echo
+
+    timetable=()
+    for lesson in $(echo "$res" | jq -r 'sort_by(.lesson)[] | @base64'); do
+        _jq () { echo "$lesson" | base64 -d | jq -r "$1"; }
+        timetable+=(
+            "$(_jq '.lesson')"
+            "$(_jq '.subject.longName')"
+            "$(_jq '.room.name')"
+            "$(_jq '.state')"
+        )
+    done
+
+    color () {
+        case "$1" in
+            NORMAL            ) echo "48;5;208" ;;
+            SUBSTITUTION      ) echo "48;5;134" ;;
+            EXAM              ) echo "48;5;221" ;;
+            CANCELLED         ) echo "48;5;246" ;;
+            ROOM_SUBSTITUTION ) echo "48;5;33"  ;;
+            FREE              ) echo "48;5;250" ;;
+            ADDITIONAL        ) echo "48;5;34"  ;;
+            *                 ) echo "48;5;169" ;;
+        esac
+    }
+
+    last_lesson=-1
+    for (( i = 1; i <= ${#timetable[@]}; i += 4 )); do
+        current_lesson="${timetable[i]}"
+        for (( j = last_lesson + 1; j < current_lesson; j++ )); do
+            echo -e "\t$(printf "%2s" "$j"):"
+        done
+        printf "\t%2s: \x1b[%sm   \x1b[0m   \x1b[1m%-20s\x1b[0m %s\n" "$current_lesson" "$(color "${timetable[i+3]}")" "${timetable[i+1]}" "${timetable[i+2]}"
+        last_lesson="$current_lesson"
+    done
+    for (( i = last_lesson + 1; i <= 10; i++ )); do
+        echo -e "\t$(printf "%2s" "$i"):"
+    done
 }
 findfont () {
     [[ -n "$1" ]] || {
