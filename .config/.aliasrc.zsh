@@ -3,8 +3,10 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'
-alias l='exa -lahg --icons --octal-permissions'
-alias ll='exa -lhg --icons --octal-permissions'
+if command -v exa > /dev/null; then
+    alias l='exa -lahg --icons --octal-permissions'
+    alias ll='exa -lhg --icons --octal-permissions'
+fi
 
 updaterc () {
     current_dir="$PWD"
