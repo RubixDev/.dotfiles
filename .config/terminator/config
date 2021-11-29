@@ -4,6 +4,19 @@
   title_transmit_bg_color = "#9141ac"
 [keybindings]
 [profiles]
+  [[default]]
+    background_color = "#2e3436"
+    background_darkness = 0.69
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = JetBrains Mono 11
+    foreground_color = "#b2b2b2"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    palette = "#3f4451:#e05561:#8cc265:#d1b652:#4aa5f0:#c162de:#42b3c2:#e6e6e6:#4f5666:#ff616e:#a5e075:#f0c85d:#4dc4ff:#de73ff:#4cd1e0:#d7dae0"
+    use_system_font = False
+    bold_is_bright = True
   [[Old]]
     background_color = "#2e3436"
     background_darkness = 0.69
@@ -16,19 +29,6 @@
     scrollback_lines = 2000
     scrollback_infinite = True
     palette = "#2e3436:#e20800:#00bf00:#f3c300:#2b76c7:#e85290:#17b2b2:#d3d7cf:#777979:#bf0303:#37a42b:#ffd500:#2fa1df:#b14098:#54ffff:#f3f3f3"
-    use_system_font = False
-    bold_is_bright = True
-  [[default]]
-    background_color = "#2e3436"
-    background_darkness = 0.69
-    background_type = transparent
-    cursor_color = "#aaaaaa"
-    font = JetBrains Mono 11
-    foreground_color = "#b2b2b2"
-    show_titlebar = False
-    scrollbar_position = hidden
-    scrollback_infinite = True
-    palette = "#3f4451:#e05561:#8cc265:#d1b652:#4aa5f0:#c162de:#42b3c2:#e6e6e6:#4f5666:#ff616e:#a5e075:#f0c85d:#4dc4ff:#de73ff:#4cd1e0:#d7dae0"
     use_system_font = False
     bold_is_bright = True
 [layouts]
