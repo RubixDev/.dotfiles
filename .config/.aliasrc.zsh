@@ -235,11 +235,11 @@ test('$1')"
 code2pdf () {
     [[ -n "$1" ]] || {
         echo "No file specified"
-        exit 1
+        return 1
     }
     [[ -n "$2" ]] || {
         echo "No language specified"
-        exit 1
+        return 1
     }
 
     mkdir -p tmp
