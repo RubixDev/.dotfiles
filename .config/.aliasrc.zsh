@@ -112,12 +112,21 @@ postclip () { curl -sSL https://clip.rubixdev.de/index.php -F data="$1" -o /dev/
 alias fetchclip='curl -sSL https://clip.rubixdev.de/clipboard.txt'
 
 untis () {
-    user="$1"
+    FILTERED=false
+    ARGS=()
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -f | --filtered ) FILTERED=true; shift ;;
+            *) ARGS+=("$1"); shift ;;
+        esac
+    done
+
+    user="${ARGS[1]}"
     [[ -n "$user" ]] || {
         echo "No user specified"
         return 1
     }
-    date="$2"
+    date="${ARGS[2]}"
     [[ -n "$date" ]] || {
         echo "No date specified"
         return 1
@@ -135,16 +144,10 @@ untis () {
         return 1
     }
 
-    if [[ -n "$3" ]]; then
-        filtered="true"
-    else
-        filtered="false"
-    fi
-
     res="$(curl -X POST -H 'Content-Type: application/json' -d "{
         \"username\": \"$username\",
         \"password\": \"$password\",
-        \"filtered\": $filtered
+        \"filtered\": $FILTERED
     }" "https://untis.rubixdev.de/timetable/$date")"
     if [[ "$(echo "$res" | jq 'has("error")')" == "true" ]]; then
         echo "$res" | jq
