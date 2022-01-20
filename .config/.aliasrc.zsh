@@ -3,9 +3,6 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'
-mkcd () {
-    mkdir "$1" && cd "$1"
-}
 if command -v exa > /dev/null; then
     alias l='exa -lahg --icons --octal-permissions'
     alias ll='exa -lhg --icons --octal-permissions'
