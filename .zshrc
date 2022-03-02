@@ -11,7 +11,7 @@ if [ -n "$DESKTOP_SESSION" ]; then
 fi
 
 export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:~/.local/bin:~/.cargo/bin:$ANDROID_HOME/platform-tools
+export PATH=$PATH:~/.local/bin:~/.cargo/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
