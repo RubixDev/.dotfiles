@@ -12,7 +12,7 @@ fi
 
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:~/.local/bin:~/.cargo/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin
-export RUSTC_WRAPPER=sccache
+export CARGO_TARGET_DIR=$HOME/.cache/cargo
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
