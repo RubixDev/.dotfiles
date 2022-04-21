@@ -36,6 +36,7 @@ alias con='ssh contabo'
 alias poof='poweroff'
 alias pubip='curl ipinfo.io/ip'
 alias apdate='sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean'
+alias occ='sudo docker exec -u www-data -it nextcloud php occ'
 
 makeinvert () {
     pwd="$PWD"
