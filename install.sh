@@ -18,3 +18,4 @@ install_file .config/.aliasrc.zsh
 install_file .tmux.conf
 install_file .config/terminator/config
 install_file .config/alacritty/alacritty.yml
+install_file .config/i3/config
