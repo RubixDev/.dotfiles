@@ -38,6 +38,11 @@ exec --no-startup-id "numlockx on"
     # Start brave
     bindsym $mod+p exec brave
 
+    # Screenshots
+    bindsym Print exec spectacle -bcm
+    bindsym Shift+Print exec spectacle -bcr
+    bindsym Alt+Print exec spectacle -bca
+
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
     floating_modifier $mod
