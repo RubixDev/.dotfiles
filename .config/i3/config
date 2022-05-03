@@ -172,6 +172,6 @@ bar {
 }
 
 gaps inner 14
-for_window [class=".*"] border pixel 4
+for_window [class=".*"] border pixel 2
 
 include ~/.config/i3/config.d/*.conf
