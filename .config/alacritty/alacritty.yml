@@ -433,8 +433,8 @@ colors:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-shell:
-  program: /usr/bin/tmux
+#shell:
+#  program: /usr/bin/tmux
 #  args:
 #    - --login
 
