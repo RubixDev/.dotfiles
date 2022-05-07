@@ -4,8 +4,8 @@ alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'
 if command -v exa > /dev/null; then
-    alias l='exa -lahg --icons --octal-permissions'
-    alias ll='exa -lhg --icons --octal-permissions'
+    alias l='exa -lahg --icons --octal-permissions --git'
+    alias ll=l
 fi
 
 updaterc () {
