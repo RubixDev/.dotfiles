@@ -3,6 +3,7 @@ scriptencoding utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set clipboard+=unnamedplus " Use system clipboard
+let mapleader = "\<Space>"
 set number relativenumber
 set linebreak
 set showbreak=↪
@@ -39,13 +40,8 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-
-" Treesitter setup
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-"Plug 'p00f/nvim-ts-rainbow'
-Plug 'lewis6991/spellsitter.nvim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Language support
 Plug 'cespare/vim-toml'
@@ -79,6 +75,10 @@ Plug 'andweeb/presence.nvim'
 " Only because nvim-cmp _requires_ snippets
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
@@ -131,6 +131,10 @@ nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
+" Ctrl+h to stop searching
+vnoremap <C-h> :nohlsearch<cr>
+nnoremap <C-h> :nohlsearch<cr>
+
 " Ctrl+k as Esc
 nnoremap <C-k> <Esc>
 inoremap <C-k> <Esc>
@@ -157,6 +161,32 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
+" Left and right can switch buffers
+nnoremap <left> :bp<CR>
+nnoremap <right> :bn<CR>
+
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
+
+" Open hotkeys
+map <C-p> :Files<CR>
+nmap <leader>; :Buffers<CR>
+
+" Quick save and quit
+nmap <leader>w :w<CR>
+nmap <leader>q :q<CR>
+nmap <leader>S :wq<CR>
+" M to make
+noremap <leader>M :!make<CR>
+
+" Keymap for replacing up to next _ or -
+noremap <leader>m ct_
+
+" Git
+nmap <leader>ga :Git add -p<CR>
+nmap <leader>gc :Git commit<CR>
+nmap <leader>gp :Git push<CR>
+
 " Completion
 " menuone: popup even when there's only one match
 " noinsert: Do not insert text until a selection is made
@@ -164,6 +194,29 @@ inoremap <right> <nop>
 set completeopt=menuone,noinsert,noselect
 set cmdheight=2 " Better display for messages
 set updatetime=300 " You will have bad experience for diagnostic messages when it's default 4000.
+
+" ripgrep
+if executable('rg')
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
+noremap <leader>s :Rg<space>
+let g:fzf_layout = { 'down': '~20%' }
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+function! s:list_cmd()
+  let base = fnamemodify(expand('%'), ':h:.:S')
+  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+endfunction
+
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+  \                               'options': '--tiebreak=index'}, <bang>0)
 
 " Svelte js/ts and css detection
 if !exists('g:context_filetype#same_filetypes')
@@ -225,22 +278,6 @@ cmp.setup.cmdline(':', {
   })
 })
 
--- TreeSitter
-require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'svelte', 'javascript', 'typescript', 'css' },
-    highlight = {
-        enable = true,
-    },
-    matchup = {
-        enable = true,
-    }
---    rainbow = {
---        enable = true,
---        extended_mode = true,
---        max_file_lines = nil,
---    }
-}
-
 -- LSP setup
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -265,7 +302,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
   -- Get signatures (and _only_ signatures) when in argument lists.
@@ -306,11 +343,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
--- Telescope (Fuzzy Finder)
-require('telescope').setup {}
--- TODO: configure pickers
-require('telescope').load_extension('fzf')
-
 -- Indent
 vim.opt.list = true
 -- vim.opt.listchars:append("space:⋅")
@@ -328,9 +360,6 @@ require("better_escape").setup {
       return vim.api.nvim_win_get_cursor(0)[2] > 1 and '<esc>l' or '<esc>'
     end,
 }
-
--- Spell checker
-require('spellsitter').setup()
 
 END
 
