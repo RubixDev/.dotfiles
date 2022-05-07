@@ -124,6 +124,9 @@ set ignorecase
 set smartcase
 set gdefault
 
+" Replace all with S
+nnoremap S :%s//g<left><left>
+
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -169,15 +172,15 @@ nnoremap <right> :bn<CR>
 nnoremap <leader><leader> <c-^>
 
 " Open hotkeys
-map <C-p> :Files<CR>
+map <leader>o :Files<CR>
 nmap <leader>; :Buffers<CR>
 
 " Quick save and quit
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
-nmap <leader>S :wq<CR>
+
 " M to make
-noremap <leader>M :!make<CR>
+noremap <leader>m :!make<space>
 
 " Keymap for replacing up to next _ or -
 noremap <leader>m ct_
@@ -185,7 +188,8 @@ noremap <leader>m ct_
 " Git
 nmap <leader>ga :Git add -p<CR>
 nmap <leader>gc :Git commit<CR>
-nmap <leader>gp :Git push<CR>
+nmap <leader>gP :Git push<CR>
+nmap <leader>gp :Git pull<CR>
 
 " Completion
 " menuone: popup even when there's only one match
@@ -211,7 +215,7 @@ command! -bang -nargs=* Rg
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+  return base == '.' ? 'fd --type file --follow -HE .git' : printf('fd --type file --follow -HE .git | proximity-sort %s', shellescape(expand('%')))
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
