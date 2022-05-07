@@ -13,6 +13,7 @@ fi
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=~/.local/bin:~/.cargo/bin:~/go/bin:$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin
 export CARGO_TARGET_DIR=$HOME/.cache/cargo
+export EDITOR=vim
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"

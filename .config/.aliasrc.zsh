@@ -25,7 +25,9 @@ editrc () {
         echo 'No .dotfiles folder at ~/.dotfiles'
         return 2
     }
-    code ~/.dotfiles
+    editor="$EDITOR"
+    [ -n "$EDITOR" ] || editor=vim
+    $editor ~/.dotfiles/.zshrc
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
