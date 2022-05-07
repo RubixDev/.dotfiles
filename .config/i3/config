@@ -20,6 +20,7 @@ exec_always --no-startup-id ~/.config/i3/scripts/screens.sh
 ### Input configuration
 exec --no-startup-id "setxkbmap -layout 'us(us_de),de'"
 exec --no-startup-id "setxkbmap -option 'grp:rctrl_toggle'"
+exec --no-startup-id "setxkbmap -option 'ctrl:nocaps'"
 exec --no-startup-id "numlockx on"
 
 ### Key bindings
