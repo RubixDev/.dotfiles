@@ -179,8 +179,9 @@ nmap <leader>; :Buffers<CR>
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
 
-" M to make
+" Run Makefile
 noremap <leader>m :!make<space>
+noremap <leader>M :!make<CR>
 
 " Keymap for replacing up to next _ or -
 noremap <leader>m ct_
