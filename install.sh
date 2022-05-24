@@ -7,10 +7,13 @@ install_file () {
     ln -s "$PWD/$1" "$HOME/$1"
 }
 
-# Install powerlevel10k theme, if not present yet
+# Install powerlevel10k theme, if not yet present
 [[ -d ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k ]] || {
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/themes/powerlevel10k
 }
+
+# Uninstall SpaceVim if present
+[ -e ~/.SpaceVim ] && curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
 
 install_file .zshrc
 install_file .p10k.zsh
