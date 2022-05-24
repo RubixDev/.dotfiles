@@ -31,6 +31,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'max397574/better-escape.nvim'
 Plug 'andymass/vim-matchup'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-abolish'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
@@ -191,6 +192,10 @@ nmap <leader>ga :Git add -p<CR>
 nmap <leader>gc :Git commit<CR>
 nmap <leader>gP :Git push<CR>
 nmap <leader>gp :Git pull<CR>
+
+" Insert line above/below cursor without insert mode
+map <Leader>N :<C-U>call append(line(".")-1, repeat([''], v:count1))<CR>
+map <Leader>n :<C-U>call append(line("."), repeat([''], v:count1))<CR>
 
 " Completion
 " menuone: popup even when there's only one match
