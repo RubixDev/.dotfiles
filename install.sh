@@ -24,4 +24,8 @@ install_file .config/alacritty/alacritty.yml
 install_file .config/i3/config
 install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf
+install_file .config/bspwm/bspwmrc
+install_file .config/sxhkd/sxhkdrc
+install_file .config/dunst/dunstrc
+install_file .config/picom.conf
 
