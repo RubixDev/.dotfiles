@@ -41,7 +41,6 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
