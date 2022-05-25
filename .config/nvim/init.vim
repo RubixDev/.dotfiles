@@ -8,6 +8,7 @@ set number relativenumber
 set linebreak
 set showbreak=↪
 set nowrap
+set nofoldenable
 set scrolloff=3 " Minimum lines to keep above and below cursor when scrolling
 set noshowmode " Do not display current mode because we have lightline
 set undofile " Preserve undo history when exiting vim
