@@ -83,6 +83,9 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+" Markdown preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+
 call plug#end()
 
 " Automatically install missing plugins
@@ -346,7 +349,6 @@ require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = c
 require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities }
--- TODO: choose markdown LSP
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = true,
