@@ -197,6 +197,11 @@ nmap <leader>gc :Git commit<CR>
 nmap <leader>gP :Git push<CR>
 nmap <leader>gp :Git pull<CR>
 
+" Markdown
+map <Leader>mp :MarkdownPreview<CR>
+map <Leader>mP :MarkdownPreviewStop<CR>
+map <Leader>mf :TableFormat<CR>
+
 " Insert line above/below cursor without insert mode
 map <Leader>N :<C-U>call append(line(".")-1, repeat([''], v:count1))<CR>
 map <Leader>n :<C-U>call append(line("."), repeat([''], v:count1))<CR>
