@@ -21,7 +21,7 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-let g:is_android = executable('uname') && system('uname -o') == 'Android'
+let g:is_android = executable('uname') && system('uname -o') == "Android\n"
 
 " Plugins
 call plug#begin()
@@ -356,13 +356,13 @@ require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabi
 require('lspconfig').ltex.setup { on_attach = on_attach, capabilities = capabilities } -- or texlab
 require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities }
 if vim.g.is_android == 0 then
     require('lspconfig').jdtls.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').kotlin_language_server.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').gdscript.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').clangd.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
 end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
