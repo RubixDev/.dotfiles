@@ -21,6 +21,8 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
+let is_android = executable('uname') && system('uname -o') == 'Android'
+
 " Plugins
 call plug#begin()
 
@@ -62,8 +64,10 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'habamax/vim-godot'
 
 " Completion
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': { -> 'make' } }
 Plug 'tzachar/fuzzy.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'tzachar/cmp-fuzzy-buffer'
@@ -83,7 +87,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " Markdown preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+if !is_android
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+endif
 
 call plug#end()
 
@@ -122,6 +128,9 @@ set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
 set shiftround
+autocmd FileType markdown setlocal ts=2 sts=2 sw=2
+autocmd FileType json setlocal ts=2 sts=2 sw=2
+autocmd FileType make setlocal ts=4 sts=0 sw=4 noexpandtab
 
 " Proper search
 set incsearch
@@ -223,14 +232,15 @@ noremap <leader>s :Rg<space>
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading --color=always -. '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow -HE .git' : printf('fd --type file --follow -HE .git | proximity-sort %s', shellescape(expand('%')))
+  let fd = 'fd -tf -LHE .git -E "*.png" -E "*.jpg" -E "*.jpeg" -E "*.gif" -E "*.xcf" -E "*.zip" -E "*.ttf" -E "*.import"'
+  return base == '.' ? fd : printf('%s | proximity-sort %s', fd, shellescape(expand('%')))
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
@@ -353,6 +363,7 @@ require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = c
 require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities }
+require('lspconfig').gdscript.setup { on_attach = on_attach, capabilities = capabilities }
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = true,

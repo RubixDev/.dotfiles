@@ -10,10 +10,16 @@ if [ -n "$DESKTOP_SESSION" ]; then
   export SSH_AUTH_SOCK
 fi
 
+if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
+    is_android=true
+else
+    is_android=false
+fi
+
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=~/.local/bin:~/.cargo/bin:~/go/bin:$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin
 export CARGO_TARGET_DIR=$HOME/.cache/cargo
-export EDITOR=vim
+export EDITOR=nvim
 
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -23,7 +29,15 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+if [ "$is_android" = true ]; then
+    if [ -n "$SSH_TTY" ]; then
+        ZSH_THEME="powerlevel10k/powerlevel10k"
+    else
+        ZSH_THEME="zish"
+    fi
+else
+    ZSH_THEME="powerlevel10k/powerlevel10k"
+fi
 DISABLE_MAGIC_FUNCTIONS="true"
 
 plugins=(

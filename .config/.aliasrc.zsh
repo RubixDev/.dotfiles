@@ -37,12 +37,20 @@ alias root='sudo su -'
 alias con='ssh contabo'
 alias poof='poweroff'
 alias pubip='curl ipinfo.io/ip'
+alias ipa='ip -br a'
 alias apdate='sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean'
 alias occ='sudo docker exec -u www-data -it nextcloud php occ'
 
 _paru_bin="$(command -v paru)"
 paru () {
     (unset -v CARGO_TARGET_DIR; $_paru_bin "$@")
+}
+
+godotvim () {
+    [ "$(basename `pwd`)" = "src" ] || cd src || return 1
+    [ -e godothost ] && rm godothost > /dev/null
+    nvim --listen godothost .
+    [ -e godothost ] && rm godothost > /dev/null
 }
 
 rewg () {

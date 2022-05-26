@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P)"
+SCRIPTPATH="$(cd "$(dirname "$0")"; pwd -P)"
 
 # Launch XDG autostart applications
 [ -f "$SCRIPTPATH/is_reload" ] || for app in "${XDG_CONFIG_HOME:-$HOME/.config}"/autostart/*; do
