@@ -9,14 +9,18 @@ if command -v exa > /dev/null; then
 fi
 
 updaterc () {
-    current_dir="$PWD"
+    pwd="$(pwd)"
     cd ~/.dotfiles || {
         echo 'The .dotfiles folder should be at ~/.dotfiles to auto update'
         return 2
     }
     git pull
     ./install.sh
-    cd "$current_dir" || return 2
+    for plugin in ~/.oh-my-zsh/custom/plugins/*; do
+        cd "$plugin"
+        git pull
+    done
+    cd "$pwd" || return 2
     # Reload shell
     exec "$SHELL"
 }
@@ -28,6 +32,15 @@ editrc () {
     editor="$EDITOR"
     [ -n "$EDITOR" ] || editor=vim
     $editor ~/.dotfiles/.zshrc
+}
+
+fullupdate () {
+    if command -v apt > /dev/null; then
+        apdate
+    else
+        paru -Syu --noconfirm
+    fi
+    updaterc
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
