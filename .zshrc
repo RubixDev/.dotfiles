@@ -42,10 +42,11 @@ DISABLE_MAGIC_FUNCTIONS="true"
 
 plugins=(
   git
+  sudo
   zsh-autosuggestions
   history-substring-search
   zsh-syntax-highlighting
-  sudo
+  zsh-vi-mode
 )
 
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
@@ -53,6 +54,10 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+# TODO: fix this
+ZVM_VI_ESCAPE_BINDKEY='^K'
+ZVM_VI_INSERT_ESCAPE_BINDKEY='jk'
 
 ZSH_HIGHLIGHT_STYLES[arg0]=fg=4
 ZSH_HIGHLIGHT_STYLES[command]=fg=4
