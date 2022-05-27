@@ -16,10 +16,6 @@ updaterc () {
     }
     git pull
     ./install.sh
-    for plugin in ~/.oh-my-zsh/custom/plugins/*; do
-        cd "$plugin"
-        git pull
-    done
     cd "$pwd" || return 2
     # Reload shell
     exec "$SHELL"
@@ -34,13 +30,20 @@ editrc () {
     $editor ~/.dotfiles/.zshrc
 }
 
-fullupdate () {
+upd () {
+    pwd="$(pwd)"
     if command -v apt > /dev/null; then
         apdate
     else
         paru -Syu --noconfirm
     fi
     updaterc
+    for plugin in ~/.oh-my-zsh/custom/plugins/*; do
+        cd "$plugin"
+        git pull
+    done
+    cd "$pwd" || return 2
+    cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
