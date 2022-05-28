@@ -115,7 +115,7 @@ install_file () {
 
 install_file .zshrc
 install_file .p10k.zsh
-install_file .config/.aliasrc.zsh
+install_file .config/aliasrc.zsh
 install_file .tmux.conf
 install_file .config/terminator/config
 install_file .config/alacritty/alacritty.yml
