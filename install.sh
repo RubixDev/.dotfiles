@@ -39,19 +39,36 @@ install_arch () {
 }
 
 install_debian () {
+    sudo apt update
     sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm || exit 2
-    [ "$is_desktop" = true ] && sudo apt install -y bspwm sxhkd polybar dunst picom nitrogen numlockx \
-        suckless-tools
+    [ "$is_desktop" = true ] && sudo apt install -y bspwm sxhkd polybar dunst picom nitrogen \
+        numlockx suckless-tools cmake pkg-config libfreetype6-dev libfontconfig1-dev \
+        libxcb-xfixes0-dev libxkbcommon-dev python3
 
     sudo npm install -g yarn || exit 2
 
     if ! command -v rustup > /dev/null; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        exec "$SHELL"
     fi
 
     rustup default > /dev/null || { rustup default stable || exit 2; }
     cargo install fd-find ripgrep proximity-sort || exit 2
-    [ "$is_desktop" = true ] && cargo install alacritty
+
+    if [ "$is_desktop" = true ]; then
+        git clone https://github.com/alacritty/alacritty.git
+        cd alacritty || exit 2
+        git pull
+        cargo build --release
+        infocmp alacritty > /dev/null || sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+        sudo cp target/release/alacritty /usr/local/bin # or anywhere else in $PATH
+        sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+        sudo desktop-file-install extra/linux/Alacritty.desktop
+        sudo update-desktop-database
+        sudo mkdir -p /usr/local/share/man/man1
+        gzip -c extra/alacritty.man | sudo tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
+        gzip -c extra/alacritty-msg.man | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
+    fi
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
