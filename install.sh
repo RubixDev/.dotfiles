@@ -62,26 +62,28 @@ install_debian () {
     cargo install fd-find ripgrep proximity-sort || exit 2
 
     if [ "$is_desktop" = true ]; then
-        git clone https://github.com/alacritty/alacritty.git
-        cd alacritty || exit 2
-        git pull
-        cargo build --release
-        infocmp alacritty > /dev/null || sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-        sudo cp "${CARGO_TARGET_DIR:-target}"/release/alacritty /usr/local/bin
-        sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-        sudo desktop-file-install extra/linux/Alacritty.desktop
-        sudo update-desktop-database
-        sudo mkdir -p /usr/local/share/man/man1
-        gzip -c extra/alacritty.man | sudo tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
-        gzip -c extra/alacritty-msg.man | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
-        cd .. || exit 2
-        rm -rf alacritty
+        if ! command -v alacritty > /dev/null; then
+            git clone https://github.com/alacritty/alacritty.git
+            cd alacritty || exit 2
+            git pull
+            cargo build --release
+            infocmp alacritty > /dev/null || sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+            sudo cp "${CARGO_TARGET_DIR:-target}"/release/alacritty /usr/local/bin
+            sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
+            sudo desktop-file-install extra/linux/Alacritty.desktop
+            sudo update-desktop-database
+            sudo mkdir -p /usr/local/share/man/man1
+            gzip -c extra/alacritty.man | sudo tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
+            gzip -c extra/alacritty-msg.man | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
+            cd .. || exit 2
+            rm -rf alacritty
+        fi
 
-        mkdir -p ~/.local/share/fonts
-        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Regular.ttf
-        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Bold.ttf
-        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Italic.ttf
-        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Bold_Italic.ttf
+        sudo mkdir -p ~/.local/share/fonts
+        [ -e /usr/share/fonts/MesloLGS_NF_Regular.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf' -o /usr/share/fonts/MesloLGS_NF_Regular.ttf
+        [ -e /usr/share/fonts/MesloLGS_NF_Bold.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf' -o /usr/share/fonts/MesloLGS_NF_Bold.ttf
+        [ -e /usr/share/fonts/MesloLGS_NF_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf' -o /usr/share/fonts/MesloLGS_NF_Italic.ttf
+        [ -e /usr/share/fonts/MesloLGS_NF_Bold_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf' -o /usr/share/fonts/MesloLGS_NF_Bold_Italic.ttf
     fi
 
     if ! command -v nvim > /dev/null; then
