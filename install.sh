@@ -49,7 +49,7 @@ install_debian () {
     sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm || exit 2
     [ "$is_desktop" = true ] && sudo apt install -y bspwm sxhkd polybar dunst picom nitrogen \
         numlockx suckless-tools cmake pkg-config libfreetype6-dev libfontconfig1-dev \
-        libxcb-xfixes0-dev libxkbcommon-dev python3
+        libxcb-xfixes0-dev libxkbcommon-dev python3 fonts-jetbrains-mono
 
     sudo npm install -g yarn || exit 2
 
@@ -76,6 +76,12 @@ install_debian () {
         gzip -c extra/alacritty-msg.man | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
         cd .. || exit 2
         rm -rf alacritty
+
+        mkdir -p ~/.local/share/fonts
+        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Regular.ttf
+        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Bold.ttf
+        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Italic.ttf
+        curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf' -o ~/.local/share/fonts/MesloLGS_NF_Bold_Italic.ttf
     fi
 
     if ! command -v nvim > /dev/null; then
