@@ -56,6 +56,7 @@ alias pubip='curl ipinfo.io/ip'
 alias ipa='ip -br a'
 alias apdate='sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean'
 alias occ='sudo docker exec -u www-data -it nextcloud php occ'
+alias sctl='sudo systemctl'
 
 _paru_bin="$(command -v paru)"
 paru () {
@@ -81,8 +82,10 @@ rewg () {
     echo "No known wg service is running"
     return 3
 }
-alias wg0='sudo systemctl stop wg-quick@wg1 && sudo systemctl start wg-quick@wg0'
-alias wg1='sudo systemctl stop wg-quick@wg0 && sudo systemctl start wg-quick@wg1'
+alias wg0='sudo systemctl stop wg-quick@wg1; sudo systemctl start wg-quick@wg0'
+alias wg1='sudo systemctl stop wg-quick@wg0; sudo systemctl start wg-quick@wg1'
+alias stopwg='sudo systemctl stop wg-quick@wg0; sudo systemctl stop wg-quick@wg1'
+alias startwg='sudo systemctl start wg-quick@wg0; sudo systemctl start wg-quick@wg1'
 
 alias lelcat='bash -c "$(curl -fsSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
 cheat () { curl -s "cheat.sh/$1" | less; }
