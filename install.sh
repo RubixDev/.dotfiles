@@ -28,7 +28,7 @@ install_arch () {
 
     $aur -Sy --needed --noconfirm fd ripgrep neovim zsh rustup fzf git curl wget shellcheck \
         pfetch neovim-plug nodejs yarn || exit 2
-    rustup default || { rustup default stable || exit 2; }
+    rustup default > /dev/null || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
     [ "$is_desktop" = true ] && $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
         alacritty picom nitrogen numlockx slock neovim-remote ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono
@@ -45,7 +45,7 @@ install_debian () {
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     fi
 
-    rustup default || { rustup default stable || exit 2; }
+    rustup default > /dev/null || { rustup default stable || exit 2; }
     cargo install fd-find ripgrep proximity-sort || exit 2
     [ "$is_desktop" = true ] && cargo install alacritty
 
