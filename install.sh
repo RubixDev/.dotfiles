@@ -1,16 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 [ "$(basename "$PWD")" = .dotfiles ] || {
     echo "Please run this script from your .dotfiles project root"
     exit 1
 }
 
-########## Dependency Installation ##########
-# TODO: ask for installation
+prompt () {
+    read -p "$1 [Y/n] " -r choice
+    case "$choice" in
+        [Yy][Ee][Ss]|[Yy]|'') return 0 ;;
+        *) return 1 ;;
+    esac
+}
 
-if [ -n "$WAYLAND_DISPLAY" ] || [ -n "$DISPLAY" ]; then
-    is_desktop=true
-fi
+########## Dependency Installation ##########
+prompt "Install desktop configurations?" && is_desktop=true
 
 install_android () {
     true
@@ -66,36 +70,38 @@ install_debian () {
     fi
 }
 
-if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
-    install_android
-else
-    . /etc/os-release
-    case "$ID" in
-        "arch") install_arch ;;
-        "debian") install_debian ;;
-        *)
-            case "$ID_LIKE" in
-                "arch") install_arch ;;
-                "debian") install_debian ;;
-                *)
-                    echo "Automatic dependency installation is not supported for this distribution"
-                    exit 3
-                    ;;
-            esac
-            ;;
-    esac
-fi
+if prompt "Do you want to automatically install all dependencies?"; then
+    if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
+        install_android
+    else
+        . /etc/os-release
+        case "$ID" in
+            "arch") install_arch ;;
+            "debian") install_debian ;;
+            *)
+                case "$ID_LIKE" in
+                    "arch") install_arch ;;
+                    "debian") install_debian ;;
+                    *)
+                        echo "Automatic dependency installation is not supported for this distribution"
+                        exit 3
+                        ;;
+                esac
+                ;;
+        esac
+    fi
 
-if [ "$(basename "$SHELL")" != "zsh" ]; then
-    sudo chsh -s "$(which zsh)" "$USER"
-fi
+    if [ "$(basename "$SHELL")" != "zsh" ]; then
+        sudo chsh -s "$(which zsh)" "$USER"
+    fi
 
-# oh-my-zsh
-[ -e ~/.oh-my-zsh ] || { sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2; }
-[ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ] || git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-[ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search" ] || git clone https://github.com/zsh-users/zsh-history-substring-search "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search"
-[ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-[ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-vi-mode" ] || git clone https://github.com/jeffreytse/zsh-vi-mode "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-vi-mode"
+    # oh-my-zsh
+    [ -e ~/.oh-my-zsh ] || { sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2; }
+    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ] || git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search" ] || git clone https://github.com/zsh-users/zsh-history-substring-search "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search"
+    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-vi-mode" ] || git clone https://github.com/jeffreytse/zsh-vi-mode "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-vi-mode"
+fi
 
 ########### dotfiles Installation ###########
 install_file () {
