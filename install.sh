@@ -26,14 +26,12 @@ install_arch () {
         exit 1
     fi
 
-    command -v rustup > /dev/null && has_rustup=true
-
     $aur -Sy --needed --noconfirm fd ripgrep neovim zsh rustup fzf git curl wget shellcheck \
         pfetch neovim-plug nodejs yarn || exit 2
-    [ "$has_rustup" = true ] || { rustup default stable || exit 2; }
+    rustup default || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
     [ "$is_desktop" = true ] && $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
-        alacritty picom nitrogen numlockx slock neovim-remote ttf-meslo-nerd-font-powerlevel10k
+        alacritty picom nitrogen numlockx slock neovim-remote ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono
 }
 
 install_debian () {
@@ -45,9 +43,9 @@ install_debian () {
 
     if ! command -v rustup > /dev/null; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-        rustup default stable || exit 2
     fi
 
+    rustup default || { rustup default stable || exit 2; }
     cargo install fd-find ripgrep proximity-sort || exit 2
     [ "$is_desktop" = true ] && cargo install alacritty
 
@@ -86,6 +84,10 @@ else
             esac
             ;;
     esac
+fi
+
+if [ "$(basename "$SHELL")" != "zsh" ]; then
+    sudo chsh -s "$(which zsh)" "$USER"
 fi
 
 # oh-my-zsh
