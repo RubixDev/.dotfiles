@@ -28,24 +28,24 @@ install_arch () {
 
     command -v rustup > /dev/null && has_rustup=true
 
-    $aur -Sy --needed fd ripgrep proximity-sort neovim zsh rustup fzf git curl wget shellcheck \
+    $aur -Sy --needed --noconfirm fd ripgrep neovim zsh rustup fzf git curl wget shellcheck \
         pfetch neovim-plug nodejs yarn || exit 2
-    [ "$is_desktop" = true ] && $aur -S --needed polybar sway-launcher-desktop bspwm sxhkd dunst \
+    [ "$has_rustup" = true ] || { rustup default stable || exit 2; }
+    $aur -S --needed --noconfirm proximity-sort || exit 2
+    [ "$is_desktop" = true ] && $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
         alacritty picom nitrogen numlockx slock neovim-remote ttf-meslo-nerd-font-powerlevel10k
-
-    [ "$has_rustup" = true ] || rustup default stable
 }
 
 install_debian () {
-    sudo apt install zsh fzf git curl wget shellcheck nodejs npm || exit 2
-    [ "$is_desktop" = true ] && sudo apt install bspwm sxhkd polybar dunst picom nitrogen numlockx \
+    sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm || exit 2
+    [ "$is_desktop" = true ] && sudo apt install -y bspwm sxhkd polybar dunst picom nitrogen numlockx \
         suckless-tools
 
     sudo npm install -g yarn || exit 2
 
     if ! command -v rustup > /dev/null; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-        rustup default stable
+        rustup default stable || exit 2
     fi
 
     cargo install fd-find ripgrep proximity-sort || exit 2
@@ -89,7 +89,7 @@ else
 fi
 
 # oh-my-zsh
-[ -e ~/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+[ -e ~/.oh-my-zsh ] || { sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2; }
 [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ] || git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
 [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search" ] || git clone https://github.com/zsh-users/zsh-history-substring-search "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search"
 [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
