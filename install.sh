@@ -12,26 +12,6 @@ if [ -n "$WAYLAND_DISPLAY" ] || [ -n "$DISPLAY" ]; then
     is_desktop=true
 fi
 
-if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
-    install_android
-else
-    . /etc/os-release
-    case "$ID" in
-        "arch") install_arch ;;
-        "debian") install_debian ;;
-        *)
-            case "$ID_LIKE" in
-                "arch") install_arch ;;
-                "debian") install_debian ;;
-                *)
-                    echo "Automatic dependency installation is not supported for this distribution"
-                    exit 3
-                    ;;
-            esac
-            ;;
-    esac
-fi
-
 install_android () {
     true
 }
@@ -87,6 +67,26 @@ install_debian () {
         rm ./pfetch
     fi
 }
+
+if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
+    install_android
+else
+    . /etc/os-release
+    case "$ID" in
+        "arch") install_arch ;;
+        "debian") install_debian ;;
+        *)
+            case "$ID_LIKE" in
+                "arch") install_arch ;;
+                "debian") install_debian ;;
+                *)
+                    echo "Automatic dependency installation is not supported for this distribution"
+                    exit 3
+                    ;;
+            esac
+            ;;
+    esac
+fi
 
 # oh-my-zsh
 [ -e ~/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
