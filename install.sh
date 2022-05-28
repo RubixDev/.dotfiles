@@ -79,11 +79,12 @@ install_debian () {
             rm -rf alacritty
         fi
 
-        sudo mkdir -p ~/.local/share/fonts
-        [ -e /usr/share/fonts/MesloLGS_NF_Regular.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf' -o /usr/share/fonts/MesloLGS_NF_Regular.ttf
-        [ -e /usr/share/fonts/MesloLGS_NF_Bold.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf' -o /usr/share/fonts/MesloLGS_NF_Bold.ttf
-        [ -e /usr/share/fonts/MesloLGS_NF_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf' -o /usr/share/fonts/MesloLGS_NF_Italic.ttf
-        [ -e /usr/share/fonts/MesloLGS_NF_Bold_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf' -o /usr/share/fonts/MesloLGS_NF_Bold_Italic.ttf
+        fontpath="/usr/share/fonts/truetype/meslo"
+        sudo mkdir -p "$fontpath"
+        [ -e "$fontpath"/MesloLGS_NF_Regular.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf' -o "$fontpath"/MesloLGS_NF_Regular.ttf
+        [ -e "$fontpath"/MesloLGS_NF_Bold.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf' -o "$fontpath"/MesloLGS_NF_Bold.ttf
+        [ -e "$fontpath"/MesloLGS_NF_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf' -o "$fontpath"/MesloLGS_NF_Italic.ttf
+        [ -e "$fontpath"/MesloLGS_NF_Bold_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf' -o "$fontpath"/MesloLGS_NF_Bold_Italic.ttf
     fi
 
     if ! command -v nvim > /dev/null; then
