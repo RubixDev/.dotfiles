@@ -13,65 +13,80 @@ if [ -n "$WAYLAND_DISPLAY" ] || [ -n "$DISPLAY" ]; then
 fi
 
 if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
-    true
+    install_android
 else
     . /etc/os-release
     case "$ID" in
-        "arch")
-            if command -v paru > /dev/null; then
-                aur=paru
-            elif command -v yay > /dev/null; then
-                aur=yay
-            else
-                echo "Neither paru nor yay is installed on your system, but required for AUR packages"
-                exit 1
-            fi
-
-            command -v rustup > /dev/null && has_rustup=true
-
-            $aur -Sy --needed fd ripgrep proximity-sort neovim zsh rustup fzf git curl wget shellcheck \
-                pfetch neovim-plug nodejs yarn || exit 2
-            [ "$is_desktop" = true ] && $aur -S --needed polybar sway-launcher-desktop bspwm sxhkd dunst \
-                alacritty picom nitrogen numlockx slock neovim-remote ttf-meslo-nerd-font-powerlevel10k
-
-            [ "$has_rustup" = true ] || rustup default stable
-            ;;
-        "debian")
-            sudo apt install zsh fzf git curl wget shellcheck nodejs npm || exit 2
-            [ "$is_desktop" = true ] && sudo apt install bspwm sxhkd polybar dunst picom nitrogen numlockx \
-                suckless-tools
-
-            sudo npm install -g yarn || exit 2
-
-            if ! command -v rustup > /dev/null; then
-                curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-                rustup default stable
-            fi
-
-            cargo install fd-find ripgrep proximity-sort || exit 2
-            [ "$is_desktop" = true ] && cargo install alacritty
-
-            if ! command -v nvim > /dev/null; then
-                wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
-                sudo apt install ./nvim-linux64.deb
-                rm ./nvim-linux64.deb
-            fi
-
-            sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-                https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-            if ! command -v pfetch > /dev/null; then
-                wget 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch'
-                sudo cp ./pfetch /usr/local/bin/pfetch
-                sudo chmod +x /usr/local/bin/pfetch
-                rm ./pfetch
-            fi
-            ;;
+        "arch") install_arch ;;
+        "debian") install_debian ;;
         *)
-            echo "Automatic dependency installation is not supported for this distribution"
-            exit 3
+            case "$ID_LIKE" in
+                "arch") install_arch ;;
+                "debian") install_debian ;;
+                *)
+                    echo "Automatic dependency installation is not supported for this distribution"
+                    exit 3
+                    ;;
+            esac
+            ;;
     esac
 fi
+
+install_android () {
+    true
+}
+
+install_arch () {
+    if command -v paru > /dev/null; then
+        aur=paru
+    elif command -v yay > /dev/null; then
+        aur=yay
+    else
+        echo "Neither paru nor yay is installed on your system, but required for AUR packages"
+        exit 1
+    fi
+
+    command -v rustup > /dev/null && has_rustup=true
+
+    $aur -Sy --needed fd ripgrep proximity-sort neovim zsh rustup fzf git curl wget shellcheck \
+        pfetch neovim-plug nodejs yarn || exit 2
+    [ "$is_desktop" = true ] && $aur -S --needed polybar sway-launcher-desktop bspwm sxhkd dunst \
+        alacritty picom nitrogen numlockx slock neovim-remote ttf-meslo-nerd-font-powerlevel10k
+
+    [ "$has_rustup" = true ] || rustup default stable
+}
+
+install_debian () {
+    sudo apt install zsh fzf git curl wget shellcheck nodejs npm || exit 2
+    [ "$is_desktop" = true ] && sudo apt install bspwm sxhkd polybar dunst picom nitrogen numlockx \
+        suckless-tools
+
+    sudo npm install -g yarn || exit 2
+
+    if ! command -v rustup > /dev/null; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        rustup default stable
+    fi
+
+    cargo install fd-find ripgrep proximity-sort || exit 2
+    [ "$is_desktop" = true ] && cargo install alacritty
+
+    if ! command -v nvim > /dev/null; then
+        wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
+        sudo apt install ./nvim-linux64.deb
+        rm ./nvim-linux64.deb
+    fi
+
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+    if ! command -v pfetch > /dev/null; then
+        wget 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch'
+        sudo cp ./pfetch /usr/local/bin/pfetch
+        sudo chmod +x /usr/local/bin/pfetch
+        rm ./pfetch
+    fi
+}
 
 # oh-my-zsh
 [ -e ~/.oh-my-zsh ] || sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
