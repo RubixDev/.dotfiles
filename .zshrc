@@ -6,7 +6,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 if [ -n "$DESKTOP_SESSION" ] && command -v gnome-keyring-daemon > /dev/null; then
-  eval "$(gnome-keyring-daemon --start)"
+  eval "$(gnome-keyring-daemon --start &> /dev/null)"
   export SSH_AUTH_SOCK
 fi
 
