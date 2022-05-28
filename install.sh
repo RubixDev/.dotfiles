@@ -26,7 +26,8 @@ install_arch () {
     elif command -v yay > /dev/null; then
         aur=yay
     else
-        sudo pacman -S --needed base-devel
+        sudo pacman -S --needed --noconfirm base-devel rustup
+        rustup default > /dev/null || { rustup default stable || exit 2; }
         git clone https://aur.archlinux.org/paru.git
         cd paru || exit 2
         makepkg -si
