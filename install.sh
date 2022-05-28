@@ -26,8 +26,13 @@ install_arch () {
     elif command -v yay > /dev/null; then
         aur=yay
     else
-        echo "Neither paru nor yay is installed on your system, but required for AUR packages"
-        exit 1
+        sudo pacman -S --needed base-devel
+        git clone https://aur.archlinux.org/paru.git
+        cd paru || exit 2
+        makepkg -si
+        cd .. || exit 2
+        rm -rf paru
+        aur=paru
     fi
 
     $aur -Sy --needed --noconfirm fd ripgrep neovim zsh rustup fzf git curl wget shellcheck \
