@@ -3,10 +3,16 @@
 SCRIPTPATH="$(cd "$(dirname "$0")"; pwd -P)"
 
 # Launch XDG autostart applications
-[ -f "$SCRIPTPATH/is_reload" ] || for app in "${XDG_CONFIG_HOME:-$HOME/.config}"/autostart/*; do
-    # Universal way to launch .desktop file: https://askubuntu.com/a/664272
-    awk '/^Exec=/ {sub("^Exec=", ""); gsub(" ?%[cDdFfikmNnUuv]", ""); exit system($0)}' "$app" &
-done
+[ -f "$SCRIPTPATH/is_reload" ] || {
+    for app in "${XDG_CONFIG_HOME:-$HOME/.config}"/autostart/*.desktop; do
+        # Universal way to launch .desktop file: https://askubuntu.com/a/664272
+        awk '/^Exec=/ {sub("^Exec=", ""); gsub(" ?%[cDdFfikmNnUuv]", ""); exit system($0)}' "$app" &
+    done
+    for app in /etc/xdg/autostart/*.desktop; do
+        # Universal way to launch .desktop file: https://askubuntu.com/a/664272
+        awk '/^Exec=/ {sub("^Exec=", ""); gsub(" ?%[cDdFfikmNnUuv]", ""); exit system($0)}' "$app" &
+    done
+}
 [ -f "$SCRIPTPATH/is_reload" ] && rm "$SCRIPTPATH/is_reload"
 
 # ensure sxhkd is running
