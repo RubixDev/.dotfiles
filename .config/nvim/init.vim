@@ -201,8 +201,8 @@ noremap <leader>m ct_
 " Git
 nmap <leader>ga :Git add -p<CR>
 nmap <leader>gc :Git commit<CR>
-nmap <leader>gP :Git push<CR>
-nmap <leader>gp :Git pull<CR>
+nmap <leader>gp :Git push<CR>
+nmap <leader>gl :Git pull<CR>
 
 " Markdown
 map <Leader>mp :MarkdownPreview<CR>
