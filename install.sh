@@ -37,12 +37,12 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm fd ripgrep neovim zsh rustup fzf git curl wget shellcheck \
-        pfetch neovim-plug nodejs yarn || exit 2
+        pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
     rustup default > /dev/null || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
     [ "$is_desktop" = true ] && $aur -S --needed --noconfirm polybar sway-launcher-desktop \
         bspwm sxhkd dunst alacritty picom nitrogen numlockx slock neovim-remote \
-        ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg-server
+        ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg
 }
 
 install_debian () {
