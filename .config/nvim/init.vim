@@ -67,7 +67,7 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'habamax/vim-godot'
 
 " Completion
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': { -> 'make' } }
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'tzachar/fuzzy.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'tzachar/cmp-fuzzy-buffer'
