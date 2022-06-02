@@ -26,18 +26,16 @@ install_arch () {
     elif command -v yay > /dev/null; then
         aur=yay
     else
-        sudo pacman -S --needed --noconfirm base-devel rustup
-        rustup default > /dev/null || { rustup default stable || exit 2; }
-        git clone https://aur.archlinux.org/paru.git
-        cd paru || exit 2
+        git clone https://aur.archlinux.org/paru-bin.git
+        cd paru-bin || exit 2
         makepkg -si
         cd .. || exit 2
-        rm -rf paru
+        rm -rf paru-bin
         aur=paru
     fi
 
-    $aur -Sy --needed --noconfirm fd ripgrep neovim zsh rustup fzf git curl wget shellcheck \
-        pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
+    $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
+        shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
     rustup default > /dev/null || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
     [ "$is_desktop" = true ] && $aur -S --needed --noconfirm polybar sway-launcher-desktop \
