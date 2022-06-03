@@ -28,7 +28,7 @@ install_arch () {
     else
         git clone https://aur.archlinux.org/paru-bin.git
         cd paru-bin || exit 2
-        makepkg -si
+        makepkg -si --noconfirm
         cd .. || exit 2
         rm -rf paru-bin
         aur=paru
