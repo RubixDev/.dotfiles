@@ -15,6 +15,7 @@ prompt () {
 
 # Check if ZDOTDIR is set to non-home path
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
+    [ -e /etc/zsh/zshenv ] || sudo touch /etc/zsh/zshenv
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
     source /etc/zsh/zshenv
