@@ -13,6 +13,13 @@ prompt () {
     esac
 }
 
+# Check if ZDOTDIR is set to non-home path
+if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
+    # shellcheck disable=SC2016
+    echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
+    source /etc/zsh/zshenv
+fi
+
 ########## Dependency Installation ##########
 prompt "Install desktop configurations?" && is_desktop=true
 
@@ -186,18 +193,11 @@ install_file () {
 # Uninstall SpaceVim if present
 [ -e ~/.SpaceVim ] && curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
 
-# Check if ZDOTDIR is set to non-home path
-if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
-    # shellcheck disable=SC2016
-    echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
-    source /etc/zsh/zshenv
-fi
-
 install_file .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
 install_file .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
 install_file .bashrc
 install_file .config/env
-install_file .config/aliasrc.zsh
+install_file .config/aliasrc
 install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf

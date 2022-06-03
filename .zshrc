@@ -61,7 +61,7 @@ ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=5
 ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=208,bold
 ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 
-source ~/.config/aliasrc.zsh
+source ~/.config/aliasrc
 
 echo
 pfetch

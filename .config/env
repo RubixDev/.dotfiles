@@ -14,7 +14,6 @@ export GOPATH="$XDG_DATA_HOME/go"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
 export ZSH="$XDG_CONFIG_HOME/oh-my-zsh"
 export ZSH_CUSTOM="$ZSH/custom"
-export HISTFILE="$XDG_STATE_HOME/zsh/history"
 # shellcheck disable=SC2139
 alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 
