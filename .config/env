@@ -1,0 +1,22 @@
+#!/bin/sh
+
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_STATE_HOME="$HOME/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+export PATH=~/.local/bin:~/.cargo/bin:~/go/bin:"$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin"
+export ANDROID_HOME="$HOME/Android/Sdk"
+export CARGO_TARGET_DIR="$XDG_CACHE_HOME/cargo"
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+export GOPATH="$XDG_DATA_HOME/go"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export ZSH="$XDG_CONFIG_HOME/oh-my-zsh"
+export ZSH_CUSTOM="$ZSH/custom"
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
+# shellcheck disable=SC2139
+alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
+
+export EDITOR=nvim
+

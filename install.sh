@@ -141,43 +141,73 @@ if prompt "Do you want to automatically install all dependencies?"; then
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
     fi
-
-    # oh-my-zsh
-    [ -e ~/.oh-my-zsh ] || { sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2; }
-    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ] || git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search" ] || git clone https://github.com/zsh-users/zsh-history-substring-search "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search"
-    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ] || git clone https://github.com/zsh-users/zsh-syntax-highlighting "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-    [ -e "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-vi-mode" ] || git clone https://github.com/jeffreytse/zsh-vi-mode "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-vi-mode"
 fi
+
+########### Oh My ZSH ###########
+[ -e "${ZSH:-$HOME/.oh-my-zsh}" ] || {
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2
+}
+[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions" ] || {
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions"
+}
+[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-history-substring-search" ] || {
+    git clone https://github.com/zsh-users/zsh-history-substring-search \
+        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-history-substring-search"
+}
+[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-syntax-highlighting" ] || {
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting \
+        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-syntax-highlighting"
+}
+[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-vi-mode" ] || {
+    git clone https://github.com/jeffreytse/zsh-vi-mode \
+        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-vi-mode"
+}
+[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/powerlevel10k" ] || {
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k \
+        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/powerlevel10k"
+}
 
 ########### dotfiles Installation ###########
 install_file () {
-    mkdir -p "$HOME/$(dirname "$1")"
-    [ ! -L ~/"$1" ] || rm ~/"$1"
-    [ ! -e ~/"$1" ] || mv ~/"$1" ~/"$1".old
-    ln -s "$PWD/$1" "$HOME/$1"
-}
-
-# Install powerlevel10k theme, if not yet present
-[ -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ] || {
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/themes/powerlevel10k
+    src="$1"
+    if [ -n "$2" ]; then
+        dest="$2"
+    else
+        dest="$HOME/$1"
+    fi
+    mkdir -p "$(dirname "$dest")"
+    [ ! -L "$dest" ] || rm "$dest"
+    [ ! -e "$dest" ] || mv "$dest" "$dest".old
+    echo "Linking '$PWD/$src' to '$dest'"
+    ln -s "$PWD/$src" "$dest"
 }
 
 # Uninstall SpaceVim if present
 [ -e ~/.SpaceVim ] && curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
 
-install_file .zshrc
-install_file .p10k.zsh
+# Check if ZDOTDIR is set to non-home path
+if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
+    # shellcheck disable=SC2016
+    echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
+    source /etc/zsh/zshenv
+fi
+
+install_file .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
+install_file .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
+install_file .bashrc
 install_file .config/aliasrc.zsh
-install_file .tmux.conf
-install_file .config/terminator/config
-install_file .config/alacritty/alacritty.yml
-install_file .config/i3/config
+install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf
-install_file .config/bspwm/bspwmrc
-install_file .config/sxhkd/sxhkdrc
-install_file .config/dunst/dunstrc
-install_file .config/picom.conf
-install_file .config/polybar/config.ini
+if [ "$is_desktop" = true ]; then
+    install_file .config/terminator/config
+    install_file .config/alacritty/alacritty.yml
+    install_file .config/i3/config
+    install_file .config/bspwm/bspwmrc
+    install_file .config/sxhkd/sxhkdrc
+    install_file .config/dunst/dunstrc
+    install_file .config/picom.conf
+    install_file .config/polybar/config.ini
+fi
 

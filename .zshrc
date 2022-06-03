@@ -16,18 +16,8 @@ else
     is_android=false
 fi
 
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=~/.local/bin:~/.cargo/bin:~/go/bin:$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin
-export CARGO_TARGET_DIR=$HOME/.cache/cargo
-export EDITOR=nvim
-
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_STATE_HOME="$HOME/.local/state"
-export XDG_CACHE_HOME="$HOME/.cache"
-
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+source ~/.config/env
+export HISTFILE="$XDG_STATE_HOME/zsh/history"
 
 if [ "$is_android" = true ]; then
     if [ -n "$SSH_TTY" ]; then
@@ -73,10 +63,8 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 
 source ~/.config/aliasrc.zsh
 
-[[ $- != *i* ]] && return
-
 echo
 pfetch
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f "${ZDOTDIR:-$HOME}/.p10k.zsh" ]] || source "${ZDOTDIR:-$HOME}/.p10k.zsh"
+
