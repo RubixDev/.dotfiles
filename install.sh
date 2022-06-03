@@ -196,6 +196,7 @@ fi
 install_file .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
 install_file .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
 install_file .bashrc
+install_file .config/env
 install_file .config/aliasrc.zsh
 install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
