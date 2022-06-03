@@ -201,6 +201,7 @@ install_file .config/aliasrc
 install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf
+install_file .config/npm/npmrc
 if [ "$is_desktop" = true ]; then
     install_file .config/terminator/config
     install_file .config/alacritty/alacritty.yml
