@@ -24,6 +24,8 @@ if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to
     source /etc/zsh/zshenv
 fi
 
+source ./.config/env
+
 ########## Dependency Installation ##########
 prompt "Install desktop configurations?" && is_desktop=true
 
@@ -49,11 +51,14 @@ install_arch () {
         shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
     rustup default > /dev/null || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
-    [ "$is_desktop" = true ] && $aur -S --needed --noconfirm polybar sway-launcher-desktop \
-        bspwm sxhkd dunst alacritty picom nitrogen numlockx slock neovim-remote \
-        ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg
 
     if [ "$is_desktop" = true ]; then
+        $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
+            alacritty picom nitrogen numlockx slock neovim-remote \
+            ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
+            kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
+            noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme gtkrc-reload || exit 2
+
         # ----- KEYBOARD LAYOUT -----
         # Remove layout from US file if present
         sudo perl -0777 -i -p -e 's/xkb_symbols "us_de"[\s\S]*?\n};\n?//g' /usr/share/X11/xkb/symbols/us || exit 1
@@ -65,6 +70,14 @@ install_arch () {
         sudo perl -0777 -i -p -e 's/<variant>[\s\S]*?<description>QWERTY with german Umlaut keys<\/description>[\s\S]*?<\/variant>\n?\s*//g' /usr/share/X11/xkb/rules/evdev.xml || exit 1
         # Make layout available in system settings
         sudo perl -0777 -i -p -e 's/(<layout>[\s\S]*?<description>English \(US\)<\/description>[\s\S]*?<variantList>\n?)(\s*)/\1\2<variant>\n\2  <configItem>\n\2    <name>us_de<\/name>\n\2    <description>QWERTY with german Umlaut keys<\/description>\n\2    <languageList>\n\2      <iso639Id>eng<\/iso639Id>\n\2      <iso639Id>ger<\/iso639Id>\n\2    <\/languageList>\n\2  <\/configItem>\n\2<\/variant>\n\2/g' /usr/share/X11/xkb/rules/evdev.xml || exit 1
+
+        # ----- QT/GTK Theme -----
+        [ "$QT_QPA_PLATFORMTHEME" = "qt5ct" ] || {
+            echo 'export QT_QPA_PLATFORMTHEME=qt5ct' >> "${ZDOTDIR:-$HOME}/.zprofile"
+            export QT_QPA_PLATFORMTHEME=qt5ct
+        }
+        kvantummanager --set Layan
+        gtkrc-reload
     fi
 }
 
@@ -194,9 +207,13 @@ install_file () {
     ln -s "$PWD/$src" "$dest"
 }
 
+mkdir -p ~/.local/state/zsh
+mkdir -p ~/.local/state/bash
+
 # Uninstall SpaceVim if present
 [ -e ~/.SpaceVim ] && curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
 
+# Create symlinks
 install_file .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
 install_file .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
 install_file .bashrc
@@ -215,5 +232,9 @@ if [ "$is_desktop" = true ]; then
     install_file .config/dunst/dunstrc
     install_file .config/picom.conf
     install_file .config/polybar/config.ini
+    install_file .gtkrc-2.0 "${GTK2_RC_FILES:-$HOME/.gtkrc-2.0}"
+    install_file .config/gtk-3.0/settings.ini
+    install_file .config/qt5ct/qt5ct.conf
+    install_file .icons/default/index.theme
 fi
 
