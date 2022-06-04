@@ -14,9 +14,6 @@ prompt () {
     esac
 }
 
-mkdir -p ~/.local/state/zsh
-mkdir -p ~/.local/state/bash
-
 # Check if ZDOTDIR is set to non-home path
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
     [ -e /etc/zsh/zshenv ] || {
@@ -30,6 +27,10 @@ fi
 
 . ./.config/env
 unset CARGO_TARGET_DIR
+
+mkdir -p ~/.local/state/zsh
+mkdir -p ~/.local/state/bash
+mkdir -p "${ZDOTDIR:-$HOME}"
 
 ########## Dependency Installation ##########
 prompt "Install desktop configurations?" && is_desktop=true
