@@ -25,6 +25,7 @@ if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to
 fi
 
 source ./.config/env
+unset CARGO_TARGET_DIR
 
 ########## Dependency Installation ##########
 prompt "Install desktop configurations?" && is_desktop=true
@@ -49,7 +50,7 @@ install_arch () {
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
         shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
-    rustup default > /dev/null || { rustup default stable || exit 2; }
+    rustup default &> /dev/null || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
 
     if [ "$is_desktop" = true ]; then
@@ -237,4 +238,6 @@ if [ "$is_desktop" = true ]; then
     install_file .config/qt5ct/qt5ct.conf
     install_file .icons/default/index.theme
 fi
+
+source ./.config/env
 
