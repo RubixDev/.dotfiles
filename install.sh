@@ -78,7 +78,6 @@ install_arch () {
             echo 'export QT_QPA_PLATFORMTHEME=qt5ct' >> "${ZDOTDIR:-$HOME}/.zprofile"
             export QT_QPA_PLATFORMTHEME=qt5ct
         fi
-        kvantummanager --set Layan
 
         # ----- Display Manager -----
         sudo systemctl disable display-manager
@@ -175,6 +174,7 @@ fi
 ########### Oh My ZSH ###########
 [ -e "${ZSH:-$HOME/.oh-my-zsh}" ] || {
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2
+    rm ~/.zshrc
 }
 [ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions" ] || {
     git clone https://github.com/zsh-users/zsh-autosuggestions \
@@ -241,6 +241,7 @@ if [ "$is_desktop" = true ]; then
     install_file .config/gtk-3.0/settings.ini
     install_file .config/qt5ct/qt5ct.conf
     install_file .icons/default/index.theme
+    install_file .config/Kvantum/kvantum.kvconfig
 fi
 
 . ./.config/env
