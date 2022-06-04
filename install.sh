@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 [ "$(basename "$PWD")" = .dotfiles ] || {
     echo "Please run this script from your .dotfiles project root"
@@ -6,7 +6,8 @@
 }
 
 prompt () {
-    read -p "$1 [Y/n] " -r choice
+    printf '%s [Y/n] ' "$1"
+    read -r choice
     case "$choice" in
         [Yy][Ee][Ss]|[Yy]|'') return 0 ;;
         *) return 1 ;;
@@ -21,10 +22,10 @@ if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to
     }
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
-    source /etc/zsh/zshenv
+    . /etc/zsh/zshenv
 fi
 
-source ./.config/env
+. ./.config/env
 unset CARGO_TARGET_DIR
 
 ########## Dependency Installation ##########
@@ -50,7 +51,7 @@ install_arch () {
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
         shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
-    rustup default &> /dev/null || { rustup default stable || exit 2; }
+    rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
 
     if [ "$is_desktop" = true ]; then
@@ -58,7 +59,7 @@ install_arch () {
             alacritty picom nitrogen numlockx slock neovim-remote ly \
             ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
-            noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme gtkrc-reload || exit 2
+            noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme || exit 2
 
         # ----- KEYBOARD LAYOUT -----
         # Remove layout from US file if present
@@ -73,12 +74,11 @@ install_arch () {
         sudo perl -0777 -i -p -e 's/(<layout>[\s\S]*?<description>English \(US\)<\/description>[\s\S]*?<variantList>\n?)(\s*)/\1\2<variant>\n\2  <configItem>\n\2    <name>us_de<\/name>\n\2    <description>QWERTY with german Umlaut keys<\/description>\n\2    <languageList>\n\2      <iso639Id>eng<\/iso639Id>\n\2      <iso639Id>ger<\/iso639Id>\n\2    <\/languageList>\n\2  <\/configItem>\n\2<\/variant>\n\2/g' /usr/share/X11/xkb/rules/evdev.xml || exit 1
 
         # ----- QT/GTK Theme -----
-        [ "$QT_QPA_PLATFORMTHEME" = "qt5ct" ] || {
+        if ! grep -q 'QT_QPA_PLATFORMTHEME=qt5ct' "${ZDOTDIR:-$HOME}/.zprofile"; then
             echo 'export QT_QPA_PLATFORMTHEME=qt5ct' >> "${ZDOTDIR:-$HOME}/.zprofile"
             export QT_QPA_PLATFORMTHEME=qt5ct
-        }
+        fi
         kvantummanager --set Layan
-        gtkrc-reload
 
         # ----- Display Manager -----
         sudo systemctl disable display-manager
@@ -243,5 +243,5 @@ if [ "$is_desktop" = true ]; then
     install_file .icons/default/index.theme
 fi
 
-source ./.config/env
+. ./.config/env
 
