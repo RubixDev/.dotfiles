@@ -14,6 +14,9 @@ prompt () {
     esac
 }
 
+mkdir -p ~/.local/state/zsh
+mkdir -p ~/.local/state/bash
+
 # Check if ZDOTDIR is set to non-home path
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
     [ -e /etc/zsh/zshenv ] || {
@@ -211,9 +214,6 @@ install_file () {
     echo "Linking '$PWD/$src' to '$dest'"
     ln -s "$PWD/$src" "$dest"
 }
-
-mkdir -p ~/.local/state/zsh
-mkdir -p ~/.local/state/bash
 
 # Uninstall SpaceVim if present
 [ -e ~/.SpaceVim ] && curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
