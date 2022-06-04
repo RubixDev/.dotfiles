@@ -37,7 +37,7 @@ upd () {
     if command -v apt > /dev/null; then
         apdate
     else
-        paru -Syu --noconfirm
+        paru -Syu
     fi
     updaterc
     for plugin in "$ZSH_CUSTOM"/plugins/*; do
