@@ -55,7 +55,7 @@ install_arch () {
 
     if [ "$is_desktop" = true ]; then
         $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
-            alacritty picom nitrogen numlockx slock neovim-remote \
+            alacritty picom nitrogen numlockx slock neovim-remote ly \
             ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme gtkrc-reload || exit 2
@@ -79,6 +79,10 @@ install_arch () {
         }
         kvantummanager --set Layan
         gtkrc-reload
+
+        # ----- Display Manager -----
+        sudo systemctl disable display-manager
+        sudo systemctl enable ly
     fi
 }
 
