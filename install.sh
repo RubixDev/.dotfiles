@@ -81,6 +81,11 @@ install_arch () {
             echo 'export QT_QPA_PLATFORMTHEME=qt5ct' >> "${ZDOTDIR:-$HOME}/.zprofile"
             export QT_QPA_PLATFORMTHEME=qt5ct
         fi
+        # shellcheck disable=SC2016
+        if ! grep -q 'GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' "${ZDOTDIR:-$HOME}/.zprofile"; then
+            echo 'GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' >> "${ZDOTDIR:-$HOME}/.zprofile"
+            export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"
+        fi
 
         # ----- Display Manager -----
         sudo systemctl disable display-manager
