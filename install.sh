@@ -83,7 +83,7 @@ install_arch () {
         fi
         # shellcheck disable=SC2016
         if ! grep -q 'GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' "${ZDOTDIR:-$HOME}/.zprofile"; then
-            echo 'GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' >> "${ZDOTDIR:-$HOME}/.zprofile"
+            echo 'export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' >> "${ZDOTDIR:-$HOME}/.zprofile"
             export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"
         fi
 
