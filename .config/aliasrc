@@ -65,7 +65,11 @@ alias sls='screen -ls'
 
 _paru_bin="$(command -v paru)"
 paru () {
-    (unset -v CARGO_TARGET_DIR; $_paru_bin "$@")
+    (
+        unset CARGO_TARGET_DIR
+        unset GOPATH
+        $_paru_bin "$@"
+    )
 }
 
 godotvim () {
