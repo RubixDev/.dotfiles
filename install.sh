@@ -97,7 +97,7 @@ install_arch () {
             alacritty picom nitrogen numlockx slock neovim-remote ly \
             ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
-            noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme || exit 2
+            noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git || exit 2
 
         # ----- KEYBOARD LAYOUT -----
         # Remove layout from US file if present
