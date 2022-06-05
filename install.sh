@@ -14,6 +14,8 @@ prompt () {
     esac
 }
 
+[ "$(id -u)" -eq 0 ] && is_root=true
+
 # Check if ZDOTDIR is set to non-home path
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"; then
     [ -e /etc/zsh/zshenv ] || {
@@ -22,24 +24,33 @@ if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] && prompt "Your ZSH config folder is set to
     }
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
-    . /etc/zsh/zshenv
+    export ZDOTDIR="$HOME/.config/zsh"
 fi
 
 . ./.config/env
 unset CARGO_TARGET_DIR
+unset GOPATH
 
 mkdir -p ~/.local/state/zsh
 mkdir -p ~/.local/state/bash
 mkdir -p "${ZDOTDIR:-$HOME}"
 
 ########## Dependency Installation ##########
-prompt "Install desktop configurations?" && is_desktop=true
+want_deps () {
+    prompt "Do you want to automatically install all dependencies?"
+    return $?
+}
 
 install_android () {
-    true
+    want_deps || return
+
+    true # TODO
 }
 
 install_arch () {
+    [ $is_root != "true" ] && prompt "Install desktop configurations?" && is_desktop=true
+    want_deps || return
+
     if command -v paru > /dev/null; then
         aur=paru
     elif command -v yay > /dev/null; then
@@ -57,6 +68,10 @@ install_arch () {
         shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
+
+    if [ "$(basename "$SHELL")" != "zsh" ]; then
+        sudo chsh -s "$(which zsh)" "$USER"
+    fi
 
     if [ "$is_desktop" = true ]; then
         $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
@@ -78,12 +93,12 @@ install_arch () {
         sudo perl -0777 -i -p -e 's/(<layout>[\s\S]*?<description>English \(US\)<\/description>[\s\S]*?<variantList>\n?)(\s*)/\1\2<variant>\n\2  <configItem>\n\2    <name>us_de<\/name>\n\2    <description>QWERTY with german Umlaut keys<\/description>\n\2    <languageList>\n\2      <iso639Id>eng<\/iso639Id>\n\2      <iso639Id>ger<\/iso639Id>\n\2    <\/languageList>\n\2  <\/configItem>\n\2<\/variant>\n\2/g' /usr/share/X11/xkb/rules/evdev.xml || exit 1
 
         # ----- QT/GTK Theme -----
-        if ! grep -q 'QT_QPA_PLATFORMTHEME=qt5ct' "${ZDOTDIR:-$HOME}/.zprofile"; then
+        if ! grep -q 'export QT_QPA_PLATFORMTHEME=qt5ct' "${ZDOTDIR:-$HOME}/.zprofile"; then
             echo 'export QT_QPA_PLATFORMTHEME=qt5ct' >> "${ZDOTDIR:-$HOME}/.zprofile"
             export QT_QPA_PLATFORMTHEME=qt5ct
         fi
         # shellcheck disable=SC2016
-        if ! grep -q 'GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' "${ZDOTDIR:-$HOME}/.zprofile"; then
+        if ! grep -q 'export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' "${ZDOTDIR:-$HOME}/.zprofile"; then
             echo 'export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"' >> "${ZDOTDIR:-$HOME}/.zprofile"
             export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc"
         fi
@@ -95,11 +110,10 @@ install_arch () {
 }
 
 install_debian () {
+    want_deps || return
+
     sudo apt update
     sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm || exit 2
-    [ "$is_desktop" = true ] && sudo apt install -y bspwm sxhkd polybar dunst picom nitrogen \
-        numlockx suckless-tools cmake pkg-config libfreetype6-dev libfontconfig1-dev \
-        libxcb-xfixes0-dev libxkbcommon-dev python3 fonts-jetbrains-mono
 
     sudo npm install -g yarn || exit 2
 
@@ -108,34 +122,8 @@ install_debian () {
         exec "$SHELL"
     fi
 
-    rustup default > /dev/null || { rustup default stable || exit 2; }
+    rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     cargo install fd-find ripgrep proximity-sort || exit 2
-
-    if [ "$is_desktop" = true ]; then
-        if ! command -v alacritty > /dev/null; then
-            git clone https://github.com/alacritty/alacritty.git
-            cd alacritty || exit 2
-            git pull
-            cargo build --release
-            infocmp alacritty > /dev/null || sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
-            sudo cp "${CARGO_TARGET_DIR:-target}"/release/alacritty /usr/local/bin
-            sudo cp extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg
-            sudo desktop-file-install extra/linux/Alacritty.desktop
-            sudo update-desktop-database
-            sudo mkdir -p /usr/local/share/man/man1
-            gzip -c extra/alacritty.man | sudo tee /usr/local/share/man/man1/alacritty.1.gz > /dev/null
-            gzip -c extra/alacritty-msg.man | sudo tee /usr/local/share/man/man1/alacritty-msg.1.gz > /dev/null
-            cd .. || exit 2
-            rm -rf alacritty
-        fi
-
-        fontpath="/usr/share/fonts/truetype/meslo"
-        sudo mkdir -p "$fontpath"
-        [ -e "$fontpath"/MesloLGS_NF_Regular.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf' -o "$fontpath"/MesloLGS_NF_Regular.ttf
-        [ -e "$fontpath"/MesloLGS_NF_Bold.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf' -o "$fontpath"/MesloLGS_NF_Bold.ttf
-        [ -e "$fontpath"/MesloLGS_NF_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf' -o "$fontpath"/MesloLGS_NF_Italic.ttf
-        [ -e "$fontpath"/MesloLGS_NF_Bold_Italic.ttf ] || sudo curl 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf' -o "$fontpath"/MesloLGS_NF_Bold_Italic.ttf
-    fi
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
@@ -147,37 +135,24 @@ install_debian () {
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     if ! command -v pfetch > /dev/null; then
-        wget 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch'
-        sudo cp ./pfetch /usr/local/bin/pfetch
+        sudo wget 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -O /usr/local/bin/pfetch
         sudo chmod +x /usr/local/bin/pfetch
-        rm ./pfetch
-    fi
-}
-
-if prompt "Do you want to automatically install all dependencies?"; then
-    if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
-        install_android
-    else
-        . /etc/os-release
-        case "$ID" in
-            "arch") install_arch ;;
-            "debian") install_debian ;;
-            *)
-                case "$ID_LIKE" in
-                    "arch") install_arch ;;
-                    "debian") install_debian ;;
-                    *)
-                        echo "Automatic dependency installation is not supported for this distribution"
-                        exit 3
-                        ;;
-                esac
-                ;;
-        esac
     fi
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
     fi
+}
+
+if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
+    [ "$is_root" = true ] || install_android
+else
+    . /etc/os-release
+    case "|$ID|$ID_LIKE|" in
+        *"|arch|"*) install_arch ;;
+        *"|debian|"*) install_debian ;;
+        *) echo "Automatic dependency installation is not supported for this distribution" ;;
+    esac
 fi
 
 ########### Oh My ZSH ###########
@@ -249,6 +224,4 @@ if [ "$is_desktop" = true ]; then
     install_file .icons/default/index.theme
     install_file .config/Kvantum/kvantum.kvconfig
 fi
-
-. ./.config/env
 
