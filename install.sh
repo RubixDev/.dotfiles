@@ -14,6 +14,15 @@ prompt () {
     esac
 }
 
+promptn () {
+    printf '%s [y/N] ' "$1"
+    read -r choice
+    case "$choice" in
+        [Yy][Ee][Ss]|[Yy]) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
 [ "$(id -u)" -eq 0 ] && is_root=true
 
 # Check if ZDOTDIR is set to non-home path
@@ -54,7 +63,10 @@ install_android () {
 }
 
 install_arch () {
-    [ $is_root != "true" ] && prompt "Install desktop configurations?" && is_desktop=true
+    if [ $is_root != "true" ] && prompt "Install desktop configurations?"; then
+        is_desktop=true
+        promptn "Install Laptop specific dependencies?" && is_laptop=true
+    fi
     want_deps || return
 
     if command -v paru > /dev/null; then
@@ -74,6 +86,7 @@ install_arch () {
         shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
+    [ "$is_laptop" = "true" ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2 }
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
