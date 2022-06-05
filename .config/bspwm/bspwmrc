@@ -34,8 +34,8 @@ bspc config normal_border_color '#0b0d11'
 bspc config active_border_color '#0b0d11'
 bspc config focused_border_color '#61afef'
 
-# A host-dependend screen setup script. An example is in ~/.dotfiles/.config/bspwmrc/screenconf.example.sh
-"$SCRIPTPATH"/screenconf.sh
+# A host-dependend setup script. An example is in ~/.dotfiles/.config/bspwm/hostconf.example.sh
+"$SCRIPTPATH"/hostconf.sh
 
 picom &
 dunst &
