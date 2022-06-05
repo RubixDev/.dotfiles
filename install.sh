@@ -229,7 +229,6 @@ install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf
 install_file .config/npm/npmrc
 if [ "$is_desktop" = true ]; then
-    install_file .config/terminator/config
     install_file .config/alacritty/alacritty.yml
     install_file .config/i3/config
     install_file .config/bspwm/bspwmrc
