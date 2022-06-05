@@ -29,6 +29,8 @@ then
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
     export ZDOTDIR="$HOME/.config/zsh"
+elif grep -q 'export ZDOTDIR="$HOME/.config/zsh"' /etc/zsh/zshenv; then
+    export ZDOTDIR="$HOME/.config/zsh"
 fi
 
 . ./.config/env
