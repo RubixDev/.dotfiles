@@ -86,7 +86,7 @@ install_arch () {
         shellcheck pfetch neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
-    [ "$is_laptop" = "true" ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2 }
+    [ "$is_laptop" = "true" ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2; }
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
