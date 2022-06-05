@@ -63,7 +63,7 @@ install_android () {
 }
 
 install_arch () {
-    if [ $is_root != "true" ] && prompt "Install desktop configurations?"; then
+    if [ "$is_root" != "true" ] && prompt "Install desktop configurations?"; then
         is_desktop=true
         promptn "Install Laptop specific dependencies?" && is_laptop=true
     fi
