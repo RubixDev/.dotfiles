@@ -30,6 +30,10 @@ super + shift + r
 super + {_,shift + }q
     bspc node -{c,k}
 
+# lock screen
+super + shift + s
+    slock
+
 # alternate between the tiled and monocle layout
 super + m
     bspc desktop -l next
