@@ -7,7 +7,8 @@ alias rm='rm -v'
 alias ip='ip -c'
 if command -v exa > /dev/null; then
     alias l='exa -lahg --icons --octal-permissions --git'
-    alias ll=l
+else
+    alias l='ls -lAh --color=auto'
 fi
 
 updaterc () {
