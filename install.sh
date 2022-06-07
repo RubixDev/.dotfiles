@@ -155,7 +155,7 @@ install_debian () {
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
     if ! command -v pfetch > /dev/null; then
-        sudo wget 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -O /usr/local/bin/pfetch
+        sudo curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o /usr/local/bin/pfetch
         sudo chmod +x /usr/local/bin/pfetch
     fi
 
