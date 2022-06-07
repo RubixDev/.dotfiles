@@ -133,7 +133,7 @@ super + {Left,Down,Up,Right}
 #
 
 XF86MonBrightness{Up,Down}
-    brightnessctl set 10%{+,-}
+    brightnessctl set 5%{+,-}
 
 XF86Audio{Raise,Lower}Volume
     pamixer -{i,d} 10
