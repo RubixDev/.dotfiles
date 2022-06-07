@@ -36,18 +36,22 @@ editrc () {
 upd () {
     pwd="$(pwd)"
     if command -v apt > /dev/null; then
-        apdate
+        sudo apt update
+        sudo apt upgrade
+        sudo apt autoremove
+        sudo apt autoclean
     else
         paru -Syu
     fi
+    # shellcheck disable=SC2046
+    cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
     updaterc
+    pwd="$(pwd)"
     for plugin in "$ZSH_CUSTOM"/plugins/*; do
         cd "$plugin" || return 1
         git pull
     done
     cd "$pwd" || return 2
-    # shellcheck disable=SC2046
-    cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
