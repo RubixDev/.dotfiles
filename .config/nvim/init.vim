@@ -357,6 +357,7 @@ require('lspconfig').ltex.setup { on_attach = on_attach, capabilities = capabili
 require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities }
+require('lspconfig').pylsp.setup { on_attach = on_attach, capabilities = capabilities }
 if vim.g.is_android == 0 then
     require('lspconfig').jdtls.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').kotlin_language_server.setup { on_attach = on_attach, capabilities = capabilities }
