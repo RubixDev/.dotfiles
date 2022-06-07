@@ -10,7 +10,7 @@ set showbreak=↪
 set nowrap
 set nofoldenable
 set scrolloff=3 " Minimum lines to keep above and below cursor when scrolling
-set noshowmode " Do not display current mode because we have lightline
+set noshowmode " Do not display current mode because we have airline
 set undofile " Preserve undo history when exiting vim
 set spell " Enable spellcheck
 set signcolumn=yes " Always draw sign column. Prevent buffer moving when adding/deleting sign.
@@ -37,7 +37,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-abolish'
 
 " GUI enhancements
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
@@ -93,31 +94,87 @@ call plug#end()
 
 " Automatically install missing plugins
 autocmd VimEnter *
-  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \|   PlugInstall --sync | q
-  \| endif
+    \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    \|   PlugInstall --sync | q
+    \| endif
 
 " Theming
 syntax on
 colorscheme one
 set background=dark
 let g:one_allow_italics = 1
-let g:airline_theme='one'
-let g:lightline = { 'colorscheme': 'one' }
 au TextYankPost * silent! lua vim.highlight.on_yank()
+
+let g:airline_theme='one'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_skip_emtpy_sections = 1
+let g:airline_detect_spell = 0
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ' '
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.colnr = ' :'
+let g:airline_symbols.dirty = ' ⚡'
+
+" The following two functions are taken from SpaceVim
+function! s:isDarwin() abort
+    if exists('s:is_darwin')
+        return s:is_darwin
+    endif
+    if has('macunix')
+        let s:is_darwin = 1
+        return s:is_darwin
+    endif
+    if ! has('unix')
+        let s:is_darwin = 0
+        return s:is_darwin
+    endif
+    let s:is_darwin = system('uname -s') ==# "Darwin\n"
+    return s:is_darwin
+endfunction
+function! Fileformat() abort
+    let fileformat = ''
+    if &fileformat ==? 'dos'
+        let fileformat = ''
+    elseif &fileformat ==? 'unix'
+        if s:isDarwin()
+            let fileformat = ''
+        else
+            let fileformat = ''
+        endif
+    elseif &fileformat ==? 'mac'
+        let fileformat = ''
+    endif
+    return fileformat
+endfunction
+function! AirlineInit()
+    let g:airline_section_b = airline#section#create_left(['branch'])
+    let g:airline_section_y = airline#section#create_right(['fileencoding', 'bom', 'eol'])
+    let g:airline_section_y = " %{&fenc . ' ' . Fileformat()} "
+endfunction
+autocmd User AirlineAfterInit call AirlineInit()
 
 " Enable true-color support
 if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+    "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 if (has("termguicolors"))
-  set termguicolors
+    set termguicolors
 endif
 if exists('+termguicolors')
-  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
+    let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
 endif
 
 " General tab settings
@@ -223,31 +280,31 @@ set updatetime=300 " You will have bad experience for diagnostic messages when i
 
 " ripgrep
 if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
+    set grepprg=rg\ --no-heading\ --vimgrep
+    set grepformat=%f:%l:%c:%m
 endif
 noremap <leader>s :Rg<space>
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always -. '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+    \ call fzf#vim#grep(
+    \   'rg --column --line-number --no-heading --color=always -. '.shellescape(<q-args>), 1,
+    \   <bang>0 ? fzf#vim#with_preview('up:60%')
+    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+    \   <bang>0)
 
 function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  let fd = 'fd -tf -LHE .git -E "*.png" -E "*.jpg" -E "*.jpeg" -E "*.gif" -E "*.xcf" -E "*.zip" -E "*.ttf" -E "*.import"'
-  return base == '.' ? fd : printf('%s | proximity-sort %s', fd, shellescape(expand('%')))
+    let base = fnamemodify(expand('%'), ':h:.:S')
+    let fd = 'fd -tf -LHE .git -E "*.png" -E "*.jpg" -E "*.jpeg" -E "*.gif" -E "*.xcf" -E "*.zip" -E "*.ttf" -E "*.import"'
+    return base == '.' ? fd : printf('%s | proximity-sort %s', fd, shellescape(expand('%')))
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+    \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+    \                               'options': '--tiebreak=index'}, <bang>0)
 
 " Svelte js/ts and css detection
 if !exists('g:context_filetype#same_filetypes')
-  let g:context_filetype#filetypes = {}
+    let g:context_filetype#filetypes = {}
 endif
 
 let g:context_filetype#filetypes.svelte =
@@ -275,70 +332,70 @@ lua << END
 -- Completion
 local cmp = require'cmp'
 cmp.setup({
-  snippet = {
-    -- REQUIRED by nvim-cmp. get rid of it once we can
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    -- Tab immediately completes. C-n/C-p to select.
-    ['<Tab>'] = cmp.mapping.confirm({ select = true })
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-  }, {
-    { name = 'path' },
-  }),
-  experimental = {
-    ghost_text = true,
-  },
+    snippet = {
+        -- REQUIRED by nvim-cmp. get rid of it once we can
+        expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        -- Tab immediately completes. C-n/C-p to select.
+        ['<Tab>'] = cmp.mapping.confirm({ select = true })
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    }, {
+        { name = 'path' },
+    }),
+    experimental = {
+        ghost_text = true,
+    },
 })
 
 -- Enable completing paths in :
 cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' },
-  }, {
-    { name = 'cmdline' },
-  })
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' },
+    }, {
+        { name = 'cmdline' },
+    })
 })
 
 -- LSP setup
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    --Enable completion triggered by <c-x><c-o>
+    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
 
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    buf_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+    buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
+    buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
-  -- Get signatures (and _only_ signatures) when in argument lists.
-  require "lsp_signature".on_attach({
-    doc_lines = 0,
-    handler_opts = {
-      border = "none"
-    },
-  })
+    -- Get signatures (and _only_ signatures) when in argument lists.
+    require "lsp_signature".on_attach({
+        doc_lines = 0,
+        handler_opts = {
+        border = "none"
+        },
+    })
 end
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -366,11 +423,11 @@ if vim.g.is_android == 0 then
     require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
 end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    signs = true,
-    update_in_insert = true,
-  }
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = true,
+        signs = true,
+        update_in_insert = true,
+    }
 )
 
 -- Indent
