@@ -392,4 +392,3 @@ require("better_escape").setup {
 }
 
 END
-

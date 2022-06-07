@@ -140,4 +140,3 @@ XF86Audio{Raise,Lower}Volume
 
 XF86AudioMute
     pamixer -t
-

@@ -22,4 +22,3 @@ export MAKEFLAGS="$procs"
 unset procs
 export _JAVA_AWT_WM_NONREPARENTING=1
 export PATH="$HOME/.local/bin:$CARGO_HOME/bin:$GOPATH/bin:$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin"
-

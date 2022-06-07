@@ -10,4 +10,3 @@ source "$HOME/.config/env"
 export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 source "$HOME/.config/aliasrc"
-

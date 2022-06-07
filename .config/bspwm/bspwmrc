@@ -47,4 +47,3 @@ setxkbmap -option 'grp:rctrl_toggle'
 setxkbmap -option 'ctrl:nocaps'
 numlockx on
 xsetroot -cursor_name left_ptr &
-

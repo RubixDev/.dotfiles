@@ -242,4 +242,3 @@ if [ "$is_desktop" = true ]; then
     install_file .icons/default/index.theme
     install_file .config/Kvantum/kvantum.kvconfig
 fi
-
