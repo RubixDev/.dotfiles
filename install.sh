@@ -200,6 +200,10 @@ fi
     git clone --depth=1 https://github.com/romkatv/powerlevel10k \
         "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/powerlevel10k"
 }
+[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/zish.zsh-theme" ] || {
+    curl https://raw.githubusercontent.com/RubixDev/zish/main/zish.zsh-theme -o \
+        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/zish.zsh-theme"
+}
 
 ########### dotfiles Installation ###########
 install_file () {
