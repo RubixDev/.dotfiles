@@ -24,21 +24,31 @@ promptn () {
 }
 
 [ "$(id -u)" -eq 0 ] && is_root=true
+command -v uname > /dev/null && [ "$(uname -o)" = "Android" ] && is_android=true
 
 # Check if ZDOTDIR is set to non-home path
 # shellcheck disable=SC2016
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] &&
-    ! grep -q 'export ZDOTDIR="$HOME/.config/zsh"' /etc/zsh/zshenv &&
-    prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' with sudo?"
+    ! (grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zsh/zshenv" ||
+        grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zshenv") &&
+    prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' globally?"
 then
-    [ -e /etc/zsh/zshenv ] || {
-        sudo mkdir -p /etc/zsh
-        sudo touch /etc/zsh/zshenv
+    [ "$is_android" = true ] || sudo=sudo
+    [ -e "$PREFIX/etc/zsh/zshenv" ] || {
+        $sudo mkdir -p "$PREFIX/etc/zsh"
+        $sudo touch "$PREFIX/etc/zsh/zshenv"
     }
-    # shellcheck disable=SC2016
-    echo 'export ZDOTDIR="$HOME/.config/zsh"' | sudo tee -a /etc/zsh/zshenv > /dev/null
+    [ -f "$PREFIX/etc/zshenv" ] && {
+        $sudo tee -a "$PREFIX/etc/zsh/zshenv" > /dev/null < "$PREFIX/etc/zshenv"
+        $sudo rm "$PREFIX/etc/zshenv"
+    }
+    [ -e "$PREFIX/etc/zshenv" ] && $sudo rm "$PREFIX/etc/zshenv"
+    $sudo ln -sr "$PREFIX/etc/zsh/zshenv" "$PREFIX/etc/zshenv"
+    echo 'export ZDOTDIR="$HOME/.config/zsh"' | $sudo tee -a "$PREFIX/etc/zsh/zshenv" > /dev/null
     export ZDOTDIR="$HOME/.config/zsh"
-elif grep -q 'export ZDOTDIR="$HOME/.config/zsh"' /etc/zsh/zshenv; then
+elif grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zsh/zshenv" ||
+        grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zshenv"
+then
     export ZDOTDIR="$HOME/.config/zsh"
 fi
 
@@ -155,7 +165,7 @@ install_debian () {
     fi
 }
 
-if command -v uname > /dev/null && [ "$(uname -o)" = "Android" ]; then
+if [ "$is_android" = true ]; then
     [ "$is_root" = true ] || install_android
 else
     . /etc/os-release
