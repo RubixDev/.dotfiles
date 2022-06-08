@@ -69,7 +69,22 @@ want_deps () {
 install_android () {
     want_deps || return
 
-    true # TODO
+    pkg update
+    pkg install ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
+        nodejs exa bat tmux || exit 2
+    cargo install proximity-sort || exit 2
+
+    if [ "$(basename "$SHELL")" != "zsh" ]; then
+        chsh -s zsh
+    fi
+
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+    if ! command -v pfetch > /dev/null; then
+        curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o "$PREFIX/bin/pfetch"
+        chmod +x "$PREFIX/bin/pfetch"
+    fi
 }
 
 install_arch () {
