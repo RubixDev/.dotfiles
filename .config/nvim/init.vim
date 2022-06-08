@@ -403,7 +403,6 @@ require('lspconfig').bashls.setup { on_attach = on_attach, capabilities = capabi
 require('lspconfig').dockerls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').golangci_lint_ls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').gopls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').pylsp.setup { on_attach = on_attach, capabilities = capabilities }
 if vim.g.is_android == 0 then
@@ -418,6 +417,7 @@ if vim.g.is_android == 0 then
     require('lspconfig').cssls.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').html.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').emmet_ls.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabilities }
 end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
