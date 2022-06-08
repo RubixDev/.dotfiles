@@ -93,7 +93,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git neovim-plug nodejs npm yarn exa bat tmux xclip || exit 2
+        shellcheck pfetch-git neovim-plug nodejs npm yarn exa bat tmux || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
 
@@ -107,7 +107,7 @@ install_arch () {
             ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git \
-            network-manager-applet xcolor maim xsct || exit 2
+            network-manager-applet xcolor maim xsct xclip || exit 2
         [ "$is_laptop" = "true" ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2; }
 
         # ----- KEYBOARD LAYOUT -----
