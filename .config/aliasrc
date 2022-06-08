@@ -49,6 +49,10 @@ upd () {
         # shellcheck disable=SC2046
         cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
     fi
+    if command -v godeb > /dev/null; then
+        [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | tail -n 1)" ] || \
+            godeb install "$(godeb list | tail -n 1)"
+    fi
     updaterc
     pwd="$(pwd)"
     for plugin in "$ZSH_CUSTOM"/plugins/*; do
