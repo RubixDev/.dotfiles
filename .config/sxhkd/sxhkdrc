@@ -10,10 +10,6 @@ super + Return
 super + @space
     alacritty --class='launcher,launcher' -e /usr/bin/sway-launcher-desktop
 
-# make sxhkd reload its configuration files:
-super + Escape
-    pkill -USR1 -x sxhkd
-
 #
 # bspwm hotkeys
 #
@@ -24,7 +20,9 @@ super + shift + q
 
 # restart bspwm
 super + shift + r
-    touch ~/.config/bspwm/is_reload && bspc wm -r
+    touch ~/.config/bspwm/is_reload && bspc wm -r; \
+    pkill -USR1 -x sxhkd
+
 
 # close and kill
 super + {_,shift + }q
