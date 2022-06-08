@@ -97,7 +97,7 @@ install_arch () {
             ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git \
-            network-manager-applet xcolor maim || exit 2
+            network-manager-applet xcolor maim xsct || exit 2
         [ "$is_laptop" = "true" ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2; }
 
         # ----- KEYBOARD LAYOUT -----

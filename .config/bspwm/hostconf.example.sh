@@ -13,3 +13,6 @@ xrandr --output DP-3 --mode 1920x1080 --rate 75 --primary --right-of HDMI-1
 #xsetwacom set 'Wacom Intuos BT S Pad pad' Button 2 'key +Control_L +Shift_L d'
 #xsetwacom set 'Wacom Intuos BT S Pad pad' Button 3 'key +Control_L minus'
 #xsetwacom set 'Wacom Intuos BT S Pad pad' Button 8 'key +Control_L +Shift_L equal'
+
+# Set color temperature with xsct
+#xsct 4000
