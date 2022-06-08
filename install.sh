@@ -71,7 +71,7 @@ install_android () {
 
     pkg update
     pkg install ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
-        nodejs exa bat tmux || exit 2
+        nodejs exa bat tmux lf || exit 2
     cargo install proximity-sort || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
@@ -108,7 +108,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch || exit 2
+        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
 
@@ -150,6 +150,18 @@ install_debian () {
 
     sudo apt update
     sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm || exit 2
+
+    command -v go > /dev/null || {
+        sudo apt install -y golang || exit 2
+        go get gopkg.in/niemeyer/godeb.v1/cmd/godeb || exit 2
+        sudo apt remove -y golang || exit 2
+        sudo apt autoremove -y || exit 2
+        godeb install "$(godeb list | tail -n 1)" || exit 2
+    }
+
+    command -v lf > /dev/null || {
+        env CGO_ENABLED=0 go install -ldflags="-s -w" github.com/gokcehan/lf@latest
+    }
 
     if ! command -v rustup > /dev/null; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
