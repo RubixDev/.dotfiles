@@ -10,6 +10,10 @@ super + Return
 super + @space
     alacritty --class='launcher,launcher' -e /usr/bin/sway-launcher-desktop
 
+# color picker
+super + shift + c
+    xcolor -s
+
 #
 # bspwm hotkeys
 #
@@ -22,7 +26,6 @@ super + shift + q
 super + shift + r
     touch ~/.config/bspwm/is_reload && bspc wm -r; \
     pkill -USR1 -x sxhkd
-
 
 # close and kill
 super + {_,shift + }q
