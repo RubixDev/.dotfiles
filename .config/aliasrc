@@ -43,8 +43,10 @@ upd () {
     else
         paru -Syu
     fi
-    # shellcheck disable=SC2046
-    cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+    if [ -n "$(cargo install --list)" ]; then
+        # shellcheck disable=SC2046
+        cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+    fi
     updaterc
     pwd="$(pwd)"
     for plugin in "$ZSH_CUSTOM"/plugins/*; do
