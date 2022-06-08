@@ -69,8 +69,8 @@ want_deps () {
 install_android () {
     want_deps || return
 
-    pkg update
-    pkg install ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
+    pkg update -y
+    pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
         nodejs exa bat tmux lf || exit 2
     cargo install proximity-sort || exit 2
 
