@@ -108,7 +108,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf || exit 2
+        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || exit 2
 
