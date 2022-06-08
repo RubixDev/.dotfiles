@@ -71,7 +71,7 @@ install_android () {
 
     pkg update -y
     pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
-        nodejs exa bat tmux lf || exit 2
+        nodejs exa bat tmux lf python golang || exit 2
     cargo install proximity-sort || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
