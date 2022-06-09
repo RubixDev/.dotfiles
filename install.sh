@@ -88,29 +88,28 @@ install_android () {
 }
 
 install_arch () {
-    if [ "$is_root" != "true" ] && prompt "Install desktop configurations?"; then
-        is_desktop=true
-        promptn "Install Laptop specific dependencies?" && is_laptop=true
-    fi
+    [ "$is_root" != true ] && prompt "Install desktop configurations?" && is_desktop=true
     want_deps || return
+    [ "$is_desktop" = true ] && promptn "Install Laptop specific dependencies?" && is_laptop=true
 
     if command -v paru > /dev/null; then
         aur=paru
     elif command -v yay > /dev/null; then
         aur=yay
-    else
+    elif [ "$is_root" != true ]; then
         git clone https://aur.archlinux.org/paru-bin.git
         cd paru-bin || exit 2
-        makepkg -si --noconfirm
+        makepkg -si --noconfirm || exit 2
         cd .. || exit 2
         rm -rf paru-bin
         aur=paru
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go || exit 2
+        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go \
+        || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    $aur -S --needed --noconfirm proximity-sort || exit 2
+    $aur -S --needed --noconfirm proximity-sort || [ "$is_root" = true ] || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
@@ -123,7 +122,7 @@ install_arch () {
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git \
             network-manager-applet xcolor maim xsct xclip yarn || exit 2
-        [ "$is_laptop" = "true" ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2; }
+        [ "$is_laptop" = true ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2; }
 
         # ----- KEYBOARD LAYOUT -----
         sudo bash -c "$(curl -sSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/us_de_layout/install.sh)"
