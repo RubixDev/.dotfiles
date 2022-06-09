@@ -324,6 +324,9 @@ let g:vim_svelte_plugin_use_sass=1
 " Enable type inlay hints in rust
 autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
 
+" Keybind to set markdown language to german
+nmap <Leader>ml :call append(line('0'), ['---', 'lang: de-DE', '---', ''])<CR>
+
 lua << END
 
 -- Completion
