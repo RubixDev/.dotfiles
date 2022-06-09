@@ -10,6 +10,7 @@ if command -v exa > /dev/null; then
 else
     alias l='ls -lAh --color=auto'
 fi
+alias li='pixterm ./*.*(png|jpg|jpeg|JPG|JPEG|PNG|webp|gif)'
 
 updaterc () {
     pwd="$(pwd)"
