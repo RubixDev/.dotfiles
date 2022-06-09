@@ -262,7 +262,6 @@ install_file .config/npm/npmrc
 install_file .config/python/pythonrc
 if [ "$is_desktop" = true ]; then
     install_file .config/alacritty/alacritty.yml
-    install_file .config/i3/config
     install_file .config/bspwm/bspwmrc
     install_file .config/sxhkd/sxhkdrc
     install_file .config/dunst/dunstrc
