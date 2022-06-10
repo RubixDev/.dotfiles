@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 alias tmux='tmux -2'
 alias cp='cp -iv'
@@ -10,7 +10,10 @@ if command -v exa > /dev/null; then
 else
     alias l='ls -lAh --color=auto'
 fi
-alias li='pixterm -f ./*.*(png|jpg|jpeg|JPG|JPEG|PNG|webp|gif)'
+
+li () {
+    pixterm -f "${1:-.}/"*.*(png|jpg|jpeg|JPG|JPEG|PNG|webp|gif)
+}
 
 updaterc () {
     pwd="$(pwd)"
