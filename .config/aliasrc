@@ -46,10 +46,14 @@ upd () {
     else
         paru -Syu
     fi
-    if [ -n "$(cargo install --list)" ]; then
-        # shellcheck disable=SC2046
-        cargo install $(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+
+    cargo_pkg_list=$(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+    if [ -n "$cargo_pkg_list" ]; then
+        # shellcheck disable=SC2086
+        cargo install $cargo_pkg_list
     fi
+    unset cargo_pkg_list
+
     if command -v godeb > /dev/null; then
         [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | tail -n 1)" ] || \
             godeb install "$(godeb list | tail -n 1)"
