@@ -72,7 +72,7 @@ install_android () {
     pkg update -y
     pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
         nodejs exa bat tmux lf python golang || exit 2
-    cargo install proximity-sort || exit 2
+    cargo install proximity-sort pixterm || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         chsh -s zsh
@@ -106,7 +106,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go \
+        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go pixterm-rust \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || [ "$is_root" = true ] || exit 2
@@ -121,7 +121,7 @@ install_arch () {
             ttf-meslo-nerd-font-powerlevel10k ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git \
-            network-manager-applet xcolor maim xsct xclip yarn || exit 2
+            network-manager-applet xcolor maim xsct xclip yarn rtkit lxqt-policykit || exit 2
         [ "$is_laptop" = true ] && { $aur -S --needed --noconfirm brightnessctl pamixer || exit 2; }
 
         # ----- KEYBOARD LAYOUT -----
@@ -168,7 +168,7 @@ install_debian () {
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    cargo install fd-find ripgrep proximity-sort onefetch || exit 2
+    cargo install fd-find ripgrep proximity-sort onefetch pixterm || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
