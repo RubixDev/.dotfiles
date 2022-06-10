@@ -107,6 +107,7 @@ install_arch () {
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
         shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go pixterm-rust \
+        autojump-rs \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || [ "$is_root" = true ] || exit 2
@@ -168,7 +169,7 @@ install_debian () {
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    cargo install fd-find ripgrep proximity-sort onefetch pixterm || exit 2
+    cargo install fd-find ripgrep proximity-sort onefetch pixterm autojump || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
