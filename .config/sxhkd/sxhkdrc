@@ -71,6 +71,10 @@ super + ctrl + {m,x,y,z}
 super + {_,shift + }{h,j,k,l}
     bspc node -{f,s} {west,south,north,east}
 
+# rotate split of current two nodes
+super + shift + i
+    bspc node @parent --rotate 90
+
 # focus the node for the given path jump
 super + {p,b,comma,period}
     bspc node -f @{parent,brother,first,second}
