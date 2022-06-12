@@ -28,9 +28,12 @@ command -v uname > /dev/null && [ "$(uname -o)" = "Android" ] && is_android=true
 
 # Check if ZDOTDIR is set to non-home path
 # shellcheck disable=SC2016
+(
+    grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zsh/zshenv" > /dev/null 2>&1 ||
+    grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zshenv" > /dev/null 2>&1
+) && set_in_file=true
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] &&
-    ! (grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zsh/zshenv" ||
-        grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zshenv") &&
+    [ "$set_in_file" != true ] &&
     prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' globally?"
 then
     [ "$is_android" = true ] || sudo=sudo
@@ -44,11 +47,10 @@ then
     }
     [ -e "$PREFIX/etc/zshenv" ] && $sudo rm "$PREFIX/etc/zshenv"
     $sudo ln -sr "$PREFIX/etc/zsh/zshenv" "$PREFIX/etc/zshenv"
+    # shellcheck disable=SC2016
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | $sudo tee -a "$PREFIX/etc/zsh/zshenv" > /dev/null
     export ZDOTDIR="$HOME/.config/zsh"
-elif grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zsh/zshenv" ||
-        grep -q 'export ZDOTDIR="$HOME/.config/zsh"' "$PREFIX/etc/zshenv"
-then
+elif [ "$set_in_file" = true ]; then
     export ZDOTDIR="$HOME/.config/zsh"
 fi
 
