@@ -38,6 +38,7 @@ editrc () {
 }
 
 upd () {
+    # Package manager
     pwd="$(pwd)"
     if [ "$(uname -o)" = "Android" ]; then
         pkg upgrade
@@ -50,21 +51,27 @@ upd () {
         paru -Syu
     fi
 
-    cargo_pkg_list=$(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
-    if [ -n "$cargo_pkg_list" ]; then
-        # shellcheck disable=SC2086
-        cargo install $cargo_pkg_list
+    # Cargo packages
+    cargo_pkg_list=()
+    while IFS='' read -r line; do cargo_pkg_list+=("$line"); done < <(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
+    if [ "${#cargo_pkg_list[@]}" -ne 0 ]; then
+        cargo install "${cargo_pkg_list[@]}"
     fi
     unset cargo_pkg_list
 
+    # Go on Debian
     if command -v godeb > /dev/null; then
         [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | tail -n 1)" ] || \
             godeb install "$(godeb list | tail -n 1)"
     fi
+
+    # dotfiles
     updaterc
+
+    # Oh-my-zsh plugins and themes
     pwd="$(pwd)"
-    for plugin in "$ZSH_CUSTOM"/plugins/*; do
-        cd "$plugin" || return 1
+    for d in "$ZSH_CUSTOM"/*/*; do
+        [ ! -d "$d" ] || cd "$d" || return 2
         git pull
     done
     cd "$pwd" || return 2
