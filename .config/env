@@ -20,7 +20,7 @@ alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 
 export EDITOR=nvim
 procs="$(nproc)"
-export MAKEFLAGS="$procs"
+export MAKEFLAGS="-j$procs"
 unset procs
 export _JAVA_AWT_WM_NONREPARENTING=1
 export PATH="$HOME/.local/bin:$CARGO_HOME/bin:$GOPATH/bin:$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools/bin"
