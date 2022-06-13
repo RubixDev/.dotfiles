@@ -55,8 +55,6 @@ elif [ "$set_in_file" = true ]; then
 fi
 
 . ./.config/env
-unset CARGO_TARGET_DIR
-unset GOPATH
 
 mkdir -p ~/.local/state/zsh
 mkdir -p ~/.local/state/bash
@@ -90,6 +88,8 @@ install_android () {
 }
 
 install_arch () {
+    unset CARGO_TARGET_DIR
+    unset GOPATH
     [ "$is_root" != true ] && prompt "Install desktop configurations?" && is_desktop=true
     want_deps || return
     [ "$is_desktop" = true ] && promptn "Install Laptop specific dependencies?" && is_laptop=true
