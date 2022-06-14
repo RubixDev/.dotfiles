@@ -252,6 +252,9 @@ noremap <leader>M :!make<CR>
 " Keymap for replacing up to next _ or -
 noremap <leader>m ct_
 
+" Delete, not cut
+nnoremap <leader>d "_d
+
 " Git
 nmap <leader>ga :Git add -p<CR>
 nmap <leader>gc :Git commit -v<CR>
