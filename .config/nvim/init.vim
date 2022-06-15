@@ -11,7 +11,6 @@ set nofoldenable
 set scrolloff=3 " Minimum lines to keep above and below cursor when scrolling
 set noshowmode " Do not display current mode because we have airline
 set undofile " Preserve undo history when exiting vim
-set spell " Enable spellcheck
 set signcolumn=yes " Always draw sign column. Prevent buffer moving when adding/deleting sign.
 set nocompatible " Required for polyglot
 " Return to last edit position when opening files (You want this!)
