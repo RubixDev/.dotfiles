@@ -59,6 +59,9 @@ upd () {
     fi
     unset cargo_pkg_list
 
+    # Rust toolchains
+    command -v rustup > /dev/null && rustup update
+
     # Go on Debian
     if command -v godeb > /dev/null; then
         [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | tail -n 1)" ] || \
