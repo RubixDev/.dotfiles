@@ -64,8 +64,8 @@ upd () {
 
     # Go on Debian
     if command -v godeb > /dev/null; then
-        [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | tail -n 1)" ] || \
-            godeb install "$(godeb list | tail -n 1)"
+        [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)" ] || \
+            godeb install "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)"
     fi
 
     # dotfiles
