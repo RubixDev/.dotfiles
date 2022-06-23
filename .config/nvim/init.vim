@@ -253,6 +253,8 @@ noremap <leader>m ct_
 
 " Delete, not cut
 nnoremap <leader>d "_d
+nnoremap <leader>c "_c
+nnoremap <leader>x "_x
 
 " Git
 nmap <leader>ga :Git add -p<CR>
