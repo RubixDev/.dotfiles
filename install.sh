@@ -91,7 +91,7 @@ install_android () {
         platform=aarch64-linux-android
         dir=pixfetch-$version-$platform
 
-        curl -o $dir.tar.gz https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
+        curl -LO https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
         tar -xvf $dir.tar.gz
 
         install -Dm755 $dir/pixfetch "$PREFIX/usr/bin/pixfetch"
@@ -212,7 +212,7 @@ install_debian () {
         platform=x86_64-unknown-linux-musl
         dir=pixfetch-$version-$platform
 
-        curl -o $dir.tar.gz https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
+        curl -LO https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
         tar -xvf $dir.tar.gz
 
         sudo install -Dm755 $dir/pixfetch /usr/bin/pixfetch
