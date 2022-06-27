@@ -85,6 +85,26 @@ install_android () {
         curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o "$PREFIX/bin/pfetch"
         chmod +x "$PREFIX/bin/pfetch"
     fi
+
+    if ! command -v pixfetch > /dev/null; then
+        version=1.0.0
+        platform=aarch64-linux-android
+        dir=pixfetch-$version-$platform
+
+        curl -O https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
+        tar -xvf $dir.tar.gz
+
+        install -Dm755 $dir/pixfetch "$PREFIX/usr/bin/pixfetch"
+        install -Dm644 $dir/README.md "$PREFIX/usr/share/doc/pixfetch/README.md"
+        install -Dm644 $dir/LICENSE "$PREFIX/usr/share/licenses/pixfetch/LICENSE"
+        install -Dm644 $dir/doc/pixfetch.1.gz "$PREFIX/usr/share/man/man1/pixfetch.1.gz"
+        install -Dm644 $dir/completion/_pixfetch "$PREFIX/usr/share/zsh/site-functions/_pixfetch"
+        install -Dm644 $dir/completion/pixfetch.bash "$PREFIX/usr/share/bash-completion/completions/pixfetch"
+        install -Dm644 $dir/completion/pixfetch.fish "$PREFIX/usr/share/fish/vendor_completions.d/pixfetch.fish"
+
+        rm -r $dir $dir.tar.gz
+        unset -v version platform dir
+    fi
 }
 
 install_arch () {
@@ -109,7 +129,7 @@ install_arch () {
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
         shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go pixterm-rust \
-        autojump-rs \
+        autojump-rs pixfetch \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort || [ "$is_root" = true ] || exit 2
@@ -187,6 +207,26 @@ install_debian () {
         sudo chmod +x /usr/local/bin/pfetch
     fi
 
+    if ! command -v pixfetch > /dev/null; then
+        version=1.0.0
+        platform=x86_64-unknown-linux-musl
+        dir=pixfetch-$version-$platform
+
+        curl -O https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
+        tar -xvf $dir.tar.gz
+
+        sudo install -Dm755 $dir/pixfetch /usr/bin/pixfetch
+        sudo install -Dm644 $dir/README.md /usr/share/doc/pixfetch/README.md
+        sudo install -Dm644 $dir/LICENSE /usr/share/licenses/pixfetch/LICENSE
+        sudo install -Dm644 $dir/doc/pixfetch.1.gz /usr/share/man/man1/pixfetch.1.gz
+        sudo install -Dm644 $dir/completion/_pixfetch /usr/share/zsh/site-functions/_pixfetch
+        sudo install -Dm644 $dir/completion/pixfetch.bash /usr/share/bash-completion/completions/pixfetch
+        sudo install -Dm644 $dir/completion/pixfetch.fish /usr/share/fish/vendor_completions.d/pixfetch.fish
+
+        rm -r $dir $dir.tar.gz
+        unset -v version platform dir
+    fi
+
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
     fi
@@ -262,6 +302,7 @@ install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf
 install_file .config/npm/npmrc
 install_file .config/python/pythonrc
+install_file .config/pixfetch/config.toml
 if [ "$is_desktop" = true ]; then
     install_file .config/alacritty/alacritty.yml
     install_file .config/bspwm/bspwmrc
