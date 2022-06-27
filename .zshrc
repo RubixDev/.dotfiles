@@ -65,6 +65,9 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 setopt extendedglob
 source ~/.config/aliasrc
 
+bindkey -v
+bindkey -s '^o' '^ulfcd\n'
+
 echo
 pfetch
 
