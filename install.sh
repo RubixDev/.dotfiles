@@ -98,7 +98,7 @@ install_android () {
         install -Dm644 $dir/README.md "$PREFIX/share/doc/pixfetch/README.md"
         install -Dm644 $dir/LICENSE "$PREFIX/share/licenses/pixfetch/LICENSE"
         install -Dm644 $dir/doc/pixfetch.1.gz "$PREFIX/share/man/man1/pixfetch.1.gz"
-        install -Dm644 $dir/completion/_pixfetch "$PREFIX/share/zsh/site-functions/_pixfetch"
+        install -Dm644 $dir/completion/_pixfetch "$PREFIX/share/zsh/vendor-completions/_pixfetch"
         install -Dm644 $dir/completion/pixfetch.bash "$PREFIX/share/bash-completion/completions/pixfetch"
         install -Dm644 $dir/completion/pixfetch.fish "$PREFIX/share/fish/vendor_completions.d/pixfetch.fish"
 
