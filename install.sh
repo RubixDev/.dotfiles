@@ -94,13 +94,13 @@ install_android () {
         curl -LO https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
         tar -xvf $dir.tar.gz
 
-        install -Dm755 $dir/pixfetch "$PREFIX/usr/bin/pixfetch"
-        install -Dm644 $dir/README.md "$PREFIX/usr/share/doc/pixfetch/README.md"
-        install -Dm644 $dir/LICENSE "$PREFIX/usr/share/licenses/pixfetch/LICENSE"
-        install -Dm644 $dir/doc/pixfetch.1.gz "$PREFIX/usr/share/man/man1/pixfetch.1.gz"
-        install -Dm644 $dir/completion/_pixfetch "$PREFIX/usr/share/zsh/site-functions/_pixfetch"
-        install -Dm644 $dir/completion/pixfetch.bash "$PREFIX/usr/share/bash-completion/completions/pixfetch"
-        install -Dm644 $dir/completion/pixfetch.fish "$PREFIX/usr/share/fish/vendor_completions.d/pixfetch.fish"
+        install -Dm755 $dir/pixfetch "$PREFIX/bin/pixfetch"
+        install -Dm644 $dir/README.md "$PREFIX/share/doc/pixfetch/README.md"
+        install -Dm644 $dir/LICENSE "$PREFIX/share/licenses/pixfetch/LICENSE"
+        install -Dm644 $dir/doc/pixfetch.1.gz "$PREFIX/share/man/man1/pixfetch.1.gz"
+        install -Dm644 $dir/completion/_pixfetch "$PREFIX/share/zsh/site-functions/_pixfetch"
+        install -Dm644 $dir/completion/pixfetch.bash "$PREFIX/share/bash-completion/completions/pixfetch"
+        install -Dm644 $dir/completion/pixfetch.fish "$PREFIX/share/fish/vendor_completions.d/pixfetch.fish"
 
         rm -r $dir $dir.tar.gz
         unset -v version platform dir
