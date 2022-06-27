@@ -41,6 +41,7 @@ plugins=(
 
 [[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 source $ZSH/oh-my-zsh.sh
+_comp_options+=(globdots) # Show hidden files in tab completion
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
