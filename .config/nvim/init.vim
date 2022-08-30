@@ -299,7 +299,7 @@ command! -bang -nargs=* Rg
 
 function! s:list_cmd()
     let base = fnamemodify(expand('%'), ':h:.:S')
-    let fd = 'fd -tf -LHE .git -E "*.png" -E "*.jpg" -E "*.jpeg" -E "*.gif" -E "*.xcf" -E "*.zip" -E "*.ttf" -E "*.import"'
+    let fd = 'fd -tf -LHE .git -E "*.png" -E "*.jpg" -E "*.jpeg" -E "*.gif" -E "*.xcf" -E "*.zip" -E "*.ttf" -E "*.import" -E node_modules'
     return base == '.' ? fd : printf('%s | proximity-sort %s', fd, shellescape(expand('%')))
 endfunction
 
