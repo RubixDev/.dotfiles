@@ -52,11 +52,12 @@ Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'godlygeek/tabular'
 Plug 'preservim/vim-markdown'
-Plug 'leafOfTree/vim-svelte-plugin'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'evanleck/vim-svelte'
+Plug 'averms/ebnf-vim'
 
 " LSP setup
 Plug 'neovim/nvim-lspconfig'
@@ -322,8 +323,10 @@ let g:context_filetype#filetypes.svelte =
 let g:ft = ''
 
 " Svelte ts and scss syntax highlighting
-let g:vim_svelte_plugin_use_typescript=1
-let g:vim_svelte_plugin_use_sass=1
+let g:svelte_preprocessor_tags = [
+\ { 'name': 'ts', 'tag': 'script', 'as': 'typescript' }
+\ ]
+let g:svelte_preprocessors = ['ts', 'scss']
 
 " Enable type inlay hints in rust
 autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
