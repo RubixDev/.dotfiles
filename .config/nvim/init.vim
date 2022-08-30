@@ -65,6 +65,9 @@ Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'habamax/vim-godot'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'MunifTanjim/prettier.nvim'
 
 " Completion
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -428,6 +431,26 @@ if vim.g.is_android == 0 then
     require('lspconfig').html.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').emmet_ls.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabilities }
+    require('null-ls').setup({ on_attach = on_attach, capabilities = capabilities })
+    require('prettier').setup({
+        bin = 'prettier',
+        filetypes = {
+            "css",
+            "scss",
+            "html",
+            "javascript",
+            "typescript",
+            "json",
+            "json5",
+            "svelte",
+        },
+
+        arrow_parens = "avoid",
+        semi = false,
+        single_quote = true,
+        tab_width = 4,
+        trailing_comma = "all",
+    })
 end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
