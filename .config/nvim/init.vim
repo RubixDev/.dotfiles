@@ -337,6 +337,9 @@ autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ on
 " Keybind to set markdown language to german
 nmap <Leader>ml :call append(line('0'), ['---', 'lang: de-DE', '---', ''])<CR>
 
+" Map o to A<CR> in markdown
+autocmd FileType markdown nmap <buffer> o A<CR>
+
 lua << END
 
 -- Completion
