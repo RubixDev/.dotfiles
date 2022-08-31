@@ -271,6 +271,13 @@ nmap <leader>gl :Git pull<CR>
 map <Leader>mp :MarkdownPreview<CR>
 map <Leader>mP :MarkdownPreviewStop<CR>
 map <Leader>mf :TableFormat<CR>
+nmap <Leader>mw :set invwrap<CR>
+" Keybind to set markdown language to german
+nmap <Leader>ml :call append(line('0'), ['---', 'lang: de-DE', '---', ''])<CR>
+" Map o to A<CR> in markdown
+autocmd FileType markdown nmap <buffer> o A<CR>
+" Default to wrapping
+autocmd FileType markdown set wrap
 
 " Insert line above/below cursor without insert mode
 map <Leader>N :<C-U>call append(line(".")-1, repeat([''], v:count1))<CR>
@@ -334,12 +341,6 @@ let g:svelte_preprocessors = ['ts', 'scss']
 
 " Enable type inlay hints in rust
 autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
-
-" Keybind to set markdown language to german
-nmap <Leader>ml :call append(line('0'), ['---', 'lang: de-DE', '---', ''])<CR>
-
-" Map o to A<CR> in markdown
-autocmd FileType markdown nmap <buffer> o A<CR>
 
 """""""""
 " LaTeX "
