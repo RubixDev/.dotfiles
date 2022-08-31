@@ -5,6 +5,10 @@
     exit 1
 }
 
+if [ "$1" = "--only-link" ]; then
+    only_link="true"
+fi
+
 prompt () {
     printf '%s [Y/n] ' "$1"
     read -r choice
@@ -34,6 +38,7 @@ command -v uname > /dev/null && [ "$(uname -o)" = "Android" ] && is_android=true
 ) && set_in_file=true
 if [ "${ZDOTDIR:-$HOME}" = "$HOME" ] &&
     [ "$set_in_file" != true ] &&
+    [ "$only_link" != true ] &&
     prompt "Your ZSH config folder is set to HOME. Do you want to set it to '~/.config/zsh' globally?"
 then
     [ "$is_android" = true ] || sudo=sudo
@@ -50,7 +55,7 @@ then
     # shellcheck disable=SC2016
     echo 'export ZDOTDIR="$HOME/.config/zsh"' | $sudo tee -a "$PREFIX/etc/zsh/zshenv" > /dev/null
     export ZDOTDIR="$HOME/.config/zsh"
-elif [ "$set_in_file" = true ]; then
+elif [ "$set_in_file" = true ] && [ "$only_link" != true ]; then
     export ZDOTDIR="$HOME/.config/zsh"
 fi
 
@@ -62,6 +67,7 @@ mkdir -p "${ZDOTDIR:-$HOME}"
 
 ########## Dependency Installation ##########
 want_deps () {
+    [ "$only_link" != true ] || return 0
     prompt "Do you want to automatically install all dependencies?"
     return $?
 }
@@ -108,6 +114,7 @@ install_android () {
 }
 
 install_arch () {
+    [ "$only_link" = true ] && return
     unset CARGO_TARGET_DIR
     unset GOPATH
     [ "$is_root" != true ] && prompt "Install desktop configurations?" && is_desktop=true

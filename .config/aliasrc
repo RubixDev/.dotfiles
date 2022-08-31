@@ -19,7 +19,7 @@ updaterc () {
         return 2
     }
     git pull
-    ./install.sh
+    ./install.sh --only-link
     cd "$pwd" || return 2
     # Reload shell
     exec "$SHELL"
