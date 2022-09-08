@@ -138,7 +138,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git neovim-plug nodejs npm exa bat tmux onefetch lf go \
+        shellcheck pfetch-git nvim-packer-git nodejs npm exa bat tmux onefetch lf go \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort pixterm-rust autojump-rs pixfetch \
@@ -209,8 +209,8 @@ install_debian () {
         rm ./nvim-linux64.deb
     fi
 
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    git clone --depth 1 https://github.com/wbthomason/packer.nvim \
+        "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start/packer.nvim"
 
     if ! command -v pfetch > /dev/null; then
         sudo curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o /usr/local/bin/pfetch
@@ -299,6 +299,7 @@ install_file .config/env
 install_file .config/aliasrc
 install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
+install_file .config/nvim/lua/plugins.lua
 install_file .config/paru/paru.conf
 install_file .config/npm/npmrc
 install_file .config/python/pythonrc
