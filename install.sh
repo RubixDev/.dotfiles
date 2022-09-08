@@ -309,6 +309,7 @@ install_file .config/nvim/init.vim
 install_file .config/paru/paru.conf
 install_file .config/npm/npmrc
 install_file .config/python/pythonrc
+install_file .config/bpython/config
 install_file .config/pixfetch/config.toml
 if [ "$is_desktop" = true ]; then
     install_file .config/alacritty/alacritty.yml
