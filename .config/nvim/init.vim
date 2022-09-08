@@ -40,6 +40,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'wellle/context.vim'
 
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
