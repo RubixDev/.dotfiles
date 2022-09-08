@@ -258,26 +258,16 @@ fi
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || exit 2
     rm ~/.zshrc
 }
-[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions" ] || {
-    git clone https://github.com/zsh-users/zsh-autosuggestions \
-        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-autosuggestions"
+install_zsh_custom () {
+    [ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/$1/$3" ] || {
+        git clone --depth=1 "https://github.com/$2/$3" \
+            "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/$1/$3"
+    }
 }
-[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-history-substring-search" ] || {
-    git clone https://github.com/zsh-users/zsh-history-substring-search \
-        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-history-substring-search"
-}
-[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-syntax-highlighting" ] || {
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting \
-        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-syntax-highlighting"
-}
-[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-vi-mode" ] || {
-    git clone https://github.com/jeffreytse/zsh-vi-mode \
-        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/plugins/zsh-vi-mode"
-}
-[ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/powerlevel10k" ] || {
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k \
-        "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/powerlevel10k"
-}
+install_zsh_custom plugins zsh-users zsh-autosuggestions
+install_zsh_custom plugins zsh-users zsh-syntax-highlighting
+install_zsh_custom plugins jeffreytse zsh-vi-mode
+install_zsh_custom themes romkatv powerlevel10k
 [ -e "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/zish.zsh-theme" ] || {
     curl https://raw.githubusercontent.com/RubixDev/zish/main/zish.zsh-theme -o \
         "${ZSH_CUSTOM:-${ZSH:-$HOME/.oh-my-zsh}/custom}/themes/zish.zsh-theme"
