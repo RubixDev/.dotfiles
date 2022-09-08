@@ -29,9 +29,7 @@ editrc () {
         echo 'No .dotfiles folder at ~/.dotfiles'
         return 2
     }
-    editor="$EDITOR"
-    [ -n "$EDITOR" ] || editor=vim
-    $editor ~/.dotfiles/.zshrc
+    ${EDITOR:-nvim} ~/.dotfiles/.zshrc
 }
 
 upd () {
