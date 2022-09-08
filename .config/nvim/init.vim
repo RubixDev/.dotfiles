@@ -463,14 +463,14 @@ if vim.g.is_android == 0 then
     require('lspconfig').clangd.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').ltex.setup { on_attach = on_attach, capabilities = capabilities } -- or texlab
-    require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities }
-    require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities }
-    require('lspconfig').cssls.setup { on_attach = on_attach, capabilities = capabilities }
-    require('lspconfig').html.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities, init_options = { provideFormatter = false } }
+    require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities, init_options = { provideFormatter = false } }
+    require('lspconfig').cssls.setup { on_attach = on_attach, capabilities = capabilities, init_options = { provideFormatter = false } }
+    require('lspconfig').html.setup { on_attach = on_attach, capabilities = capabilities, init_options = { provideFormatter = false } }
     require('lspconfig').emmet_ls.setup { on_attach = on_attach, capabilities = capabilities }
-    require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabilities }
-    require('null-ls').setup({ on_attach = on_attach, capabilities = capabilities })
-    require('prettier').setup({
+    require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabilities, init_options = { provideFormatter = false } }
+    require('null-ls').setup { on_attach = on_attach, capabilities = capabilities }
+    require('prettier').setup {
         bin = 'prettier',
         filetypes = {
             "css",
@@ -483,13 +483,20 @@ if vim.g.is_android == 0 then
             "svelte",
         },
 
+        -- Do not restrict prettier to npm projects
+        ['null-ls'] = {
+            condition = function() return true end,
+        },
+
+        -- Default prettier settings
         arrow_parens = "avoid",
         semi = false,
         single_quote = true,
         tab_width = 4,
         trailing_comma = "all",
-    })
+    }
 end
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = true,
