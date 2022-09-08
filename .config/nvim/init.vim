@@ -8,7 +8,7 @@ set linebreak
 set showbreak=↪
 set nowrap
 set nofoldenable
-set scrolloff=3 " Minimum lines to keep above and below cursor when scrolling
+set scrolloff=8 " Minimum lines to keep above and below cursor when scrolling
 set noshowmode " Do not display current mode because we have airline
 set undofile " Preserve undo history when exiting vim
 set signcolumn=yes " Always draw sign column. Prevent buffer moving when adding/deleting sign.
