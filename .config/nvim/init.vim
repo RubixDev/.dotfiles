@@ -451,12 +451,12 @@ require('nvim-lsp-installer').setup { on_attach = on_attach, automatic_installat
 require('lspconfig').rust_analyzer.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').vimls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').bashls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').dockerls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').golangci_lint_ls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').gopls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').pylsp.setup { on_attach = on_attach, capabilities = capabilities }
 if vim.g.is_android == 0 then
+    require('lspconfig').dockerls.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').golangci_lint_ls.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').gopls.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').jdtls.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').kotlin_language_server.setup { on_attach = on_attach, capabilities = capabilities }
     require('lspconfig').gdscript.setup { on_attach = on_attach, capabilities = capabilities }
