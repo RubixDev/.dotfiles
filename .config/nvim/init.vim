@@ -494,14 +494,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     }
 )
 
--- Indent
-vim.opt.list = true
--- vim.opt.listchars:append("space:⋅")
-require('indent_blankline').setup {
-    show_current_context = true,
-    show_current_context_start = true,
-}
-
 -- Better escape
 require("better_escape").setup {
     mapping = {"jk", "jj"},
