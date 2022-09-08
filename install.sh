@@ -5,9 +5,12 @@
     exit 1
 }
 
-if [ "$1" = "--only-link" ]; then
-    only_link="true"
-fi
+while [ $# -ne 0 ]; do
+    if [ "$1" = "--only-link" ]; then
+        only_link="true"
+    fi
+    shift
+done
 
 prompt () {
     printf '%s [Y/n] ' "$1"
