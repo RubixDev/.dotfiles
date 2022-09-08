@@ -185,6 +185,7 @@ set shiftwidth=4    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
 set shiftround
 autocmd FileType markdown setlocal ts=2 sts=2 sw=2
+autocmd FileType toml setlocal ts=2 sts=2 sw=2
 autocmd FileType json setlocal ts=2 sts=2 sw=2
 autocmd FileType make setlocal ts=4 sts=0 sw=4 noexpandtab
 
