@@ -1,0 +1,22 @@
+/**
+ * @name SimplyTransparent
+ * @version 1.0.0
+ * @author RubixDev
+ * @authorLink https://rubixdev.de
+ * @description A simple Discord theme with a transparent background and two font changes
+ * @source https://github.com/RubixDev/SimplyTransparent
+*/
+@import url(https://rubixdev.github.io/SimplyTransparent/SimplyTransparent-source.theme.css);
+
+/* Uncomment the next line if you don't have the fonts locally */
+/*@import url(https://fonts.googleapis.com/css?family=Righteous|JetBrains+Mono);*/
+
+:root {
+    --background: transparent;
+    --chat-transparency: 0.8;
+    --sides-transparency: 0.9;
+    --sides-blur: 5px;
+
+    --font-code: 'JetBrains Mono';
+    --font-header: 'Righteous';
+}

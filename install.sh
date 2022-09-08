@@ -316,6 +316,7 @@ if [ "$is_desktop" = true ]; then
     install_file .config/qt5ct/qt5ct.conf
     install_file .icons/default/index.theme
     install_file .config/Kvantum/kvantum.kvconfig
+    install_file .config/BetterDiscord/themes/SimplyTransparent.theme.css
 
     # XDG-MIME default apps
     install_file .config/mimeapps.list
