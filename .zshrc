@@ -39,7 +39,9 @@ plugins=(
   zsh-vi-mode
 )
 
-[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
+# autojump
+[[ -s /usr/share/autojump/autojump.zsh ]] && source /usr/share/autojump/autojump.zsh
+
 source $ZSH/oh-my-zsh.sh
 _comp_options+=(globdots) # Show hidden files in tab completion
 zstyle ':completion:*' special-dirs false # but not . and ..

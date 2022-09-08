@@ -11,3 +11,6 @@ export HISTFILE="$XDG_STATE_HOME/bash/history"
 
 shopt -s extglob
 source "$HOME/.config/aliasrc"
+
+# autojump
+[[ -s /usr/share/autojump/autojump.bash ]] && source /usr/share/autojump/autojump.bash
