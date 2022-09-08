@@ -13,6 +13,7 @@ set noshowmode " Do not display current mode because we have airline
 set undofile " Preserve undo history when exiting vim
 set signcolumn=yes " Always draw sign column. Prevent buffer moving when adding/deleting sign.
 set nocompatible " Required for polyglot
+set mouse=a
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
