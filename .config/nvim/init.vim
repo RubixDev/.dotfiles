@@ -261,6 +261,8 @@ noremap <leader>m ct_
 nnoremap <leader>d "_d
 nnoremap <leader>c "_c
 nnoremap <leader>x "_x
+nnoremap <leader>D "_D
+nnoremap <leader>C "_C
 
 " Git
 nmap <leader>ga :Git add -p<CR>
