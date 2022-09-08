@@ -1,0 +1,9 @@
+[Default Applications]
+text/*=nvim.desktop
+text/xml=nvim.desktop
+text/plain=nvim.desktop
+application/json=nvim.desktop
+
+inode/directory=lf.desktop
+image/*=nsxiv.desktop
+application/pdf=zathura.desktop

@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=lf
+Exec=alacritty -e lf
+Type=Application

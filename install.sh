@@ -316,4 +316,11 @@ if [ "$is_desktop" = true ]; then
     install_file .config/qt5ct/qt5ct.conf
     install_file .icons/default/index.theme
     install_file .config/Kvantum/kvantum.kvconfig
+
+    # XDG-MIME default apps
+    install_file .config/mimeapps.list
+    install_file .local/share/applications/lf.desktop
+    install_file .local/share/applications/nsxiv.desktop
+    install_file .local/share/applications/nvim.desktop
+    install_file .local/share/applications/zathura.desktop
 fi
