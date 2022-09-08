@@ -193,7 +193,6 @@ autocmd FileType make setlocal ts=4 sts=0 sw=4 noexpandtab
 set incsearch
 set ignorecase
 set smartcase
-set gdefault
 
 " Replace all with S
 nnoremap S :%s//g<left><left>
