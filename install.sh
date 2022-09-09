@@ -138,7 +138,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git nvim-packer-git nodejs npm exa bat tmux onefetch lf go \
+        shellcheck pfetch-git nodejs npm exa bat tmux onefetch lf go \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm proximity-sort pixterm-rust autojump-rs pixfetch \
@@ -208,9 +208,6 @@ install_debian () {
         sudo apt install ./nvim-linux64.deb
         rm ./nvim-linux64.deb
     fi
-
-    git clone --depth 1 https://github.com/wbthomason/packer.nvim \
-        "${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/pack/packer/start/packer.nvim"
 
     if ! command -v pfetch > /dev/null; then
         sudo curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o /usr/local/bin/pfetch

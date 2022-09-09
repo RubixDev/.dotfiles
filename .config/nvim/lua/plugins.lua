@@ -1,3 +1,16 @@
+local ensure_packer = function()
+    local fn = vim.fn
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
+end
+
+local packer_bootstrap = ensure_packer()
+
 vim.cmd([[
   augroup packer_user_config
     autocmd!
@@ -5,7 +18,10 @@ vim.cmd([[
   augroup end
 ]])
 
-return require('packer').startup(function (use)
+return require('packer').startup(function(use)
+    -- Packer
+    use 'wbthomason/packer.nvim'
+
     -- Theme
     use 'rakr/vim-one'
 
@@ -28,7 +44,7 @@ return require('packer').startup(function (use)
     use 'lukas-reineke/indent-blankline.nvim'
     use {
         'wellle/context.vim',
-        config = function ()
+        config = function()
             vim.g.context_add_mappings = false
             vim.g.context_highlight_border = '<hide>'
             vim.g.context_highlight_normal = 'PMenu'
@@ -85,4 +101,9 @@ return require('packer').startup(function (use)
 
     -- Markdown preview
     use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    if packer_bootstrap then
+        require('packer').sync()
+    end
 end)
