@@ -30,6 +30,8 @@ return require('packer').startup(function (use)
         'wellle/context.vim',
         config = function ()
             vim.g.context_add_mappings = false
+            vim.g.context_highlight_border = '<hide>'
+            vim.g.context_highlight_normal = 'PMenu'
         end,
     }
 
