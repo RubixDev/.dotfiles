@@ -4,7 +4,6 @@ return require('packer').startup(function (use)
 
     -- VIM enhancements
     use 'editorconfig/editorconfig-vim'
-    use 'max397574/better-escape.nvim'
     use 'andymass/vim-matchup'
     use 'jiangmiao/auto-pairs'
     use 'tpope/vim-abolish'
