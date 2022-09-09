@@ -375,7 +375,17 @@ require('nvim-lsp-installer').setup { on_attach = on_attach, automatic_installat
 require('lspconfig').rust_analyzer.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').vimls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').bashls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = capabilities }
+require('lspconfig').sumneko_lua.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+}
 require('lspconfig').pylsp.setup { on_attach = on_attach, capabilities = capabilities }
 if vim.g.is_android == 0 then
     require('lspconfig').dockerls.setup { on_attach = on_attach, capabilities = capabilities }
