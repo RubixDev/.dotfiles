@@ -181,7 +181,7 @@ install_debian () {
     want_deps || return
 
     sudo apt update
-    sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm autojump || exit 2
+    sudo apt install -y zsh fzf git curl wget shellcheck nodejs npm autojump python3-venv || exit 2
 
     command -v go > /dev/null || {
         sudo apt install -y golang || exit 2
