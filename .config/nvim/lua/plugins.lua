@@ -20,7 +20,12 @@ return require('packer').startup(function (use)
     use 'vim-airline/vim-airline-themes'
     use 'kyazdani42/nvim-web-devicons'
     use 'lukas-reineke/indent-blankline.nvim'
-    use 'wellle/context.vim'
+    use {
+        'wellle/context.vim',
+        config = function ()
+            vim.g.context_add_mappings = false
+        end,
+    }
 
     -- Fuzzy Finder
     use 'airblade/vim-rooter'
