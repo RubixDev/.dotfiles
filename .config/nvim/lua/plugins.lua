@@ -60,7 +60,7 @@ return require('packer').startup(function(use)
     use 'cespare/vim-toml'
     use 'stephpy/vim-yaml'
     use 'rust-lang/rust.vim'
-    use { 'fatih/vim-go', run = ':GoUpdateBinaries' }
+    use { 'fatih/vim-go', run = ':GoUpdateBinaries', disable = vim.g.is_android == 1 }
     use 'godlygeek/tabular'
     use 'preservim/vim-markdown'
     use 'pangloss/vim-javascript'
@@ -69,14 +69,14 @@ return require('packer').startup(function(use)
     use 'sheerun/vim-polyglot'
     use 'evanleck/vim-svelte'
     use 'averms/ebnf-vim'
-    use 'frabjous/knap'
+    use { 'frabjous/knap', disable = vim.g.is_android == 1 }
 
     -- LSP setup
     use 'neovim/nvim-lspconfig'
     use 'williamboman/nvim-lsp-installer'
     use 'nvim-lua/lsp_extensions.nvim'
     use 'ray-x/lsp_signature.nvim'
-    use 'habamax/vim-godot'
+    use { 'habamax/vim-godot', disable = vim.g.is_android == 1 }
     use 'nvim-lua/plenary.nvim'
     use 'jose-elias-alvarez/null-ls.nvim'
     use 'MunifTanjim/prettier.nvim'
@@ -121,7 +121,7 @@ return require('packer').startup(function(use)
     end }
 
     -- Discord presence
-    use 'andweeb/presence.nvim'
+    use { 'andweeb/presence.nvim', disable = vim.g.is_android == 1 }
 
     -- Only because nvim-cmp _requires_ snippets
     use 'hrsh7th/cmp-vsnip'
@@ -132,7 +132,7 @@ return require('packer').startup(function(use)
     use 'airblade/vim-gitgutter'
 
     -- Markdown preview
-    use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install' }
+    use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', disable = vim.g.is_android == 1 }
 
     -- Automatically set up your configuration after cloning packer.nvim
     if packer_bootstrap then
