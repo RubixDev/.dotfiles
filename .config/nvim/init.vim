@@ -302,40 +302,6 @@ let g:knap_settings = {
 \ }
 
 lua << END
-
--- Completion
-local cmp = require'cmp'
-cmp.setup({
-    snippet = {
-        -- REQUIRED by nvim-cmp. get rid of it once we can
-        expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-        end,
-    },
-    mapping = cmp.mapping.preset.insert({
-        -- Tab immediately completes. C-n/C-p to select.
-        ['<Tab>'] = cmp.mapping.confirm({ select = true })
-    }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-    }, {
-        { name = 'path' },
-    }),
-    experimental = {
-        ghost_text = true,
-    },
-})
-
--- Enable completing paths in :
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' },
-    }, {
-        { name = 'cmdline' },
-    })
-})
-
 -- LSP setup
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
