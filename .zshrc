@@ -49,9 +49,15 @@ zstyle ':completion:*' special-dirs false # but not . and ..
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
-# TODO: fix this
+# Ctrl+K for escape
 ZVM_VI_ESCAPE_BINDKEY='^K'
 ZVM_VI_INSERT_ESCAPE_BINDKEY='^K'
+ZVM_VI_VISUAL_ESCAPE_BINDKEY='^K'
+ZVM_VI_OPPEND_ESCAPE_BINDKEY='^K'
+
+# Other Vim keybinds
+bindkey -a -s 'H' '^'
+bindkey -a -s 'L' '$'
 
 ZSH_HIGHLIGHT_STYLES[arg0]=fg=4
 ZSH_HIGHLIGHT_STYLES[command]=fg=4
