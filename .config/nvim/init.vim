@@ -153,16 +153,18 @@ map L $
 nnoremap ; :
 
 " No arrow keys --- force yourself to use the home row
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+if g:is_android == 0
+    nnoremap <up> <nop>
+    nnoremap <down> <nop>
+    inoremap <up> <nop>
+    inoremap <down> <nop>
+    inoremap <left> <nop>
+    inoremap <right> <nop>
 
-" Left and right can switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
+    " Left and right can switch buffers
+    nnoremap <left> :bp<CR>
+    nnoremap <right> :bn<CR>
+endif
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
