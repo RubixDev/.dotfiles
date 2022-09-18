@@ -76,6 +76,9 @@ upd () {
 
     # Neovim plugins
     nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
+    # Flatpaks
+    command -v flatpak && flatpak update
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
