@@ -81,7 +81,7 @@ install_android () {
     pkg update -y
     pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
         nodejs exa bat tmux lf python || exit 2
-    cargo install proximity-sort pixterm || exit 2
+    cargo install pixterm || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         chsh -s zsh
@@ -141,7 +141,7 @@ install_arch () {
         shellcheck pfetch-git nodejs npm exa bat tmux onefetch lf go \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    $aur -S --needed --noconfirm proximity-sort pixterm-rust autojump-rs pixfetch \
+    $aur -S --needed --noconfirm pixterm-rust autojump-rs pixfetch \
         || [ "$is_root" = true ] || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
@@ -201,7 +201,7 @@ install_debian () {
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    cargo install fd-find ripgrep proximity-sort onefetch pixterm autojump || exit 2
+    cargo install fd-find ripgrep onefetch pixterm autojump || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
@@ -296,7 +296,8 @@ install_file .config/env
 install_file .config/aliasrc
 install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
-install_file .config/nvim/lua/plugins.lua
+install_file .config/nvim/lua
+install_file .config/nvim/after
 install_file .config/paru/paru.conf
 install_file .config/npm/npmrc
 install_file .config/python/pythonrc
