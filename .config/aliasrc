@@ -12,6 +12,7 @@ else
 fi
 command -v pixterm > /dev/null && alias li='pixterm -fa'
 alias maketex='latexmk -xelatex -pdfxe -halt-on-error'
+alias styluag='stylua --config-file $XDG_CONFIG_HOME/stylua/stylua.toml'
 
 updaterc () {
     pwd="$(pwd)"
