@@ -18,6 +18,10 @@ map({ 'n', 'v' }, '<C-h>', ':nohlsearch<cr>')
 map({ 'n', 'i', 'v', 's', 'x', 'o', 'l', 't' }, '<C-k>', '<Esc>')
 map('c', '<C-k>', '<C-c>')
 
+-- Move into wrapped lines
+map('n', 'j', 'gj')
+map('n', 'k', 'gk')
+
 -- Jump to start and end of line using the home row keys
 map('', 'H', '^')
 map('', 'L', '$')
