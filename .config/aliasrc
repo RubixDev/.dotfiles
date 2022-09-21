@@ -11,6 +11,7 @@ else
     alias l='ls -lAh --color=auto'
 fi
 command -v pixterm > /dev/null && alias li='pixterm -fa'
+alias maketex='latexmk -xelatex -pdfxe -halt-on-error'
 
 updaterc () {
     pwd="$(pwd)"
