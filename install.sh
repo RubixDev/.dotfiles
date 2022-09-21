@@ -80,7 +80,7 @@ install_android () {
 
     pkg update -y
     pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
-        nodejs exa bat tmux lf python || exit 2
+        nodejs exa bat tmux lf python stylua || exit 2
     cargo install pixterm || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
@@ -138,7 +138,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git nodejs npm exa bat tmux onefetch lf go \
+        shellcheck pfetch-git nodejs npm exa bat tmux onefetch lf go stylua \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm pixterm-rust autojump-rs pixfetch \
@@ -201,7 +201,7 @@ install_debian () {
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    cargo install fd-find ripgrep onefetch pixterm autojump || exit 2
+    cargo install fd-find ripgrep onefetch pixterm autojump stylua || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.deb' || exit 2
@@ -303,6 +303,7 @@ install_file .config/npm/npmrc
 install_file .config/python/pythonrc
 install_file .config/bpython/config
 install_file .config/pixfetch/config.toml
+install_file .config/stylua/stylua.toml
 if [ "$is_desktop" = true ]; then
     install_file .config/alacritty/alacritty.yml
     install_file .config/bspwm/bspwmrc

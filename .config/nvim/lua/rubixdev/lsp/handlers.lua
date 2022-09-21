@@ -104,7 +104,22 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
+    -- Disable formatting for some language servers
+    local disabled_formatter = {
+        svelte = true,
+        tsserver = true,
+        cssls = true,
+        html = true,
+        jsonls = true,
+        sumneko_lua = true,
+    }
+    if disabled_formatter[client.name] then
+        client.resolved_capabilities.document_formatting = false
+    end
+
+    -- Add mappings
     lsp_keymaps(bufnr)
+    -- LSP based highlighting
     lsp_highlight_document(client)
 end
 

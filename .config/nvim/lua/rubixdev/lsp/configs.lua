@@ -14,12 +14,6 @@ local function with_settings(settings)
     }
 end
 
-local default_no_formatter = merge_opts {
-    init_options = {
-        provideFormatter = false,
-    },
-}
-
 require('nvim-lsp-installer').setup(merge_opts { automatic_installation = true })
 require('lspconfig').rust_analyzer.setup(with_settings {
     ['rust-analyzer'] = {
@@ -38,13 +32,6 @@ require('lspconfig').sumneko_lua.setup(with_settings {
         },
         telemetry = {
             enable = false,
-        },
-        format = {
-            defaultConfig = {
-                quote_style = 'single',
-                call_arg_parentheses = 'remove_table_only',
-                end_of_line = 'lf',
-            },
         },
     },
 })
@@ -96,12 +83,12 @@ if vim.g.is_android == 0 then
             },
         },
     })
-    require('lspconfig').svelte.setup(default_no_formatter)
-    require('lspconfig').tsserver.setup(default_no_formatter)
-    require('lspconfig').cssls.setup(default_no_formatter)
-    require('lspconfig').html.setup(default_no_formatter)
+    require('lspconfig').svelte.setup(default_opts)
+    require('lspconfig').tsserver.setup(default_opts)
+    require('lspconfig').cssls.setup(default_opts)
+    require('lspconfig').html.setup(default_opts)
     require('lspconfig').emmet_ls.setup(default_opts)
-    require('lspconfig').jsonls.setup(default_no_formatter)
+    require('lspconfig').jsonls.setup(default_opts)
     require('prettier').setup {
         bin = 'prettier',
         filetypes = {
@@ -129,9 +116,14 @@ if vim.g.is_android == 0 then
         tab_width = 4,
         trailing_comma = 'all',
     }
-    require('null-ls').setup(merge_opts {
+    local null_ls_ok, null_ls = pcall(require, 'null-ls')
+    if not null_ls_ok then
+        return
+    end
+    null_ls.setup(merge_opts {
         sources = {
-            require('null-ls').builtins.code_actions.gitsigns,
+            null_ls.builtins.code_actions.gitsigns,
+            null_ls.builtins.formatting.stylua,
         },
     })
 end
