@@ -79,6 +79,8 @@ map('', '<Leader>n', ':<C-U>call append(line("."), repeat([""], v:count1))<CR>')
 
 -- Set LTeX language to German in LaTeX files
 map('n', '<leader>ll', ':call append(line("0"), ["% LTeX: language=de-DE"])<CR>')
+-- Disable ChkTeX tabular warnings
+map('n', '<leader>lt', ':call append(line("0"), ["% chktex-file -2"])<CR>')
 -- Open/scroll LaTeX preview
 map('n', '<leader>lp', ':TexlabForward<CR>')
 -- Build LaTeX project
