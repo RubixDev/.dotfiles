@@ -2,8 +2,8 @@ local ensure_packer = function()
     local fn = vim.fn
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
     if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
+        fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
+        vim.cmd([[packadd packer.nvim]])
         return true
     end
     return false
@@ -21,32 +21,32 @@ vim.cmd([[
 return require('packer').startup {
     function(use)
         -- Packer
-        use 'wbthomason/packer.nvim'
+        use('wbthomason/packer.nvim')
 
         -- Theme
-        use 'navarasu/onedark.nvim'
+        use('navarasu/onedark.nvim')
 
         -- VIM enhancements
-        use 'editorconfig/editorconfig-vim'
-        use 'andymass/vim-matchup'
-        use 'jiangmiao/auto-pairs'
-        use 'tpope/vim-abolish'
+        use('editorconfig/editorconfig-vim')
+        use('andymass/vim-matchup')
+        use('jiangmiao/auto-pairs')
+        use('tpope/vim-abolish')
         use {
             'numToStr/Comment.nvim',
             config = function()
                 require('Comment').setup()
             end,
         }
-        use 'airblade/vim-rooter'
-        use 'dstein64/vim-startuptime'
-        use 'lewis6991/impatient.nvim'
+        use('airblade/vim-rooter')
+        use('dstein64/vim-startuptime')
+        use('lewis6991/impatient.nvim')
 
         -- GUI enhancements
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons' },
         }
-        use 'lukas-reineke/indent-blankline.nvim'
+        use('lukas-reineke/indent-blankline.nvim')
 
         -- Fuzzy Finder
         use {
@@ -69,22 +69,22 @@ return require('packer').startup {
             'preservim/vim-markdown',
             requires = { 'godlygeek/tabular' },
         }
-        use 'averms/ebnf-vim'
-        use 'baskerville/vim-sxhkdrc'
+        use('averms/ebnf-vim')
+        use('baskerville/vim-sxhkdrc')
 
         -- Treesitter
         use {
             'nvim-treesitter/nvim-treesitter',
             run = function()
-                require('nvim-treesitter.install').update({ with_sync = true })
+                require('nvim-treesitter.install').update { with_sync = true }
             end,
         }
-        use 'nvim-treesitter/nvim-treesitter-context'
+        use('nvim-treesitter/nvim-treesitter-context')
 
         -- LSP setup
-        use 'neovim/nvim-lspconfig'
-        use 'williamboman/nvim-lsp-installer'
-        use 'ray-x/lsp_signature.nvim'
+        use('neovim/nvim-lspconfig')
+        use('williamboman/nvim-lsp-installer')
+        use('ray-x/lsp_signature.nvim')
         use { 'habamax/vim-godot', disable = vim.g.is_android == 1 }
         use {
             'jose-elias-alvarez/null-ls.nvim',
@@ -92,7 +92,7 @@ return require('packer').startup {
                 'nvim-lua/plenary.nvim',
             },
         }
-        use 'MunifTanjim/prettier.nvim'
+        use('MunifTanjim/prettier.nvim')
 
         -- Completion
         use {
@@ -104,7 +104,7 @@ return require('packer').startup {
                 'hrsh7th/cmp-cmdline',
                 'hrsh7th/cmp-buffer',
                 'saadparwaiz1/cmp_luasnip',
-            }
+            },
         }
 
         -- Snippets
@@ -112,15 +112,15 @@ return require('packer').startup {
             'L3MON4D3/LuaSnip',
             requires = {
                 'rafamadriz/friendly-snippets',
-            }
+            },
         }
 
         -- Discord presence
         use { 'andweeb/presence.nvim', disable = vim.g.is_android == 1 }
 
         -- Git
-        use 'tpope/vim-fugitive'
-        use 'lewis6991/gitsigns.nvim'
+        use('tpope/vim-fugitive')
+        use('lewis6991/gitsigns.nvim')
 
         -- Markdown preview
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', disable = vim.g.is_android == 1 }
@@ -133,7 +133,7 @@ return require('packer').startup {
     config = {
         display = {
             open_fn = function()
-                return require('packer.util').float({ border = 'rounded' })
+                return require('packer.util').float { border = 'rounded' }
             end,
             prompt_border = 'rounded',
         },

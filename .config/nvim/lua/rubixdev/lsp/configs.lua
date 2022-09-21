@@ -39,6 +39,13 @@ require('lspconfig').sumneko_lua.setup(with_settings {
         telemetry = {
             enable = false,
         },
+        format = {
+            defaultConfig = {
+                quote_style = 'single',
+                call_arg_parentheses = 'remove_table_only',
+                end_of_line = 'lf',
+            },
+        },
     },
 })
 require('lspconfig').pylsp.setup(default_opts)
@@ -110,7 +117,9 @@ if vim.g.is_android == 0 then
 
         -- Do not restrict prettier to npm projects
         ['null-ls'] = {
-            condition = function() return true end,
+            condition = function()
+                return true
+            end,
         },
 
         -- Default prettier settings
@@ -122,7 +131,7 @@ if vim.g.is_android == 0 then
     }
     require('null-ls').setup(merge_opts {
         sources = {
-            require('null-ls').builtins.code_actions.gitsigns
-        }
+            require('null-ls').builtins.code_actions.gitsigns,
+        },
     })
 end

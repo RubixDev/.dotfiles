@@ -10,9 +10,9 @@ telescope.load_extension('fzf')
 
 -- Include hidden files except '.git'
 local vimgrep_arguments = { unpack(require('telescope.config').values.vimgrep_arguments) }
-table.insert(vimgrep_arguments, "--hidden")
-table.insert(vimgrep_arguments, "--glob")
-table.insert(vimgrep_arguments, "!.git/*")
+table.insert(vimgrep_arguments, '--hidden')
+table.insert(vimgrep_arguments, '--glob')
+table.insert(vimgrep_arguments, '!.git/*')
 
 -- Setup
 telescope.setup {
@@ -52,11 +52,13 @@ telescope.setup {
             override_file_sorter = true, -- override the file sorter
             case_mode = 'smart_case', -- or 'ignore_case' or 'respect_case'
         },
-    }
+    },
 }
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<Leader>o', builtin.find_files)
-vim.keymap.set('n', '<Leader>O', function() builtin.find_files { no_ignore = true } end)
+vim.keymap.set('n', '<Leader>O', function()
+    builtin.find_files { no_ignore = true }
+end)
 vim.keymap.set('n', '<Leader>s', builtin.live_grep)
 vim.keymap.set('n', '<Leader>;', builtin.buffers)

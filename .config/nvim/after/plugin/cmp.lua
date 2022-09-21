@@ -33,7 +33,7 @@ local kind_icons = {
     Struct = '',
     Event = '',
     Operator = '',
-    TypeParameter = ''
+    TypeParameter = '',
 }
 
 cmp.setup {
@@ -42,7 +42,7 @@ cmp.setup {
             luasnip.lsp_expand(args.body)
         end,
     },
-    mapping = cmp.mapping.preset.insert({
+    mapping = cmp.mapping.preset.insert {
         -- Tab immediately completes or jumps in snippet. Ctrl+N/Ctrl+P to select.
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -84,7 +84,7 @@ cmp.setup {
         -- Ctrl+U and Ctrl+D to scroll docs up and down respectively
         ['<C-U>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
         ['<C-D>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
-    }),
+    },
     sources = cmp.config.sources {
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
@@ -122,5 +122,5 @@ cmp.setup.cmdline(':', {
         { name = 'path' },
     }, {
         { name = 'cmdline' },
-    })
+    }),
 })

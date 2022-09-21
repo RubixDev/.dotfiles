@@ -62,18 +62,18 @@ local progress_component = {
 -- Taken from AstroNvim: https://github.com/AstroNvim/AstroNvim/blob/90592994b1794f5b88268b21bb63f367096b57cb/lua/core/status.lua#L60-L73
 local lsp_progress_component = {
     function()
-       local lsp = vim.lsp.util.get_progress_messages()[1]
-        return vim.lsp.util.get_progress_messages()[1]
-            and string.format(
-                " %%<%s %s %s (%s%%%%) ",
-                ((lsp.percentage or 0) >= 99 and { "", "", "" } or { "", "", "" })[math.floor(
-                    vim.loop.hrtime() / 12e7
-                ) % 3 + 1],
-                lsp.title or "",
-                lsp.message or "",
-                lsp.percentage or 0
-            )
-            or ""
+        local lsp = vim.lsp.util.get_progress_messages()[1]
+        return lsp
+                and string.format(
+                    ' %%<%s %s %s (%s%%%%) ',
+                    ((lsp.percentage or 0) >= 99 and { '', '', '' } or { '', '', '' })[math.floor(
+                        vim.loop.hrtime() / 12e7
+                    ) % 3 + 1],
+                    lsp.title or '',
+                    lsp.message or '',
+                    lsp.percentage or 0
+                )
+            or ''
     end,
 }
 
@@ -92,15 +92,11 @@ lualine.setup {
         lualine_c = { filename_component },
         lualine_x = { lsp_progress_component, 'filetype' },
         lualine_y = { 'encoding', 'fileformat' },
-        lualine_z = { progress_component }
+        lualine_z = { progress_component },
     },
     inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { 'filename' },
+        lualine_c = { filename_component },
         lualine_x = { progress_component },
-        lualine_y = {},
-        lualine_z = {}
     },
     tabline = {
         lualine_a = { buffers_component },
