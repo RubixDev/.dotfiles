@@ -19,6 +19,7 @@ SCRIPTPATH="$(cd "$(dirname "$0")"; pwd -P)"
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc rule -a launcher:launcher center=on state=floating sticky=on
+bspc rule -a Zathura state=tiled # Do not start zathura floating
 
 bspc config border_width 2
 bspc config window_gap 14
