@@ -196,8 +196,7 @@ install_debian () {
     }
 
     if ! command -v rustup > /dev/null; then
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-        exec "$SHELL"
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
