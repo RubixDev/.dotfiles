@@ -83,7 +83,12 @@ return require('packer').startup {
 
         -- LSP setup
         use { 'neovim/nvim-lspconfig' }
-        use { 'williamboman/nvim-lsp-installer' }
+        use {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
+            'RubixDev/mason-null-ls.nvim', -- TODO: switch to 'jayp0521/mason-null-ls.nvim' when merged
+            'RubixDev/mason-update-all',
+        }
         use { 'ray-x/lsp_signature.nvim' }
         use { 'habamax/vim-godot', disable = vim.g.is_android == 1 }
         use {

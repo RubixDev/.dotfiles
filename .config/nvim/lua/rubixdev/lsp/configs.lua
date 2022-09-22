@@ -4,17 +4,29 @@ local default_opts = {
     capabilities = handlers.capabilities,
 }
 
-local function merge_opts(new_opts)
-    return vim.tbl_deep_extend('force', new_opts, default_opts)
-end
-
 local function with_settings(settings)
-    return merge_opts {
-        settings = settings,
-    }
+    return vim.tbl_deep_extend('force', { settings = settings }, default_opts)
 end
 
-require('nvim-lsp-installer').setup(merge_opts { automatic_installation = true })
+-- Mason: automatic installation of LSPs and null-ls sources
+require('mason').setup {
+    ui = {
+        border = 'rounded',
+        icons = {
+            package_installed = '✓',
+            package_pending = '⟳',
+            package_uninstalled = '✗',
+        },
+    },
+}
+require('mason-lspconfig').setup { automatic_installation = true }
+require('rubixdev.lsp.null_ls')
+require('mason-null-ls').setup { automatic_installation = true }
+require('mason-update-all').setup()
+
+----------------------
+-- Language Servers --
+----------------------
 require('lspconfig').rust_analyzer.setup(with_settings {
     ['rust-analyzer'] = {
         checkOnSave = { command = 'clippy' },
@@ -116,14 +128,4 @@ if vim.g.is_android == 0 then
         tab_width = 4,
         trailing_comma = 'all',
     }
-    local null_ls_ok, null_ls = pcall(require, 'null-ls')
-    if not null_ls_ok then
-        return
-    end
-    null_ls.setup(merge_opts {
-        sources = {
-            null_ls.builtins.code_actions.gitsigns,
-            null_ls.builtins.formatting.stylua,
-        },
-    })
 end
