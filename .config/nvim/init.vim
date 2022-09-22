@@ -18,7 +18,9 @@ set nocompatible " Not compatible with VI
 set mouse=a " Enable mouse support
 set cmdheight=2 " Two lines for command output
 set updatetime=300 " You will have bad experience for diagnostic messages when it's default 4000.
+
 set colorcolumn=120 " Highlight column 120
+autocmd FileType gitcommit setlocal colorcolumn=72
 
 " Tab settings
 set tabstop=4       " number of visual spaces per TAB
