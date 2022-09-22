@@ -8,7 +8,7 @@ set number relativenumber " Relative line numbers
 set linebreak
 set showbreak=↪
 set nowrap " Do not wrap by default
-autocmd FileType markdown set wrap " ...except in markdown files
+autocmd FileType markdown setlocal wrap " ...except in markdown files
 set nofoldenable " Do not fold by default
 set scrolloff=8 " Minimum lines to keep above and below cursor when scrolling
 set noshowmode " Do not display current mode because we have a statusline plugin

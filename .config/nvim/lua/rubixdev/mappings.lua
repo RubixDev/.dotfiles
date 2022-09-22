@@ -69,7 +69,7 @@ map('n', '<leader>gl', ':Git pull<CR>')
 map('n', '<Leader>mp', ':MarkdownPreview<CR>')
 map('n', '<Leader>mP', ':MarkdownPreviewStop<CR>')
 map('n', '<Leader>mf', ':TableFormat<CR>')
-map('n', '<Leader>mw', ':set invwrap<CR>')
+map('n', '<Leader>mw', ':setlocal invwrap<CR>')
 -- Set LTeX language to German in markdown files
 map('n', '<Leader>ml', ':call append(line("0"), ["---", "lang: de-DE", "---", ""])<CR>')
 
