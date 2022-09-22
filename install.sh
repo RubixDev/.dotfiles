@@ -204,7 +204,7 @@ install_debian () {
     cargo install fd-find ripgrep onefetch pixterm autojump stylua tree-sitter-cli || exit 2
 
     if ! command -v nvim > /dev/null; then
-        wget 'https://github.com/neovim/neovim/tags/latest/downloads/nvim-linux64.deb' || exit 2
+        wget 'https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb' || exit 2
         sudo apt install ./nvim-linux64.deb
         rm ./nvim-linux64.deb
     fi
