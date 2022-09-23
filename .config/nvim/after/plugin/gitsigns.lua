@@ -4,10 +4,6 @@ if not status_ok then
 end
 
 gitsigns.setup {
-    signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-    },
     current_line_blame = true,
     preview_config = {
         border = 'rounded',
