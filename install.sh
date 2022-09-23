@@ -303,7 +303,6 @@ install_file .config/aliasrc
 install_file .config/tmux/tmux.conf
 install_file .config/nvim/init.vim
 install_file .config/nvim/lua
-install_file .config/nvim/after
 install_file .config/paru/paru.conf
 install_file .config/npm/npmrc
 install_file .config/python/pythonrc

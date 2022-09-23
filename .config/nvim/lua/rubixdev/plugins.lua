@@ -39,14 +39,27 @@ return require('packer').startup {
         }
         use { 'airblade/vim-rooter' }
         use { 'dstein64/vim-startuptime' }
-        use { 'lewis6991/impatient.nvim' }
+        use {
+            'lewis6991/impatient.nvim',
+            config = function()
+                require('impatient')
+            end,
+        }
 
         -- GUI enhancements
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons' },
+            config = function()
+                require('rubixdev.plugin.lualine')
+            end,
         }
-        use { 'lukas-reineke/indent-blankline.nvim' }
+        use {
+            'lukas-reineke/indent-blankline.nvim',
+            config = function()
+                require('rubixdev.plugin.indent_blankline')
+            end,
+        }
 
         -- Fuzzy Finder
         use {
@@ -61,6 +74,9 @@ return require('packer').startup {
             requires = {
                 'nvim-lua/plenary.nvim',
             },
+            config = function()
+                require('rubixdev.plugin.telescope')
+            end,
         }
 
         -- Language support
@@ -68,6 +84,9 @@ return require('packer').startup {
         use {
             'preservim/vim-markdown',
             requires = { 'godlygeek/tabular' },
+            config = function()
+                require('rubixdev.plugin.markdown')
+            end,
         }
         use { 'averms/ebnf-vim' }
         use { 'baskerville/vim-sxhkdrc' }
@@ -81,6 +100,9 @@ return require('packer').startup {
             'nvim-treesitter/nvim-treesitter',
             run = function()
                 require('nvim-treesitter.install').update { with_sync = true }
+            end,
+            config = function()
+                require('rubixdev.plugin.treesitter')
             end,
         }
         use { 'nvim-treesitter/nvim-treesitter-context' }
@@ -113,6 +135,9 @@ return require('packer').startup {
                 'hrsh7th/cmp-buffer',
                 'saadparwaiz1/cmp_luasnip',
             },
+            config = function()
+                require('rubixdev.plugin.cmp')
+            end,
         }
 
         -- Snippets
@@ -128,7 +153,12 @@ return require('packer').startup {
 
         -- Git
         use { 'tpope/vim-fugitive' }
-        use { 'lewis6991/gitsigns.nvim' }
+        use {
+            'lewis6991/gitsigns.nvim',
+            config = function()
+                require('rubixdev.plugin.gitsigns')
+            end,
+        }
 
         -- Markdown preview
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', disable = vim.g.is_android == 1 }
