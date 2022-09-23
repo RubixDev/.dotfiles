@@ -9,8 +9,22 @@ local default_opts = {
     capabilities = handlers.capabilities,
 }
 
-local function with_settings(settings)
-    return vim.tbl_deep_extend('force', { settings = settings }, default_opts)
+local function external(path)
+    local config = require(path)
+
+    local opts = {}
+    opts.on_attach = handlers.on_attach
+    opts.capabilities = handlers.capabilities
+    opts.settings = config.settings
+
+    if type(config.on_attach) == 'function' then
+        opts.on_attach = function(client, bufnr)
+            config.on_attach(client, bufnr)
+            handlers.on_attach(client, bufnr)
+        end
+    end
+
+    return opts
 end
 
 -----------
@@ -37,26 +51,10 @@ utils.try_setup('mason-update-all')
 ----------------------
 local lspconfig = require('lspconfig')
 
-lspconfig.rust_analyzer.setup(with_settings {
-    ['rust-analyzer'] = {
-        checkOnSave = { command = 'clippy' },
-    },
-})
+lspconfig.rust_analyzer.setup(external('rubixdev.lsp.configs.rust_analyzer'))
 lspconfig.vimls.setup(default_opts)
 lspconfig.bashls.setup(default_opts)
-lspconfig.sumneko_lua.setup(with_settings {
-    Lua = {
-        runtime = {
-            version = 'LuaJIT',
-        },
-        diagnostics = {
-            globals = { 'vim' },
-        },
-        telemetry = {
-            enable = false,
-        },
-    },
-})
+lspconfig.sumneko_lua.setup(external('rubixdev.lsp.configs.sumneko_lua'))
 lspconfig.pylsp.setup(default_opts)
 if vim.g.is_android == 0 then
     lspconfig.dockerls.setup(default_opts)
@@ -67,44 +65,8 @@ if vim.g.is_android == 0 then
     lspconfig.gdscript.setup(default_opts)
     lspconfig.clangd.setup(default_opts)
     lspconfig.taplo.setup(default_opts)
-    lspconfig.ltex.setup(with_settings {
-        ltex = {
-            additionalRules = {
-                enablePickyRules = true,
-                motherTongue = 'de-De',
-            },
-        },
-    })
-    lspconfig.texlab.setup(with_settings {
-        texlab = {
-            build = {
-                args = {
-                    '-xelatex', -- Build with xelatex
-                    '-pdfxe', -- Build with xelatex
-                    '-interaction=nonstopmode', -- Ignore errors
-                    '-synctex=1', -- Enable SyncTeX
-                    '-pv', -- Open preview
-                    '%f',
-                },
-                onSave = true, -- Build on save
-            },
-            forwardSearch = {
-                -- Use zathura for preview
-                executable = 'zathura',
-                args = { '--synctex-forward', '%l:1:%f', '%p' },
-            },
-
-            -- Set latexindent as formatter
-            bibtexFormatter = 'latexindent',
-            latexFormatter = 'latexindent',
-
-            -- Enable chktex lints
-            chktex = {
-                onOpenAndSave = true,
-                onEdit = true,
-            },
-        },
-    })
+    lspconfig.ltex.setup(external('rubixdev.lsp.configs.ltex'))
+    lspconfig.texlab.setup(external('rubixdev.lsp.configs.texlab'))
     lspconfig.svelte.setup(default_opts)
     lspconfig.tsserver.setup(default_opts)
     lspconfig.cssls.setup(default_opts)

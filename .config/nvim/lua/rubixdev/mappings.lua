@@ -70,18 +70,7 @@ map('n', '<Leader>mp', ':MarkdownPreview<CR>')
 map('n', '<Leader>mP', ':MarkdownPreviewStop<CR>')
 map('n', '<Leader>mf', ':TableFormat<CR>')
 map('n', '<Leader>mw', ':setlocal invwrap<CR>')
--- Set LTeX language to German in markdown files
-map('n', '<Leader>ml', ':call append(line("0"), ["---", "lang: de-DE", "---", ""])<CR>')
 
 -- Insert line above/below cursor without insert mode
 map('', '<Leader>N', ':<C-U>call append(line(".")-1, repeat([""], v:count1))<CR>')
 map('', '<Leader>n', ':<C-U>call append(line("."), repeat([""], v:count1))<CR>')
-
--- Set LTeX language to German in LaTeX files
-map('n', '<leader>ll', ':call append(line("0"), ["% LTeX: language=de-DE"])<CR>')
--- Disable ChkTeX tabular warnings
-map('n', '<leader>lt', ':call append(line("0"), ["% chktex-file -2"])<CR>')
--- Open/scroll LaTeX preview
-map('n', '<leader>lp', ':TexlabForward<CR>')
--- Build LaTeX project
-map('n', '<leader>lb', ':TexlabBuild<CR>')
