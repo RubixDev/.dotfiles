@@ -76,8 +76,9 @@ upd () {
     done
     cd "$pwd" || return 2
 
-    # Neovim plugins
+    # Neovim plugins and packages
     nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
 
     # Flatpaks
     command -v flatpak && flatpak update
