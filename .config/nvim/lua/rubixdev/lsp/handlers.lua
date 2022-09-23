@@ -57,6 +57,19 @@ local function lsp_highlight_document(client)
     end
 end
 
+local function show_documentation()
+    local filetype = vim.bo.filetype
+    if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+        vim.cmd('help ' .. vim.fn.expand('<cword>'))
+    elseif vim.tbl_contains({ 'man' }, filetype) then
+        vim.cmd('Man ' .. vim.fn.expand('<cword>'))
+    elseif vim.fn.expand('%:t') == 'Cargo.toml' and require('crates').popup_available() then
+        require('crates').show_popup()
+    else
+        vim.lsp.buf.hover()
+    end
+end
+
 local function lsp_keymaps(bufnr)
     local opts = { buffer = bufnr, silent = true }
     local map = vim.keymap.set
@@ -65,7 +78,7 @@ local function lsp_keymaps(bufnr)
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     map('n', 'gD', vim.lsp.buf.declaration, opts)
     map('n', 'gd', builtin.lsp_definitions, opts)
-    map('n', 'K', vim.lsp.buf.hover, opts)
+    map('n', 'K', show_documentation, opts)
     map('n', 'gi', builtin.lsp_implementations, opts)
     map('n', '<leader>D', builtin.lsp_type_definitions, opts)
     map('n', '<leader>r', vim.lsp.buf.rename, opts)

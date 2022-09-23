@@ -91,6 +91,7 @@ cmp.setup {
         { name = 'luasnip' },
         { name = 'path' },
         { name = 'buffer' },
+        { name = 'crates' },
     },
     experimental = {
         ghost_text = true,
@@ -108,7 +109,7 @@ cmp.setup {
                 nvim_lsp = '[LSP]',
                 luasnip = '[Snippet]',
                 nvim_lua = '[Lua]',
-                latex_symbols = '[LaTeX]',
+                crates = '[crates.nvim]',
             })[entry.source.name]
             return vim_item
         end,

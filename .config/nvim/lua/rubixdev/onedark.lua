@@ -6,7 +6,7 @@ onedark.setup {
     --     transparent = true,
     -- },
     highlights = {
-        -- Floats with cyan borders
+        -- Floats with cyan borders and solid background
         FloatBorder = { fg = '$cyan', bg = '$bg1' },
         LspInfoBorder = { fg = '$cyan', bg = '$bg1' },
         TelescopeBorder = { fg = '$cyan', bg = '$bg1' },
@@ -14,6 +14,10 @@ onedark.setup {
         TelescopeResultsBorder = { fg = '$cyan', bg = '$bg1' },
         TelescopePreviewBorder = { fg = '$cyan', bg = '$bg1' },
         TelescopeNormal = { bg = '$bg1' },
+
+        -- Correctly looking pills in crates.nvim popup
+        CratesNvimPopupPillText = { fg = '$bg0', bg = '$fg' },
+        CratesNvimPopupPillBorder = { fg = '$fg' },
     },
 }
 onedark.load()
