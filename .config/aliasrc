@@ -82,6 +82,9 @@ upd () {
 
     # Flatpaks
     command -v flatpak && flatpak update
+
+    # Global npm packages
+    npm update --global
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
