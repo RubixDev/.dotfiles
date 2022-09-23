@@ -6,12 +6,23 @@ end
 local onedark_status_ok, colors = pcall(require, 'rubixdev.onedark')
 local onedark = require('lualine.utils.loader').load_theme('onedark')
 if onedark_status_ok then
-    -- Set middle section bg color to bg, instead of bg1
-    onedark.normal.c.bg = vim.g.onedark_config.lualine.transparent and colors.none or colors.bg0
-    onedark.inactive.c.bg = vim.g.onedark_config.lualine.transparent and colors.none or colors.bg0
-
-    -- Set middle section fg color to green
-    onedark.normal.c.fg = colors.green
+    -- Set middle section bg color to bg0 and fg color to match vi mode
+    onedark = vim.tbl_deep_extend('force', onedark, {
+        inactive = {
+            c = { bg = vim.g.onedark_config.lualine.transparent and colors.none or colors.bg0 },
+        },
+        normal = {
+            c = {
+                fg = onedark.normal.a.bg,
+                bg = vim.g.onedark_config.lualine.transparent and colors.none or colors.bg0,
+            },
+        },
+        visual = { c = { fg = onedark.visual.a.bg } },
+        replace = { c = { fg = onedark.replace.a.bg } },
+        insert = { c = { fg = onedark.insert.a.bg } },
+        command = { c = { fg = onedark.command.a.bg } },
+        terminal = { c = { fg = onedark.terminal.a.bg } },
+    })
 end
 
 local buffers_component = {
@@ -42,7 +53,7 @@ local diff_component = {
         added = ' ',
         modified = '柳',
         removed = ' ',
-    }
+    },
 }
 
 local workspace_diagnostics_component = vim.tbl_deep_extend('force', diagnostics_component, {
