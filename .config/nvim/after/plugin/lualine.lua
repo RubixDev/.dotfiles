@@ -36,6 +36,15 @@ local diagnostics_component = {
     -- end,
 }
 
+local diff_component = {
+    'diff',
+    symbols = {
+        added = ' ',
+        modified = '柳',
+        removed = ' ',
+    }
+}
+
 local workspace_diagnostics_component = vim.tbl_deep_extend('force', diagnostics_component, {
     sources = { 'nvim_workspace_diagnostic' },
 })
@@ -50,14 +59,8 @@ local filename_component = {
     },
 }
 
-local progress_component = {
-    function()
-        local cur = vim.fn.line('.')
-        local total = vim.fn.line('$')
-        local col = vim.fn.virtcol('.')
-        return math.floor(cur / total * 100) .. '%% ' .. cur .. '/' .. total .. string.format(' :%-2d', col)
-    end,
-}
+local location_component = { '%l:%c' }
+local progress_component = { '%p%%/%L' }
 
 -- Taken from AstroNvim: https://github.com/AstroNvim/AstroNvim/blob/90592994b1794f5b88268b21bb63f367096b57cb/lua/core/status.lua#L60-L73
 local lsp_progress_component = {
@@ -88,15 +91,15 @@ lualine.setup {
     },
     sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', diagnostics_component },
+        lualine_b = { 'branch', diff_component, diagnostics_component },
         lualine_c = { filename_component },
         lualine_x = { lsp_progress_component, 'filetype' },
         lualine_y = { 'encoding', 'fileformat' },
-        lualine_z = { progress_component },
+        lualine_z = { location_component, progress_component },
     },
     inactive_sections = {
         lualine_c = { filename_component },
-        lualine_x = { progress_component },
+        lualine_x = { location_component, progress_component },
     },
     tabline = {
         lualine_a = { buffers_component },
