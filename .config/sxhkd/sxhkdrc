@@ -22,10 +22,6 @@ Print
 # bspwm hotkeys
 #
 
-# quit bspwm
-super + shift + q
-    bspc quit
-
 # restart bspwm
 super + shift + r
     touch ~/.config/bspwm/is_reload && bspc wm -r; \
