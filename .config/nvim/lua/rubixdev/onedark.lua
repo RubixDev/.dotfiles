@@ -6,9 +6,14 @@ onedark.setup {
     --     transparent = true,
     -- },
     highlights = {
-        -- Floats with cyan borders and no background
-        FloatBorder = { fg = '$cyan', bg = '$none' },
-        NormalFloat = { bg = '$none' },
+        -- Floats with cyan borders
+        FloatBorder = { fg = '$cyan', bg = '$bg1' },
+        LspInfoBorder = { fg = '$cyan', bg = '$bg1' },
+        TelescopeBorder = { fg = '$cyan', bg = '$bg1' },
+        TelescopePromptBorder = { fg = '$cyan', bg = '$bg1' },
+        TelescopeResultsBorder = { fg = '$cyan', bg = '$bg1' },
+        TelescopePreviewBorder = { fg = '$cyan', bg = '$bg1' },
+        TelescopeNormal = { bg = '$bg1' },
     },
 }
 onedark.load()

@@ -17,40 +17,27 @@ M.setup = function()
         vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
     end
 
-    local config = {
-        virtual_text = true,
-        -- show signs
-        signs = {
-            active = signs,
-        },
-        update_in_insert = true,
-        underline = true,
+    vim.diagnostic.config {
         severity_sort = true,
-        float = {
-            focusable = false,
-            style = 'minimal',
-            border = 'rounded',
-            source = 'always',
-            header = '',
-            prefix = '',
-        },
+        update_in_insert = true,
     }
-
-    vim.diagnostic.config(config)
-
-    vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-        border = 'rounded',
-    })
-
-    vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        border = 'rounded',
-    })
 
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         virtual_text = true,
         signs = true,
         update_in_insert = true,
     })
+
+    -- Set rounded float border for all handlers
+    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or 'rounded'
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+    end
+
+    -- Set border of :LspInfo window
+    require('lspconfig.ui.windows').default_options.border = 'rounded'
 end
 
 -- Enable dynamic highlighting from LSP
