@@ -80,7 +80,7 @@ return require('packer').startup {
         }
 
         -- Language support
-        use { 'fatih/vim-go', run = ':GoUpdateBinaries', disable = vim.g.is_android == 1 }
+        use { 'fatih/vim-go', run = ':GoUpdateBinaries', disable = _G.is_android }
         use {
             'preservim/vim-markdown',
             requires = { 'godlygeek/tabular' },
@@ -121,7 +121,7 @@ return require('packer').startup {
             'RubixDev/mason-update-all',
         }
         use { 'ray-x/lsp_signature.nvim' }
-        use { 'habamax/vim-godot', disable = vim.g.is_android == 1 }
+        use { 'habamax/vim-godot', disable = _G.is_android }
         use {
             'jose-elias-alvarez/null-ls.nvim',
             requires = {
@@ -154,7 +154,7 @@ return require('packer').startup {
         }
 
         -- Discord presence
-        use { 'andweeb/presence.nvim', disable = vim.g.is_android == 1 }
+        use { 'andweeb/presence.nvim', disable = _G.is_android }
 
         -- Git
         use { 'tpope/vim-fugitive' }
@@ -166,7 +166,7 @@ return require('packer').startup {
         }
 
         -- Markdown preview
-        use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', disable = vim.g.is_android == 1 }
+        use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', disable = _G.is_android }
 
         -- Automatically set up your configuration after cloning packer.nvim
         if packer_bootstrap then

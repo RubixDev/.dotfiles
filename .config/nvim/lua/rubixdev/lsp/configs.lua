@@ -56,7 +56,7 @@ lspconfig.vimls.setup(default_opts)
 lspconfig.bashls.setup(default_opts)
 lspconfig.sumneko_lua.setup(external('rubixdev.lsp.configs.sumneko_lua'))
 lspconfig.pylsp.setup(default_opts)
-if vim.g.is_android == 0 then
+if not _G.is_android then
     lspconfig.dockerls.setup(default_opts)
     lspconfig.golangci_lint_ls.setup(default_opts)
     lspconfig.gopls.setup(default_opts)

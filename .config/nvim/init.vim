@@ -55,9 +55,6 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
-" Set global is_android boolean
-let g:is_android = executable('uname') && system('uname -o') == "Android\n"
-
 " Highlight yanking
 au TextYankPost * silent! lua vim.highlight.on_yank()
 

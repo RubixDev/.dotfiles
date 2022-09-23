@@ -27,7 +27,7 @@ map('', 'H', '^')
 map('', 'L', '$')
 
 -- No arrow keys --- force yourself to use the home row (but not on android)
-if vim.g.is_android == 0 then
+if not _G.is_android then
     map('n', '<up>', '<nop>')
     map('n', '<down>', '<nop>')
     map('i', '<up>', '<nop>')
