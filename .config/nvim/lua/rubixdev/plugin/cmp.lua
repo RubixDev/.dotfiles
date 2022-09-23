@@ -1,10 +1,11 @@
-local cmp_status_ok, cmp = pcall(require, 'cmp')
-if not cmp_status_ok then
-    return
-end
+local cmp = require('cmp')
 
-local luasnip_status_ok, luasnip = pcall(require, 'luasnip')
-if not luasnip_status_ok then
+-- Stop if luasnip is not (yet) installed
+local luasnip_ok, luasnip = pcall(require, 'luasnip')
+if not luasnip_ok then
+    vim.schedule(function()
+        vim.notify('Did not setup nvim-cmp, because luasnip is not installed', vim.log.levels.WARN)
+    end)
     return
 end
 

@@ -1,11 +1,8 @@
-local status_ok, lualine = pcall(require, 'lualine')
-if not status_ok then
-    return
-end
+local lualine = require('lualine')
 
-local onedark_status_ok, colors = pcall(require, 'rubixdev.onedark')
+local onedark_ok, colors = pcall(require, 'rubixdev.onedark')
 local onedark = require('lualine.utils.loader').load_theme('onedark')
-if onedark_status_ok then
+if onedark_ok then
     -- Set middle section bg color to bg0 and fg color to match vi mode
     onedark = vim.tbl_deep_extend('force', onedark, {
         inactive = {

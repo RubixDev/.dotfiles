@@ -1,4 +1,9 @@
+---------------
+-- Utilities --
+---------------
 local handlers = require('rubixdev.lsp.handlers')
+local utils = require('rubixdev.utils')
+
 local default_opts = {
     on_attach = handlers.on_attach,
     capabilities = handlers.capabilities,
@@ -8,8 +13,10 @@ local function with_settings(settings)
     return vim.tbl_deep_extend('force', { settings = settings }, default_opts)
 end
 
--- Mason: automatic installation of LSPs and null-ls sources
-require('mason').setup {
+-----------
+-- Mason --
+-----------
+utils.try_setup('mason', {
     ui = {
         border = 'rounded',
         icons = {
@@ -18,24 +25,26 @@ require('mason').setup {
             package_uninstalled = '✗',
         },
     },
-}
-require('mason-lspconfig').setup { automatic_installation = true }
+})
+utils.try_setup('mason-lspconfig', { automatic_installation = true })
 require('rubixdev.lsp.null_ls')
 require('rubixdev.lsp.crates_nvim')
-require('mason-null-ls').setup { automatic_installation = true }
-require('mason-update-all').setup()
+utils.try_setup('mason-null-ls', { automatic_installation = true })
+utils.try_setup('mason-update-all')
 
 ----------------------
 -- Language Servers --
 ----------------------
-require('lspconfig').rust_analyzer.setup(with_settings {
+local lspconfig = require('lspconfig')
+
+lspconfig.rust_analyzer.setup(with_settings {
     ['rust-analyzer'] = {
         checkOnSave = { command = 'clippy' },
     },
 })
-require('lspconfig').vimls.setup(default_opts)
-require('lspconfig').bashls.setup(default_opts)
-require('lspconfig').sumneko_lua.setup(with_settings {
+lspconfig.vimls.setup(default_opts)
+lspconfig.bashls.setup(default_opts)
+lspconfig.sumneko_lua.setup(with_settings {
     Lua = {
         runtime = {
             version = 'LuaJIT',
@@ -48,17 +57,17 @@ require('lspconfig').sumneko_lua.setup(with_settings {
         },
     },
 })
-require('lspconfig').pylsp.setup(default_opts)
+lspconfig.pylsp.setup(default_opts)
 if vim.g.is_android == 0 then
-    require('lspconfig').dockerls.setup(default_opts)
-    require('lspconfig').golangci_lint_ls.setup(default_opts)
-    require('lspconfig').gopls.setup(default_opts)
-    require('lspconfig').jdtls.setup(default_opts)
-    require('lspconfig').kotlin_language_server.setup(default_opts)
-    require('lspconfig').gdscript.setup(default_opts)
-    require('lspconfig').clangd.setup(default_opts)
-    require('lspconfig').taplo.setup(default_opts)
-    require('lspconfig').ltex.setup(with_settings {
+    lspconfig.dockerls.setup(default_opts)
+    lspconfig.golangci_lint_ls.setup(default_opts)
+    lspconfig.gopls.setup(default_opts)
+    lspconfig.jdtls.setup(default_opts)
+    lspconfig.kotlin_language_server.setup(default_opts)
+    lspconfig.gdscript.setup(default_opts)
+    lspconfig.clangd.setup(default_opts)
+    lspconfig.taplo.setup(default_opts)
+    lspconfig.ltex.setup(with_settings {
         ltex = {
             additionalRules = {
                 enablePickyRules = true,
@@ -66,7 +75,7 @@ if vim.g.is_android == 0 then
             },
         },
     })
-    require('lspconfig').texlab.setup(with_settings {
+    lspconfig.texlab.setup(with_settings {
         texlab = {
             build = {
                 args = {
@@ -96,10 +105,10 @@ if vim.g.is_android == 0 then
             },
         },
     })
-    require('lspconfig').svelte.setup(default_opts)
-    require('lspconfig').tsserver.setup(default_opts)
-    require('lspconfig').cssls.setup(default_opts)
-    require('lspconfig').html.setup(default_opts)
-    require('lspconfig').emmet_ls.setup(default_opts)
-    require('lspconfig').jsonls.setup(default_opts)
+    lspconfig.svelte.setup(default_opts)
+    lspconfig.tsserver.setup(default_opts)
+    lspconfig.cssls.setup(default_opts)
+    lspconfig.html.setup(default_opts)
+    lspconfig.emmet_ls.setup(default_opts)
+    lspconfig.jsonls.setup(default_opts)
 end

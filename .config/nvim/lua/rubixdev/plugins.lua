@@ -108,7 +108,12 @@ return require('packer').startup {
         use { 'nvim-treesitter/nvim-treesitter-context' }
 
         -- LSP setup
-        use { 'neovim/nvim-lspconfig' }
+        use {
+            'neovim/nvim-lspconfig',
+            config = function()
+                require('rubixdev.lsp')
+            end,
+        }
         use {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',

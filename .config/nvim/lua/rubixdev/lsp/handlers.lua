@@ -1,7 +1,4 @@
-local status_ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-if not status_ok then
-    return
-end
+local utils = require('rubixdev.utils')
 
 local M = {}
 
@@ -90,17 +87,15 @@ local function lsp_keymaps(bufnr)
     map('n', ']D', builtin.diagnostics, opts)
     map('n', '<leader>f', vim.lsp.buf.formatting, opts)
 
-    -- Get signatures (and _only_ signatures) when in argument lists.
-    local lsp_signature_status_ok, lsp_signature = pcall(require, 'lsp_signature')
-    if not lsp_signature_status_ok then
-        return
-    end
-    lsp_signature.on_attach({
-        bind = true,
-        handler_opts = {
-            border = 'rounded',
-        },
-    }, bufnr)
+    -- Get signatures when in argument lists.
+    utils.try_setup('lsp_signature', function(lsp_signature)
+        lsp_signature.on_attach({
+            bind = true,
+            handler_opts = {
+                border = 'rounded',
+            },
+        }, bufnr)
+    end)
 end
 
 M.on_attach = function(client, bufnr)
@@ -139,8 +134,9 @@ M.on_attach = function(client, bufnr)
     lsp_highlight_document(client)
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+utils.try_setup('cmp_nvim_lsp', function(cmp_nvim_lsp)
+    M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+end)
 
 return M
