@@ -86,7 +86,7 @@ return require('packer').startup {
         use {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
-            'RubixDev/mason-null-ls.nvim', -- TODO: switch to 'jayp0521/mason-null-ls.nvim' when merged
+            'jayp0521/mason-null-ls.nvim',
             'RubixDev/mason-update-all',
         }
         use { 'ray-x/lsp_signature.nvim' }
