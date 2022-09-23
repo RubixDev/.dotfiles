@@ -21,7 +21,7 @@ require('mason').setup {
 }
 require('mason-lspconfig').setup { automatic_installation = true }
 require('rubixdev.lsp.null_ls')
-require('rubixdev.lsp.crates')
+require('rubixdev.lsp.crates_nvim')
 require('mason-null-ls').setup { automatic_installation = true }
 require('mason-update-all').setup()
 
