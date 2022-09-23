@@ -112,9 +112,25 @@ M.on_attach = function(client, bufnr)
         html = true,
         jsonls = true,
         sumneko_lua = true,
+        pylsp = true,
     }
     if disabled_formatter[client.name] then
         client.resolved_capabilities.document_formatting = false
+    end
+
+    -- Disable formatter of null-ls if formatting is provided by other LSP
+    local clients = vim.lsp.buf_get_clients()
+    local null_ls_index = nil
+    local has_other_formatter = false
+    for i, lsp in ipairs(clients) do
+        if lsp.name == 'null-ls' then
+            null_ls_index = i
+        elseif lsp.resolved_capabilities.document_formatting then
+            has_other_formatter = true
+        end
+    end
+    if null_ls_index ~= nil and has_other_formatter then
+        clients[null_ls_index].resolved_capabilities.document_formatting = false
     end
 
     -- Add mappings

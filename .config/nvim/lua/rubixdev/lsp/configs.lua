@@ -101,31 +101,4 @@ if vim.g.is_android == 0 then
     require('lspconfig').html.setup(default_opts)
     require('lspconfig').emmet_ls.setup(default_opts)
     require('lspconfig').jsonls.setup(default_opts)
-    require('prettier').setup {
-        bin = 'prettier',
-        filetypes = {
-            'css',
-            'scss',
-            'html',
-            'javascript',
-            'typescript',
-            'json',
-            'json5',
-            'svelte',
-        },
-
-        -- Do not restrict prettier to npm projects
-        ['null-ls'] = {
-            condition = function()
-                return true
-            end,
-        },
-
-        -- Default prettier settings
-        arrow_parens = 'avoid',
-        semi = false,
-        single_quote = true,
-        tab_width = 4,
-        trailing_comma = 'all',
-    }
 end

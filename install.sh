@@ -83,6 +83,8 @@ install_android () {
         nodejs exa bat tmux lf python || exit 2
     cargo install pixterm || exit 2
 
+    npm i -g prettier prettier-plugin-svelte || exit 2
+
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         chsh -s zsh
     fi
@@ -144,6 +146,9 @@ install_arch () {
     $aur -S --needed --noconfirm pixterm-rust autojump-rs pixfetch \
         || [ "$is_root" = true ] || exit 2
 
+    # We must install prettier through npm for it to detect the svelte plugin globally
+    npm i -g prettier prettier-plugin-svelte || exit 2
+
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         sudo chsh -s "$(which zsh)" "$USER"
     fi
@@ -201,6 +206,8 @@ install_debian () {
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     cargo install fd-find ripgrep onefetch pixterm autojump tree-sitter-cli bat || exit 2
+
+    npm i -g prettier prettier-plugin-svelte || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb' || exit 2

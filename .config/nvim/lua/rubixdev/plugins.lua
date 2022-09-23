@@ -97,7 +97,6 @@ return require('packer').startup {
                 'nvim-lua/plenary.nvim',
             },
         }
-        use { 'MunifTanjim/prettier.nvim' }
 
         -- Completion
         use {
