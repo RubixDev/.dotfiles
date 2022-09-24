@@ -116,6 +116,7 @@ return require('packer').startup {
         }
         use { 'nvim-treesitter/nvim-treesitter-context' }
         use { 'p00f/nvim-ts-rainbow' }
+        use { 'nvim-treesitter/playground' }
 
         -- LSP setup
         use {
