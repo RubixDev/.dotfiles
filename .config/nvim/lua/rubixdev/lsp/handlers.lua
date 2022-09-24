@@ -120,7 +120,7 @@ M.on_attach = function(client, bufnr)
     for i, lsp in ipairs(clients) do
         if lsp.name == 'null-ls' then
             null_ls_index = i
-        elseif lsp.resolved_capabilities.document_formatting then
+        elseif lsp.resolved_capabilities.document_formatting and not disabled_formatter[lsp.name] then
             has_other_formatter = true
         end
     end
