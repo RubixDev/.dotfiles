@@ -65,9 +65,6 @@ upd () {
             godeb install "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)"
     fi
 
-    # dotfiles
-    updaterc
-
     # Oh-my-zsh plugins and themes
     pwd="$(pwd)"
     for d in "$ZSH_CUSTOM"/*/*; do
@@ -85,6 +82,9 @@ upd () {
 
     # Global npm packages
     npm update --global
+
+    # dotfiles
+    updaterc
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
