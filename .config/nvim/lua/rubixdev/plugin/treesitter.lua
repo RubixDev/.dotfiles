@@ -47,4 +47,14 @@ treesitter.setup {
         },
         additional_vim_regex_highlighting = false,
     },
+
+    -- RRethy/nvim-treesitter-endwise
+    endwise = {
+        enable = true,
+    },
+
+    -- windwp/nvim-ts-autotag
+    autotag = {
+        enable = true,
+    },
 }

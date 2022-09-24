@@ -29,7 +29,16 @@ return require('packer').startup {
         -- VIM enhancements
         use { 'editorconfig/editorconfig-vim' }
         use { 'andymass/vim-matchup' }
-        use { 'jiangmiao/auto-pairs' }
+        use {
+            {
+                'windwp/nvim-autopairs',
+                config = function()
+                    require('rubixdev.plugin.autopairs')
+                end,
+            },
+            { 'RRethy/nvim-treesitter-endwise' },
+            { 'windwp/nvim-ts-autotag' },
+        }
         use { 'tpope/vim-abolish' }
         use {
             'numToStr/Comment.nvim',
