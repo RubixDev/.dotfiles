@@ -57,4 +57,15 @@ treesitter.setup {
     autotag = {
         enable = true,
     },
+
+    -- andymass/vim-matchup
+    matchup = {
+        enable = true,
+    },
+
+    -- p00f/nvim-ts-rainbow
+    rainbow = {
+        enable = true,
+        extended_mode = false,
+    },
 }
