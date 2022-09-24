@@ -18,6 +18,11 @@ onedark.setup {
         -- Correctly looking pills in crates.nvim popup
         CratesNvimPopupPillText = { fg = '$bg0', bg = '$fg' },
         CratesNvimPopupPillBorder = { fg = '$fg' },
+
+        -- TODO comment highlighting
+        Todo = { fg = '$orange', fmt = 'bold' },
+        TSTodo = { fg = '$orange', fmt = 'bold' },
+        TSWarning = { fg = '$orange', fmt = 'bold' },
     },
 }
 onedark.load()
