@@ -100,7 +100,7 @@ return require('packer').startup {
         use { 'averms/ebnf-vim' }
         use { 'baskerville/vim-sxhkdrc' }
         use {
-            'RubixDev/crates.nvim', -- TODO: switch to 'saecki/crates.nvim' when merged
+            'saecki/crates.nvim',
             requires = { 'nvim-lua/plenary.nvim' },
         }
 
