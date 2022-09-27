@@ -1,11 +1,7 @@
 {
   "extends": "https://raw.githubusercontent.com/RubixDev/.dotfiles/main/.config/dprint/dprint.json",
   "includes": ["**/*"],
-  "excludes": [
-    "**/target",
-    "**/node_modules",
-    "**/*-lock.json"
-  ],
+  "excludes": ["**/target", "**/node_modules", "**/*-lock.json"],
   "plugins": [
     "https://plugins.dprint.dev/prettier-0.11.0.json@385edfc0e1212b3be6412cda49322ecd62cb38ac71b9b463869bebf23a4767e3",
     "https://plugins.dprint.dev/rustfmt-0.6.2.json@886c6f3161cf020c2d75160262b0f56d74a521e05cfb91ec4f956650c8ca76ca"
