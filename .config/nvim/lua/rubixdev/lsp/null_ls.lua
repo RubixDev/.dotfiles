@@ -21,8 +21,7 @@ utils.try_setup('null-ls', function(null_ls)
             null_ls.builtins.diagnostics.zsh, -- Very basic zsh linting
 
             null_ls.builtins.formatting.blue, -- Better python formatter
-            null_ls.builtins.formatting.stylua,
-            null_ls.builtins.formatting.prettier.with(require('rubixdev.lsp.prettier')),
+            null_ls.builtins.formatting.dprint.with(require('rubixdev.lsp.dprint')),
             null_ls.builtins.formatting.shfmt.with {
                 -- Does not support zsh specific things, but enable it anyway
                 extra_filetypes = { 'bash', 'zsh' },

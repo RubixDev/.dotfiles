@@ -1,0 +1,5 @@
+{
+  "extends": "https://raw.githubusercontent.com/RubixDev/.dotfiles/main/.config/dprint/dprint.json",
+  "includes": ["**/*"],
+  "excludes": []
+}
