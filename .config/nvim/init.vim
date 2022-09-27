@@ -22,6 +22,7 @@ set updatetime=300 " You will have bad experience for diagnostic messages when i
 set colorcolumn=120 " Highlight column 120
 autocmd FileType gitcommit setlocal colorcolumn=72
 autocmd FileType python setlocal colorcolumn=79
+autocmd FileType markdown setlocal colorcolumn=80
 
 " Tab settings
 set tabstop=4       " number of visual spaces per TAB
