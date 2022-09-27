@@ -27,9 +27,6 @@ utils.try_setup('null-ls', function(null_ls)
                 extra_filetypes = { 'bash', 'zsh' },
                 extra_args = { '--indent', '4', '--binary-next-line', '--case-indent', '--space-redirects' },
             }, -- Shell scripts
-            null_ls.builtins.formatting.sqlfluff.with {
-                extra_args = { '--dialect', 'postgres' },
-            }, -- SQL
             null_ls.builtins.formatting.trim_newlines, -- Trim trailing newlines
             null_ls.builtins.formatting.trim_whitespace, -- Trim trailing whitespace
 
