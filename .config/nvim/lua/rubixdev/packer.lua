@@ -32,9 +32,7 @@ return require('packer').startup {
         use {
             {
                 'windwp/nvim-autopairs',
-                config = function()
-                    require('rubixdev.plugin.autopairs')
-                end,
+                config = function() require('rubixdev.plugin.autopairs') end,
             },
             { 'RRethy/nvim-treesitter-endwise' },
             { 'windwp/nvim-ts-autotag' },
@@ -42,39 +40,29 @@ return require('packer').startup {
         use { 'tpope/vim-abolish' }
         use {
             'numToStr/Comment.nvim',
-            config = function()
-                require('Comment').setup()
-            end,
+            config = function() require('Comment').setup() end,
         }
         use { 'airblade/vim-rooter' }
         use { 'dstein64/vim-startuptime' }
         use {
             'lewis6991/impatient.nvim',
-            config = function()
-                require('impatient')
-            end,
+            config = function() require('impatient') end,
         }
         use { 'tpope/vim-repeat' }
         use {
             'ur4ltz/surround.nvim',
-            config = function()
-                require('rubixdev.plugin.surround')
-            end,
+            config = function() require('rubixdev.plugin.surround') end,
         }
 
         -- GUI enhancements
         use {
             'nvim-lualine/lualine.nvim',
             requires = { 'kyazdani42/nvim-web-devicons' },
-            config = function()
-                require('rubixdev.plugin.lualine')
-            end,
+            config = function() require('rubixdev.plugin.lualine') end,
         }
         use {
             'lukas-reineke/indent-blankline.nvim',
-            config = function()
-                require('rubixdev.plugin.indent_blankline')
-            end,
+            config = function() require('rubixdev.plugin.indent_blankline') end,
         }
 
         -- Fuzzy Finder
@@ -90,9 +78,7 @@ return require('packer').startup {
             requires = {
                 'nvim-lua/plenary.nvim',
             },
-            config = function()
-                require('rubixdev.plugin.telescope')
-            end,
+            config = function() require('rubixdev.plugin.telescope') end,
         }
 
         -- Language support
@@ -100,9 +86,7 @@ return require('packer').startup {
         use {
             'preservim/vim-markdown',
             requires = { 'godlygeek/tabular' },
-            config = function()
-                require('rubixdev.plugin.markdown')
-            end,
+            config = function() require('rubixdev.plugin.markdown') end,
         }
         use { 'averms/ebnf-vim' }
         use { 'baskerville/vim-sxhkdrc' }
@@ -114,12 +98,8 @@ return require('packer').startup {
         -- Treesitter
         use {
             'nvim-treesitter/nvim-treesitter',
-            run = function()
-                require('nvim-treesitter.install').update { with_sync = true }
-            end,
-            config = function()
-                require('rubixdev.plugin.treesitter')
-            end,
+            run = function() require('nvim-treesitter.install').update { with_sync = true } end,
+            config = function() require('rubixdev.plugin.treesitter') end,
         }
         use { 'nvim-treesitter/nvim-treesitter-context' }
         use { 'p00f/nvim-ts-rainbow' }
@@ -128,9 +108,7 @@ return require('packer').startup {
         -- LSP setup
         use {
             'neovim/nvim-lspconfig',
-            config = function()
-                require('rubixdev.lsp')
-            end,
+            config = function() require('rubixdev.lsp') end,
         }
         use {
             'williamboman/mason.nvim',
@@ -158,9 +136,7 @@ return require('packer').startup {
                 'hrsh7th/cmp-buffer',
                 'saadparwaiz1/cmp_luasnip',
             },
-            config = function()
-                require('rubixdev.plugin.cmp')
-            end,
+            config = function() require('rubixdev.plugin.cmp') end,
         }
 
         -- Snippets
@@ -178,24 +154,18 @@ return require('packer').startup {
         use { 'tpope/vim-fugitive' }
         use {
             'lewis6991/gitsigns.nvim',
-            config = function()
-                require('rubixdev.plugin.gitsigns')
-            end,
+            config = function() require('rubixdev.plugin.gitsigns') end,
         }
 
         -- Markdown preview
         use { 'iamcco/markdown-preview.nvim', run = 'cd app && yarn install', disable = _G.is_android }
 
         -- Automatically set up your configuration after cloning packer.nvim
-        if packer_bootstrap then
-            require('packer').sync()
-        end
+        if packer_bootstrap then require('packer').sync() end
     end,
     config = {
         display = {
-            open_fn = function()
-                return require('packer.util').float { border = 'rounded' }
-            end,
+            open_fn = function() return require('packer.util').float { border = 'rounded' } end,
             prompt_border = 'rounded',
         },
         autoremove = true,

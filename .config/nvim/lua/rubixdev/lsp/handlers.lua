@@ -88,14 +88,17 @@ local function lsp_keymaps(bufnr)
     map('n', '<leader>f', vim.lsp.buf.formatting, opts)
 
     -- Get signatures when in argument lists.
-    utils.try_setup('lsp_signature', function(lsp_signature)
-        lsp_signature.on_attach({
-            bind = true,
-            handler_opts = {
-                border = 'rounded',
-            },
-        }, bufnr)
-    end)
+    utils.try_setup(
+        'lsp_signature',
+        function(lsp_signature)
+            lsp_signature.on_attach({
+                bind = true,
+                handler_opts = {
+                    border = 'rounded',
+                },
+            }, bufnr)
+        end
+    )
 end
 
 M.on_attach = function(client, bufnr)
@@ -109,9 +112,7 @@ M.on_attach = function(client, bufnr)
         sumneko_lua = true,
         pylsp = true,
     }
-    if disabled_formatter[client.name] then
-        client.resolved_capabilities.document_formatting = false
-    end
+    if disabled_formatter[client.name] then client.resolved_capabilities.document_formatting = false end
 
     -- Disable formatter of null-ls if formatting is provided by other LSP
     local clients = vim.lsp.buf_get_clients()
@@ -135,8 +136,9 @@ M.on_attach = function(client, bufnr)
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-utils.try_setup('cmp_nvim_lsp', function(cmp_nvim_lsp)
-    M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
-end)
+utils.try_setup(
+    'cmp_nvim_lsp',
+    function(cmp_nvim_lsp) M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities) end
+)
 
 return M

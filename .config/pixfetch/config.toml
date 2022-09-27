@@ -4,31 +4,31 @@ max_width = 15
 
 # The minimum alpha value for pixels to be displayed
 # - Must be an integer between 0 and 255
-#alpha_threshold = 50
+# alpha_threshold = 50
 
 # Whether to show a colon between each info key and value
-#show_colons = true
+# show_colons = true
 
 # When set to true, skip the image cache
-#skip_cache = true
+# skip_cache = true
 
 # Use CatmullRom (cubic) interpolation while resizing
-#aliasing = false
+# aliasing = false
 
 # The gap size in pixels to the left and right of the image
 # - Must be an integer between 0 and 10
-#gap = 2
+# gap = 2
 
 # Override the main color
 # - Must be an integer between 0 and 7
 # - The color for the user@hostname will be this + 1
-#color_override = 2
+# color_override = 2
 
 # Path to a custom image to be used instead
-#image_override = "~/Pictures/logo.png"
+# image_override = "~/Pictures/logo.png"
 
 # A list of infos to exclusively show
-#info_whitelist = [
+# info_whitelist = [
 #    "UserAtHostname",
 #    "OS",
 #    "Host",
@@ -44,19 +44,19 @@ max_width = 15
 #    "Seperator",
 #    "Colors1",
 #    "Colors2",
-#]
+# ]
 
 # A list of infos to not show
 info_blacklist = [
-#    "UserAtHostname",
-#    "OS",
-#    "Host",
-#    "Kernel",
-#    "Uptime",
-#    "Packages",
+    # "UserAtHostname",
+    # "OS",
+    # "Host",
+    # "Kernel",
+    # "Uptime",
+    # "Packages",
     "Shell",
     "Terminal", # takes by far the longest to fetch
-#    "CPU",
+    # "CPU",
     "Memory",
     "Swap",
     "Battery",

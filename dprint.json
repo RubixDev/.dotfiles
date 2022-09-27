@@ -1,0 +1,5 @@
+{
+  "extends": ".config/dprint/dprint.json",
+  "includes": ["**/*"],
+  "excludes": [".config/alacritty/alacritty.yml"]
+}

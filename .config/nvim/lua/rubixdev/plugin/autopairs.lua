@@ -16,21 +16,15 @@ autopairs.add_rules {
     end),
     Rule('( ', ' )')
         :with_pair(cond.none())
-        :with_move(function(opts)
-            return opts.prev_char:match('.%)') ~= nil
-        end)
+        :with_move(function(opts) return opts.prev_char:match('.%)') ~= nil end)
         :use_key(')'),
     Rule('{ ', ' }')
         :with_pair(cond.none())
-        :with_move(function(opts)
-            return opts.prev_char:match('.%}') ~= nil
-        end)
+        :with_move(function(opts) return opts.prev_char:match('.%}') ~= nil end)
         :use_key('}'),
     Rule('[ ', ' ]')
         :with_pair(cond.none())
-        :with_move(function(opts)
-            return opts.prev_char:match('.%]') ~= nil
-        end)
+        :with_move(function(opts) return opts.prev_char:match('.%]') ~= nil end)
         :use_key(']'),
 }
 
@@ -43,23 +37,15 @@ local function multiline_close_jump(open, close)
             local line = utils.text_get_current_line(0)
 
             -- Require cursor at end of line
-            if #line ~= col then
-                return false
-            end
+            if #line ~= col then return false end
 
             -- Prefer closing unclosed pairs
             local unclosed_count = 0
             for c in line:gmatch('[\\' .. open .. '\\' .. close .. ']') do
-                if c == open then
-                    unclosed_count = unclosed_count + 1
-                end
-                if unclosed_count > 0 and c == close then
-                    unclosed_count = unclosed_count - 1
-                end
+                if c == open then unclosed_count = unclosed_count + 1 end
+                if unclosed_count > 0 and c == close then unclosed_count = unclosed_count - 1 end
             end
-            if unclosed_count > 0 then
-                return false
-            end
+            if unclosed_count > 0 then return false end
 
             -- Find row with closing pair
             local nextrow = row + 1
@@ -76,9 +62,7 @@ local function multiline_close_jump(open, close)
         :with_cr(cond.none())
         :with_del(cond.none())
         :set_end_pair_length(0)
-        :replace_endpair(function()
-            return '<esc>xEa'
-        end)
+        :replace_endpair(function() return '<esc>xEa' end)
 end
 
 autopairs.add_rules {

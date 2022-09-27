@@ -3,9 +3,9 @@ local cmp = require('cmp')
 -- Stop if luasnip is not (yet) installed
 local luasnip_ok, luasnip = pcall(require, 'luasnip')
 if not luasnip_ok then
-    vim.schedule(function()
-        vim.notify('Did not setup nvim-cmp, because luasnip is not installed', vim.log.levels.WARN)
-    end)
+    vim.schedule(
+        function() vim.notify('Did not setup nvim-cmp, because luasnip is not installed', vim.log.levels.WARN) end
+    )
     return
 end
 
@@ -39,9 +39,7 @@ local kind_icons = {
 
 cmp.setup {
     snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end,
+        expand = function(args) luasnip.lsp_expand(args.body) end,
     },
     mapping = cmp.mapping.preset.insert {
         -- Tab immediately completes or jumps in snippet. Ctrl+N/Ctrl+P to select.
@@ -129,6 +127,4 @@ cmp.setup.cmdline(':', {
 
 -- Insert parentheses after function or method completion
 local cmp_autopairs_ok, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
-if cmp_autopairs_ok then
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-end
+if cmp_autopairs_ok then cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done()) end

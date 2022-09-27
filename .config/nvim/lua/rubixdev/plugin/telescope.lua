@@ -54,8 +54,6 @@ telescope.setup {
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<Leader>o', builtin.find_files)
-vim.keymap.set('n', '<Leader>O', function()
-    builtin.find_files { no_ignore = true }
-end)
+vim.keymap.set('n', '<Leader>O', function() builtin.find_files { no_ignore = true } end)
 vim.keymap.set('n', '<Leader>s', builtin.live_grep)
 vim.keymap.set('n', '<Leader>;', builtin.buffers)
