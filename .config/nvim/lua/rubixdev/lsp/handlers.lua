@@ -111,6 +111,7 @@ M.on_attach = function(client, bufnr)
         jsonls = true,
         sumneko_lua = true,
         pylsp = true,
+        taplo = true,
     }
     if disabled_formatter[client.name] then client.resolved_capabilities.document_formatting = false end
 
