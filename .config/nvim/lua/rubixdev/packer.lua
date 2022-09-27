@@ -54,6 +54,13 @@ return require('packer').startup {
                 require('impatient')
             end,
         }
+        use { 'tpope/vim-repeat' }
+        use {
+            'ur4ltz/surround.nvim',
+            config = function()
+                require('rubixdev.plugin.surround')
+            end,
+        }
 
         -- GUI enhancements
         use {
