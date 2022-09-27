@@ -270,7 +270,7 @@ install_zsh_custom themes romkatv powerlevel10k
 }
 
 ########### dotfiles Installation ###########
-install_file () {
+link () {
     src="$1"
     if [ -n "$2" ]; then
         dest="$2"
@@ -288,38 +288,38 @@ install_file () {
 [ -e ~/.SpaceVim ] && curl -sLf https://spacevim.org/install.sh | bash -s -- --uninstall
 
 # Create symlinks
-install_file .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
-install_file .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
-install_file .bashrc
-install_file .config/env
-install_file .config/aliasrc
-install_file .config/tmux/tmux.conf
-install_file .config/nvim/init.vim
-install_file .config/nvim/lua
-install_file .config/paru/paru.conf
-install_file .config/npm/npmrc
-install_file .config/python/pythonrc
-install_file .config/bpython/config
-install_file .config/pixfetch/config.toml
-install_file .config/dprint
+link .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
+link .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
+link .bashrc
+link .config/env
+link .config/aliasrc
+link .config/tmux/tmux.conf
+link .config/nvim/init.vim
+link .config/nvim/lua
+link .config/paru/paru.conf
+link .config/npm/npmrc
+link .config/python/pythonrc
+link .config/bpython/config
+link .config/pixfetch/config.toml
+link .config/dprint
 if [ "$is_desktop" = true ]; then
-    install_file .config/alacritty/alacritty.yml
-    install_file .config/bspwm/bspwmrc
-    install_file .config/sxhkd/sxhkdrc
-    install_file .config/dunst/dunstrc
-    install_file .config/picom.conf
-    install_file .config/polybar/config.ini
-    install_file .gtkrc-2.0 "${GTK2_RC_FILES:-$HOME/.gtkrc-2.0}"
-    install_file .config/gtk-3.0/settings.ini
-    install_file .config/qt5ct/qt5ct.conf
-    install_file .icons/default/index.theme
-    install_file .config/Kvantum/kvantum.kvconfig
-    install_file .config/BetterDiscord/themes/SimplyTransparent.theme.css
+    link .config/alacritty/alacritty.yml
+    link .config/bspwm/bspwmrc
+    link .config/sxhkd/sxhkdrc
+    link .config/dunst/dunstrc
+    link .config/picom.conf
+    link .config/polybar/config.ini
+    link .gtkrc-2.0 "${GTK2_RC_FILES:-$HOME/.gtkrc-2.0}"
+    link .config/gtk-3.0/settings.ini
+    link .config/qt5ct/qt5ct.conf
+    link .icons/default/index.theme
+    link .config/Kvantum/kvantum.kvconfig
+    link .config/BetterDiscord/themes/SimplyTransparent.theme.css
 
     # XDG-MIME default apps
-    install_file .config/mimeapps.list
-    install_file .local/share/applications/lf.desktop
-    install_file .local/share/applications/nsxiv.desktop
-    install_file .local/share/applications/nvim.desktop
-    install_file .local/share/applications/zathura.desktop
+    link .config/mimeapps.list
+    link .local/share/applications/lf.desktop
+    link .local/share/applications/nsxiv.desktop
+    link .local/share/applications/nvim.desktop
+    link .local/share/applications/zathura.desktop
 fi
