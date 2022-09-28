@@ -128,6 +128,10 @@ return require('packer').startup {
             'rmagatti/goto-preview',
             config = function() require('rubixdev.plugin.goto_preview') end,
         }
+        use {
+            'weilbith/nvim-code-action-menu',
+            config = function() require('rubixdev.plugin.code_action_menu') end,
+        }
 
         -- Completion
         use {

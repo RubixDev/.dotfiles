@@ -67,24 +67,33 @@ local function show_documentation()
     end
 end
 
+local function code_actions()
+    local ok, menu = pcall(require, 'code_action_menu')
+    if ok then
+        menu.open_code_action_menu()
+    else
+        vim.lsp.buf.code_action()
+    end
+end
+
 local function lsp_keymaps(bufnr)
     local opts = { buffer = bufnr, silent = true }
     local map = vim.keymap.set
-    local builtin = require('telescope.builtin')
+    local telescope = require('telescope.builtin')
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     map('n', 'gD', vim.lsp.buf.declaration, opts)
-    map('n', 'gd', builtin.lsp_definitions, opts)
+    map('n', 'gd', telescope.lsp_definitions, opts)
     map('n', 'K', show_documentation, opts)
-    map('n', 'gi', builtin.lsp_implementations, opts)
-    map('n', '<leader>D', builtin.lsp_type_definitions, opts)
+    map('n', 'gi', telescope.lsp_implementations, opts)
+    map('n', '<leader>D', telescope.lsp_type_definitions, opts)
     map('n', '<leader>r', vim.lsp.buf.rename, opts)
-    map('n', '<leader>a', vim.lsp.buf.code_action, opts)
-    map('n', 'gr', builtin.lsp_references, opts)
+    map('n', '<leader>a', code_actions, opts)
+    map('n', 'gr', telescope.lsp_references, opts)
     map('n', '<leader>e', vim.diagnostic.open_float, opts)
     map('n', '[d', vim.diagnostic.goto_prev, opts)
     map('n', ']d', vim.diagnostic.goto_next, opts)
-    map('n', ']D', builtin.diagnostics, opts)
+    map('n', ']D', telescope.diagnostics, opts)
     map('n', '<leader>f', vim.lsp.buf.formatting, opts)
 
     -- Get signatures when in argument lists.
