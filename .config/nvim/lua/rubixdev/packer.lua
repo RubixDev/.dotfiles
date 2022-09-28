@@ -124,6 +124,10 @@ return require('packer').startup {
                 'nvim-lua/plenary.nvim',
             },
         }
+        use {
+            'rmagatti/goto-preview',
+            config = function() require('rubixdev.plugin.goto_preview') end,
+        }
 
         -- Completion
         use {
