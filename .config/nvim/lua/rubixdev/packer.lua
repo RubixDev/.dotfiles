@@ -144,6 +144,7 @@ return require('packer').startup {
                 'hrsh7th/cmp-buffer',
                 'saadparwaiz1/cmp_luasnip',
                 { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim' },
+                { 'David-Kunz/cmp-npm', requires = 'nvim-lua/plenary.nvim' },
             },
             config = function() require('rubixdev.plugin.cmp') end,
         }

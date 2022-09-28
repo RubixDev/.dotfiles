@@ -1,4 +1,5 @@
 local cmp = require('cmp')
+local utils = require('rubixdev.utils')
 
 -- Stop if luasnip is not (yet) installed
 local luasnip_ok, luasnip = pcall(require, 'luasnip')
@@ -36,6 +37,8 @@ local kind_icons = {
     Operator = '',
     TypeParameter = '',
 }
+
+utils.try_setup('cmp-npm')
 
 cmp.setup {
     snippet = {
@@ -92,6 +95,7 @@ cmp.setup {
         { name = 'buffer' },
         { name = 'crates' },
         { name = 'git' },
+        { name = 'npm', keyword_length = 4 },
     },
     experimental = {
         ghost_text = true,
@@ -110,6 +114,8 @@ cmp.setup {
                 luasnip = '[Snippet]',
                 nvim_lua = '[Lua]',
                 crates = '[crates.nvim]',
+                git = '[Git]',
+                npm = '[NPM]',
             })[entry.source.name]
             return vim_item
         end,
@@ -130,4 +136,4 @@ cmp.setup.cmdline(':', {
 local cmp_autopairs_ok, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
 if cmp_autopairs_ok then cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done()) end
 
-require('rubixdev.utils').try_setup('cmp_git')
+utils.try_setup('cmp_git')
