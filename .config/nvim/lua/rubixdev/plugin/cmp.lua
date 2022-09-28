@@ -91,6 +91,7 @@ cmp.setup {
         { name = 'path' },
         { name = 'buffer' },
         { name = 'crates' },
+        { name = 'git' },
     },
     experimental = {
         ghost_text = true,
@@ -128,3 +129,5 @@ cmp.setup.cmdline(':', {
 -- Insert parentheses after function or method completion
 local cmp_autopairs_ok, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
 if cmp_autopairs_ok then cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done()) end
+
+require('rubixdev.utils').try_setup('cmp_git')
