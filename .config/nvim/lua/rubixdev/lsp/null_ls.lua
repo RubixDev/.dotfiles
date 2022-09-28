@@ -5,7 +5,6 @@ utils.try_setup('null-ls', function(null_ls)
     null_ls.setup {
         on_attach = handlers.on_attach,
         sources = {
-            null_ls.builtins.code_actions.gitsigns, -- Code actions for git
             null_ls.builtins.code_actions.shellcheck, -- Code actions to disable shellcheck warnings
 
             null_ls.builtins.diagnostics.actionlint, -- GitHub Actions workflow
