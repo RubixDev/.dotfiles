@@ -54,6 +54,7 @@
   },
 
   "rustfmt": {
+    "max_width": 100
   },
 
   "sql": {
