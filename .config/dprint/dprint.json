@@ -68,7 +68,7 @@
   },
 
   "includes": ["**/*"],
-  "excludes": [],
+  "excludes": ["**/target", "**/node_modules", "**/*-lock.json"],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.74.0.wasm",
     "https://plugins.dprint.dev/json-0.15.6.wasm",
@@ -78,7 +78,7 @@
     "https://plugins.dprint.dev/sql-0.1.2.wasm",
     "https://plugins.dprint.dev/rustfmt-0.6.2.json@886c6f3161cf020c2d75160262b0f56d74a521e05cfb91ec4f956650c8ca76ca",
     "https://plugins.dprint.dev/RubixDev/stylua-v0.1.0.wasm",
-    "https://plugins.dprint.dev/prettier-0.11.0.json@385edfc0e1212b3be6412cda49322ecd62cb38ac71b9b463869bebf23a4767e3",
+    "https://plugins.dprint.dev/prettier-0.12.0.json@f8c34316196cf4d0fb2f51b19073331258e15e71a934ee04a7b3328db684c98f",
     "https://plugins.dprint.dev/RubixDev/ebnf-0.1.0.wasm"
   ]
 }

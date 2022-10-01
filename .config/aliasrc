@@ -13,7 +13,7 @@ fi
 command -v pixterm > /dev/null && alias li='pixterm -fa'
 
 alias maketex='latexmk -xelatex -pdfxe -halt-on-error'
-alias dprinit='cp ~/.config/dprint/dprint_wrapped.json dprint.json'
+alias dprinit='cp ~/.config/dprint/dprint.json dprint.json'
 alias dprintg='dprint --config $XDG_CONFIG_HOME/dprint/dprint.json'
 
 updaterc () {
