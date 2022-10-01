@@ -40,7 +40,7 @@ end
 -- Enable dynamic highlighting from LSP
 local function lsp_highlight_document(client)
     -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.documentHighlightProvider then
         vim.api.nvim_exec(
             [[
                 augroup lsp_document_highlight
@@ -76,6 +76,43 @@ local function code_actions()
     end
 end
 
+local function format()
+    local disabled_formatter = {
+        svelte = true,
+        tsserver = true,
+        cssls = true,
+        html = true,
+        jsonls = true,
+        sumneko_lua = true,
+        pylsp = true,
+        taplo = true,
+        dockerls = true,
+    }
+
+    vim.lsp.buf.format {
+        filter = function(client)
+            -- Disable formatting for some language servers
+            if disabled_formatter[client.name] then return false end
+
+            -- Disable formatter of null-ls if formatting is provided by another LSP
+            if client.name ~= 'null-ls' then return true end
+            local clients = vim.lsp.buf_get_clients()
+            local has_other_formatter = false
+            for _, lsp in ipairs(clients) do
+                if
+                    lsp.name ~= 'null-ls'
+                    and lsp.server_capabilities.documentFormattingProvider
+                    and not disabled_formatter[lsp.name]
+                then
+                    has_other_formatter = true
+                end
+            end
+            if has_other_formatter then return false end
+            return true
+        end,
+    }
+end
+
 local function lsp_keymaps(bufnr)
     local opts = { buffer = bufnr, silent = true }
     local map = vim.keymap.set
@@ -94,7 +131,7 @@ local function lsp_keymaps(bufnr)
     map('n', '[d', vim.diagnostic.goto_prev, opts)
     map('n', ']d', vim.diagnostic.goto_next, opts)
     map('n', ']D', telescope.diagnostics, opts)
-    map('n', '<leader>f', vim.lsp.buf.formatting, opts)
+    map('n', '<leader>f', format, opts)
 
     -- Get signatures when in argument lists.
     utils.try_setup(
@@ -111,35 +148,6 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-    -- Disable formatting for some language servers
-    local disabled_formatter = {
-        svelte = true,
-        tsserver = true,
-        cssls = true,
-        html = true,
-        jsonls = true,
-        sumneko_lua = true,
-        pylsp = true,
-        taplo = true,
-        dockerls = true,
-    }
-    if disabled_formatter[client.name] then client.resolved_capabilities.document_formatting = false end
-
-    -- Disable formatter of null-ls if formatting is provided by other LSP
-    local clients = vim.lsp.buf_get_clients()
-    local null_ls_index = nil
-    local has_other_formatter = false
-    for i, lsp in ipairs(clients) do
-        if lsp.name == 'null-ls' then
-            null_ls_index = i
-        elseif lsp.resolved_capabilities.document_formatting and not disabled_formatter[lsp.name] then
-            has_other_formatter = true
-        end
-    end
-    if null_ls_index ~= nil and has_other_formatter then
-        clients[null_ls_index].resolved_capabilities.document_formatting = false
-    end
-
     -- Add mappings
     lsp_keymaps(bufnr)
     -- LSP based highlighting
