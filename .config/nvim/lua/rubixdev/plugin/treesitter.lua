@@ -1,5 +1,15 @@
 local treesitter = require('nvim-treesitter.configs')
 
+vim.filetype.add { extension = { ebnf = 'ebnf' } }
+
+require('nvim-treesitter.parsers').get_parser_configs().ebnf = {
+    install_info = {
+        url = 'https://github.com/RubixDev/ebnf.git',
+        files = { 'crates/tree-sitter-ebnf/src/parser.c' },
+        branch = 'main',
+    },
+}
+
 treesitter.setup {
     ensure_installed = {
         'bash',
@@ -9,6 +19,7 @@ treesitter.setup {
         'cpp',
         'css',
         'dockerfile',
+        'ebnf',
         'gdscript',
         -- 'gitattributes', -- currently experimental
         'gitignore',

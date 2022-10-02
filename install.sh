@@ -296,6 +296,7 @@ link .config/aliasrc
 link .config/tmux/tmux.conf
 link .config/nvim/init.vim
 link .config/nvim/lua
+link .config/nvim/queries
 link .config/paru/paru.conf
 link .config/npm/npmrc
 link .config/python/pythonrc

@@ -27,4 +27,11 @@ onedark.setup {
 }
 onedark.load()
 
+vim.api.nvim_set_hl(0, '@grammar.terminal', { link = '@string' })
+vim.api.nvim_set_hl(0, '@grammar.special', { link = '@string.regex' })
+vim.api.nvim_set_hl(0, '@grammar.nonterminal.pascal', { link = '@type' })
+vim.api.nvim_set_hl(0, '@grammar.nonterminal.camel', { link = '@property' })
+vim.api.nvim_set_hl(0, '@grammar.nonterminal.upper', { link = '@constant' })
+vim.api.nvim_set_hl(0, '@grammar.nonterminal.lower', { link = '@parameter' })
+
 return require('onedark.colors')

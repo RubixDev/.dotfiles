@@ -88,7 +88,6 @@ return require('packer').startup {
             requires = { 'godlygeek/tabular' },
             config = function() require('rubixdev.plugin.markdown') end,
         }
-        use { 'averms/ebnf-vim' }
         use { 'baskerville/vim-sxhkdrc' }
         use {
             'saecki/crates.nvim',
