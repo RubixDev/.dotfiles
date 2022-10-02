@@ -200,7 +200,7 @@ install_debian () {
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    cargo install fd-find ripgrep onefetch pixterm autojump tree-sitter-cli bat dprint || exit 2
+    cargo install fd-find ripgrep onefetch pixterm autojump tree-sitter-cli bat dprint exa || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb' || exit 2
