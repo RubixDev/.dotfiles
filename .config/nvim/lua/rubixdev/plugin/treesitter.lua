@@ -4,8 +4,9 @@ vim.filetype.add { extension = { ebnf = 'ebnf' } }
 
 require('nvim-treesitter.parsers').get_parser_configs().ebnf = {
     install_info = {
-        url = 'https://github.com/RubixDev/tree-sitter-ebnf.git',
+        url = 'https://github.com/RubixDev/ebnf.git',
         files = { 'src/parser.c' },
+        location = 'crates/tree-sitter-ebnf',
         branch = 'main',
     },
 }
