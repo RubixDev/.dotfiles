@@ -157,7 +157,7 @@ end
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 utils.try_setup(
     'cmp_nvim_lsp',
-    function(cmp_nvim_lsp) M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities) end
+    function(cmp_nvim_lsp) M.capabilities = cmp_nvim_lsp.default_capabilities() end
 )
 
 return M
