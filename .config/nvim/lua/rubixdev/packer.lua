@@ -53,6 +53,7 @@ return require('packer').startup {
             'ur4ltz/surround.nvim',
             config = function() require('rubixdev.plugin.surround') end,
         }
+        use { 'fidian/hexmode' }
 
         -- GUI enhancements
         use {

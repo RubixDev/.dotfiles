@@ -71,3 +71,6 @@ endif
 
 " Load lua config
 lua require('rubixdev')
+
+let g:hexmode_patterns = '*.bin,*.wasm'
+let g:tex_flavor = 'latex'
