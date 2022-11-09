@@ -99,7 +99,7 @@ return require('packer').startup {
         -- Treesitter
         use {
             'nvim-treesitter/nvim-treesitter',
-            run = function() require('nvim-treesitter.install').update { with_sync = true } end,
+            run = ':TSUpdate',
             config = function() require('rubixdev.plugin.treesitter') end,
         }
         use { 'nvim-treesitter/nvim-treesitter-context' }
