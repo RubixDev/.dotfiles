@@ -103,6 +103,9 @@ return require('packer').startup {
         use { 'nvim-treesitter/nvim-treesitter-context' }
         use { 'p00f/nvim-ts-rainbow' }
         use { 'nvim-treesitter/playground' }
+        use { 'smarthome-go/tree-sitter-hms' }
+        use { 'RubixDev/ebnf', rtp = 'crates/tree-sitter-ebnf' }
+        use { 'rush-rs/tree-sitter-rush' }
 
         -- LSP setup
         use {

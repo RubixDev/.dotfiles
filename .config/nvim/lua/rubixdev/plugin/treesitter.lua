@@ -1,12 +1,26 @@
 local treesitter = require('nvim-treesitter.configs')
 
-vim.filetype.add { extension = { ebnf = 'ebnf' } }
+vim.filetype.add { extension = { ebnf = 'ebnf', hms = 'homescript', rush = 'rush' } }
 
 require('nvim-treesitter.parsers').get_parser_configs().ebnf = {
     install_info = {
         url = 'https://github.com/RubixDev/ebnf.git',
         files = { 'src/parser.c' },
         location = 'crates/tree-sitter-ebnf',
+        branch = 'main',
+    },
+}
+require('nvim-treesitter.parsers').get_parser_configs().hms = {
+    install_info = {
+        url = '~/Coding/Rust/tree-sitter-hms',
+        files = { 'src/parser.c' },
+    },
+    filetype = 'homescript',
+}
+require('nvim-treesitter.parsers').get_parser_configs().rush = {
+    install_info = {
+        url = 'https://github.com/rush-rs/tree-sitter-rush.git',
+        files = { 'src/parser.c' },
         branch = 'main',
     },
 }
@@ -60,6 +74,10 @@ treesitter.setup {
             'sxhkdrc',
         },
         additional_vim_regex_highlighting = false,
+    },
+
+    indent = {
+        enable = true,
     },
 
     -- RRethy/nvim-treesitter-endwise
