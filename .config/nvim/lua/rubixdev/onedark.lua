@@ -20,18 +20,19 @@ onedark.setup {
         CratesNvimPopupPillBorder = { fg = '$fg' },
 
         -- TODO comment highlighting
-        Todo = { fg = '$orange', fmt = 'bold' },
-        TSTodo = { fg = '$orange', fmt = 'bold' },
-        TSWarning = { fg = '$orange', fmt = 'bold' },
+        ['@text.warning'] = { fg = '$orange', fmt = 'bold' },
+
+        -- Rust
+        ['@storageclass.lifetime'] = { fg = '$red' },
+        ['@type.qualifier'] = { fg = '$purple' },
     },
 }
 onedark.load()
 
-vim.api.nvim_set_hl(0, '@grammar.terminal', { link = '@string' })
-vim.api.nvim_set_hl(0, '@grammar.special', { link = '@string.regex' })
-vim.api.nvim_set_hl(0, '@grammar.nonterminal.pascal', { link = '@type' })
-vim.api.nvim_set_hl(0, '@grammar.nonterminal.camel', { link = '@property' })
-vim.api.nvim_set_hl(0, '@grammar.nonterminal.upper', { link = '@constant' })
-vim.api.nvim_set_hl(0, '@grammar.nonterminal.lower', { link = '@parameter' })
+vim.api.nvim_set_hl(0, '@string.special.grammar', { link = '@string.regex' })
+vim.api.nvim_set_hl(0, '@symbol.grammar.pascal', { link = '@type' })
+vim.api.nvim_set_hl(0, '@symbol.grammar.camel', { link = '@property' })
+vim.api.nvim_set_hl(0, '@symbol.grammar.upper', { link = '@constant' })
+vim.api.nvim_set_hl(0, '@symbol.grammar.lower', { link = '@parameter' })
 
 return require('onedark.colors')
