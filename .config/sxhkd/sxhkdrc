@@ -141,7 +141,7 @@ super + {Left,Down,Up,Right}
     brightnessctl set {5, 1}%{+,-}
 
 XF86Audio{Raise,Lower}Volume
-    pamixer -{i,d} 10
+    pamixer -{i,d} 5
 
 XF86AudioMute
     pamixer -t
