@@ -73,6 +73,7 @@ treesitter.setup {
         disable = {
             'bash',
             'sxhkdrc',
+            'gitcommit',
         },
         additional_vim_regex_highlighting = false,
     },
