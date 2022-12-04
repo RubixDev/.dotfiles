@@ -159,6 +159,8 @@ us_de () {
 
 postclip () { curl -sSL https://clip.rubixdev.de/index.php -F data="$1" -o /dev/null; }
 alias fetchclip='curl -sSL https://clip.rubixdev.de/clipboard.txt'
+alias shareclip='postclip "$(getclip | base64 --wrap=0)"'
+alias loadclip='fetchclip | base64 -d | setclip'
 
 findfont () {
     [ -n "$1" ] || {
