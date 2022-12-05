@@ -2,14 +2,6 @@ local treesitter = require('nvim-treesitter.configs')
 
 vim.filetype.add { extension = { ebnf = 'ebnf', hms = 'homescript', rush = 'rush' } }
 
-require('nvim-treesitter.parsers').get_parser_configs().ebnf = {
-    install_info = {
-        url = 'https://github.com/RubixDev/ebnf.git',
-        files = { 'src/parser.c' },
-        location = 'crates/tree-sitter-ebnf',
-        branch = 'main',
-    },
-}
 require('nvim-treesitter.parsers').get_parser_configs().hms = {
     install_info = {
         url = 'https://github.com/smarthome-go/tree-sitter-hms.git',
