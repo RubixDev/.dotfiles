@@ -20,11 +20,15 @@ onedark.setup {
         CratesNvimPopupPillBorder = { fg = '$fg' },
 
         -- TODO comment highlighting
-        ['@text.warning'] = { fg = '$orange', fmt = 'bold' },
+        ['@text.todo'] = { fg = '$orange', fmt = 'bold' },
 
         -- Rust
         ['@storageclass.lifetime'] = { fg = '$red' },
         ['@type.qualifier'] = { fg = '$purple' },
+
+        -- Tree-sitter diff highlights
+        ['@text.diff.add'] = { fg = '$green' },
+        ['@text.diff.delete'] = { fg = '$red' },
     },
 }
 onedark.load()
