@@ -36,57 +36,61 @@ editrc () {
     ${EDITOR:-nvim} ~/.dotfiles/.zshrc
 }
 
+upd_run () {
+    "$@" || exit 1
+}
+
 upd () {
     # Package manager
     pwd="$(pwd)"
     if [ "$(uname -o)" = "Android" ]; then
-        pkg upgrade
+        upd_run pkg upgrade
     elif command -v apt > /dev/null; then
-        sudo apt update
-        sudo apt upgrade
-        sudo apt autoremove
-        sudo apt autoclean
+        upd_run sudo apt update
+        upd_run sudo apt upgrade
+        upd_run sudo apt autoremove
+        upd_run sudo apt autoclean
     else
-        paru -Syu
+        upd_run paru -Syu
     fi
 
     # Cargo packages
     cargo_pkg_list=()
     while IFS='' read -r line; do cargo_pkg_list+=("$line"); done < <(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
     if [ "${#cargo_pkg_list[@]}" -ne 0 ]; then
-        cargo install "${cargo_pkg_list[@]}"
+        upd_run cargo install "${cargo_pkg_list[@]}"
     fi
     unset cargo_pkg_list
 
     # Rust toolchains
-    command -v rustup > /dev/null && rustup update
+    command -v rustup > /dev/null && upd_run rustup update
 
     # Go on Debian
     if command -v godeb > /dev/null; then
         [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)" ] || \
-            godeb install "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)"
+            upd_run godeb install "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)"
     fi
 
     # Oh-my-zsh plugins and themes
     pwd="$(pwd)"
     for d in "$ZSH_CUSTOM"/*/*; do
         [ ! -d "$d" ] || cd "$d" || return 2
-        git pull
+        upd_run git pull
     done
     cd "$pwd" || return 2
 
     # Neovim plugins and packages
-    nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-    nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
+    upd_run nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    upd_run nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll'
 
     # Flatpaks
-    command -v flatpak && flatpak update
+    command -v flatpak && upd_run flatpak update
 
     # Global npm packages
-    npm update --global
+    upd_run npm update --global
 
     # dotfiles
-    updaterc
+    upd_run updaterc
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
