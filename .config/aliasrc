@@ -54,6 +54,9 @@ upd () {
         upd_run paru -Syu
     fi
 
+    # Rust toolchains
+    command -v rustup > /dev/null && upd_run rustup update
+
     # Cargo packages
     cargo_pkg_list=()
     while IFS='' read -r line; do cargo_pkg_list+=("$line"); done < <(cargo install --list | grep -E '^[a-z0-9_-]+ v[0-9.]+:$' | cut -f1 -d' ')
@@ -61,9 +64,6 @@ upd () {
         upd_run cargo install "${cargo_pkg_list[@]}"
     fi
     unset cargo_pkg_list
-
-    # Rust toolchains
-    command -v rustup > /dev/null && upd_run rustup update
 
     # Go on Debian
     if command -v godeb > /dev/null; then
