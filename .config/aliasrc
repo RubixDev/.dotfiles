@@ -80,7 +80,7 @@ upd () {
     nvim --headless -c 'autocmd User MasonUpdateAllComplete quitall' -c 'MasonUpdateAll' || return 1
 
     # Flatpaks
-    command -v flatpak && flatpak update || return 1
+    command -v flatpak && { flatpak update || return 1; }
 
     # Global npm packages
     npm update --global || return 1
