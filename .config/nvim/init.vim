@@ -23,6 +23,7 @@ set colorcolumn=120 " Highlight column 120
 autocmd FileType gitcommit setlocal colorcolumn=72
 autocmd FileType python setlocal colorcolumn=79
 autocmd FileType markdown setlocal colorcolumn=80
+autocmd FileType rust setlocal colorcolumn=100
 
 " Tab settings
 set tabstop=4       " number of visual spaces per TAB
