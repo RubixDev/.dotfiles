@@ -1,0 +1,15 @@
+[user]
+	name = RubixDev
+	email = silas.groh@t-online.de
+    signingkey = silas.groh@t-online.de
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[include]
+    path = ~/.config/git/user
+[commit]
+    gpgsign = true
+
+[tag]
+    gpgSign = true
