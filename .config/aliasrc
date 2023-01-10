@@ -165,6 +165,12 @@ alias fetchclip='curl -sSL https://clip.rubixdev.de/clipboard.txt'
 alias shareclip='postclip "$(getclip | base64 --wrap=0)"'
 alias loadclip='fetchclip | base64 -d | setclip'
 
+speedup () {
+    local ext
+    ext="${1##*.}"
+    ffmpeg -i "$1" -filter_complex "[0:v]setpts=$(( 1 / $2 ))*PTS[v];[0:a]atempo=$2[a]" -map "[v]" -map "[a]" "${1%."$ext"}.output.$ext"
+}
+
 findfont () {
     [ -n "$1" ] || {
         echo "Please specify a symbol to search for"
