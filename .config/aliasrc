@@ -83,7 +83,7 @@ upd () {
     command -v flatpak && { flatpak update || return 1; }
 
     # refresh keyring
-    gpg --list-keys && { gpg --refresh-keys || return 1; }
+    gpg --list-keys &>/dev/null && { gpg --refresh-keys || return 1; }
 
     # Global npm packages
     npm update --global || return 1
