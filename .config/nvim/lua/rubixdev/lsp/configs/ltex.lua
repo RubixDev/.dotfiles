@@ -3,7 +3,13 @@ return {
         ltex = {
             additionalRules = {
                 enablePickyRules = true,
-                motherTongue = 'de-De',
+                -- motherTongue = 'de-De',
+            },
+            disabledRules = {
+                ['en-US'] = { 'PASSIVE_VOICE', 'WORD_CONTAINS_UNDERSCORE' },
+            },
+            dictionary = {
+                ['en-US'] = { 'EBNF', 'ebnf', 'lst', 'emph', 'Wirth', 'lookahead' },
             },
         },
     },
