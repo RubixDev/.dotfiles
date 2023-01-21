@@ -74,3 +74,18 @@ if not _G.is_android then
     lspconfig.emmet_ls.setup(default_opts)
     lspconfig.jsonls.setup(default_opts)
 end
+
+-- rush language server
+local util = require('lspconfig/util')
+local configs = require('lspconfig/configs')
+configs.rush = {
+    default_config = {
+        cmd = { 'rush-ls' },
+        filetypes = { 'rush' },
+        root_dir = util.root_pattern('.git', '.rush'),
+        single_file_support = true,
+        settings = {},
+        init_options = {},
+    },
+}
+configs.rush.setup { default_opts }
