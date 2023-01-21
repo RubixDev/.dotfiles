@@ -155,9 +155,6 @@ M.on_attach = function(client, bufnr)
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-utils.try_setup(
-    'cmp_nvim_lsp',
-    function(cmp_nvim_lsp) M.capabilities = cmp_nvim_lsp.default_capabilities() end
-)
+utils.try_setup('cmp_nvim_lsp', function(cmp_nvim_lsp) M.capabilities = cmp_nvim_lsp.default_capabilities() end)
 
 return M
