@@ -5,5 +5,15 @@ text/plain=nvim.desktop
 application/json=nvim.desktop
 
 inode/directory=lf.desktop
+
 image/*=nsxiv.desktop
+image/png=nsxiv.desktop
+image/jpeg=nsxiv.desktop
+
+video/*=mpv.desktop
+video/x-msvideo=mpv.desktop
+video/quicktime=mpv.desktop
+video/mp4=mpv.desktop
+video/MP2T=mpv.desktop
+
 application/pdf=zathura.desktop
