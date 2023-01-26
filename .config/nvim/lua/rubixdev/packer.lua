@@ -107,6 +107,7 @@ return require('packer').startup {
         use { 'nvim-treesitter/playground' }
         use { 'smarthome-go/tree-sitter-hms' }
         use { 'rush-rs/tree-sitter-rush' }
+        use { 'rush-rs/tree-sitter-asm' }
 
         -- LSP setup
         use {
