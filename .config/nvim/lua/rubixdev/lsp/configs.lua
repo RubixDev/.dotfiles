@@ -54,7 +54,7 @@ local lspconfig = require('lspconfig')
 lspconfig.rust_analyzer.setup(external('rubixdev.lsp.configs.rust_analyzer'))
 lspconfig.vimls.setup(default_opts)
 lspconfig.bashls.setup(default_opts)
-lspconfig.sumneko_lua.setup(external('rubixdev.lsp.configs.sumneko_lua'))
+lspconfig.lua_ls.setup(external('rubixdev.lsp.configs.lua_ls'))
 lspconfig.pylsp.setup(default_opts)
 if not _G.is_android then
     lspconfig.dockerls.setup(default_opts)
