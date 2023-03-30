@@ -4,11 +4,11 @@
 
 # terminal emulator
 super + Return
-    alacritty
+    wezterm
 
 # program launcher
 super + @space
-    alacritty --class='launcher,launcher' -e /usr/bin/sway-launcher-desktop
+    wezterm start --class='launcher' /usr/bin/sway-launcher-desktop
 
 # color picker
 super + shift + c

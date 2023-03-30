@@ -4,7 +4,7 @@ text/xml=nvim.desktop
 text/plain=nvim.desktop
 application/json=nvim.desktop
 
-inode/directory=lf.desktop
+inode/directory=joshuto.desktop
 
 image/*=nsxiv.desktop
 image/png=nsxiv.desktop

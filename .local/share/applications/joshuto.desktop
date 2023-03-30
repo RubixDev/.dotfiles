@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=joshuto
+Exec=wezterm -e joshuto
+Type=Application

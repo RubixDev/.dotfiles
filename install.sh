@@ -81,7 +81,7 @@ install_android () {
     pkg update -y
     pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
         nodejs exa bat tmux lf python || exit 2
-    cargo install pixterm dprint || exit 2
+    cargo install pixterm dprint pfetch || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         chsh -s zsh
@@ -89,11 +89,6 @@ install_android () {
 
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-    if ! command -v pfetch > /dev/null; then
-        curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o "$PREFIX/bin/pfetch"
-        chmod +x "$PREFIX/bin/pfetch"
-    fi
 
     if ! command -v pixfetch > /dev/null; then
         version=1.0.0
@@ -138,7 +133,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-git nodejs npm exa bat tmux onefetch lf go dprint \
+        shellcheck pfetch-rs-bin nodejs npm exa bat tmux onefetch joshuto-bin lf go dprint \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm pixterm-rust autojump-rs pixfetch \
@@ -151,7 +146,7 @@ install_arch () {
     if [ "$is_desktop" = true ]; then
         $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
             alacritty picom nitrogen numlockx slock neovim-remote ly \
-            nerd-fonts-jetbrains-mono ttf-jetbrains-mono xorg xcursor-breeze \
+            ttf-jetbrains-mono-nerd ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git \
             network-manager-applet xcolor maim xsct xclip yarn rtkit lxqt-policykit || exit 2
@@ -200,17 +195,12 @@ install_debian () {
     fi
 
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    cargo install fd-find ripgrep onefetch pixterm autojump tree-sitter-cli bat dprint exa || exit 2
+    cargo install fd-find ripgrep onefetch pixterm autojump tree-sitter-cli bat dprint exa pfetch || exit 2
 
     if ! command -v nvim > /dev/null; then
         wget 'https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb' || exit 2
         sudo apt install ./nvim-linux64.deb
         rm ./nvim-linux64.deb
-    fi
-
-    if ! command -v pfetch > /dev/null; then
-        sudo curl 'https://raw.githubusercontent.com/dylanaraps/pfetch/master/pfetch' -o /usr/local/bin/pfetch
-        sudo chmod +x /usr/local/bin/pfetch
     fi
 
     if ! command -v pixfetch > /dev/null; then
@@ -317,10 +307,12 @@ if [ "$is_desktop" = true ]; then
     link .icons/default/index.theme
     link .config/Kvantum/kvantum.kvconfig
     link .config/BetterDiscord/themes/SimplyTransparent.theme.css
+    link .config/joshuto
+    link .config/wezterm
 
     # XDG-MIME default apps
     link .config/mimeapps.list
-    link .local/share/applications/lf.desktop
+    link .local/share/applications/joshuto.desktop
     link .local/share/applications/nsxiv.desktop
     link .local/share/applications/nvim.desktop
     link .local/share/applications/zathura.desktop

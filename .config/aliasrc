@@ -208,3 +208,22 @@ def test(char):
 
 test('$1')"
 }
+
+function jo {
+    local cmd cmd_file code
+    cmd_file=$(mktemp)
+    joshuto --output-file "$cmd_file" "$@"
+    code=$?
+
+	case "$code" in
+		# regular exit
+		0) ;;
+		# output contains current directory
+		101)
+            cd "$(<"$cmd_file")"
+			;;
+		# output selected files
+		102) ;;
+		*) return "$code" ;;
+	esac
+}

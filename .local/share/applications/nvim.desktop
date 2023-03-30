@@ -1,4 +1,4 @@
 [Desktop Entry]
 Name=Neovim
-Exec=alacritty -e nvim
+Exec=wezterm -e nvim
 Type=Application
