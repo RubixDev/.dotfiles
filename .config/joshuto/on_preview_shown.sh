@@ -25,7 +25,7 @@ kitty_show () {
 
 case "$mimetype" in
 	image/*)
-        # kitty_clear
+        kitty_clear
         kitty_show "$FILE_PATH"
         ;;
     application/pdf)
@@ -35,6 +35,10 @@ case "$mimetype" in
             -singlefile                 \
             -jpeg -tiffcompression jpeg \
             -- "$FILE_PATH" "${TMP_FILE%.*}"
+        kitty_show "$TMP_FILE"
+        ;;
+    video/*)
+        ffmpegthumbnailer -i "$FILE_PATH" -o "$TMP_FILE" -s 0
         kitty_show "$TMP_FILE"
         ;;
 	*) kitty_clear ;;
