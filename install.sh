@@ -261,7 +261,6 @@ link .config/nvim/init.vim
 link .config/nvim/lua
 link .config/nvim/queries
 link .config/paru/paru.conf
-link .config/npm/npmrc
 link .config/git/config
 link .config/python/pythonrc
 link .config/bpython/config
