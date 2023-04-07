@@ -6,6 +6,10 @@
 super + Return
     wezterm
 
+# alternative terminal emulator
+super + shift + u
+    konsole
+
 # program launcher
 super + @space
     wezterm start --class='launcher' /usr/bin/sway-launcher-desktop
@@ -17,6 +21,18 @@ super + shift + c
 # screenshot
 Print
     maim -su | xclip -selection clipboard -t image/png -i
+
+# brightness
+{_, shift + } XF86MonBrightness{Up,Down}
+    brightnessctl set {5, 1}%{+,-}
+
+# volume
+XF86Audio{Raise,Lower}Volume
+    pamixer -{i,d} 5
+
+# volume mute
+XF86AudioMute
+    pamixer -t
 
 #
 # bspwm hotkeys
@@ -132,16 +148,3 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
     bspc node -v {-20 0,0 20,0 -20,20 0}
-
-#
-# brightness/volume
-#
-
-{_, shift + } XF86MonBrightness{Up,Down}
-    brightnessctl set {5, 1}%{+,-}
-
-XF86Audio{Raise,Lower}Volume
-    pamixer -{i,d} 5
-
-XF86AudioMute
-    pamixer -t

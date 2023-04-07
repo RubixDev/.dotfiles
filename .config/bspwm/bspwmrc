@@ -2,6 +2,9 @@
 
 SCRIPTPATH="$(cd "$(dirname "$0")"; pwd -P)"
 
+# source env
+. "$HOME/.config/env"
+
 # Launch XDG autostart applications
 [ -f "$SCRIPTPATH/is_reload" ] || {
     for app in "${XDG_CONFIG_HOME:-$HOME/.config}"/autostart/*.desktop; do
@@ -14,6 +17,9 @@ SCRIPTPATH="$(cd "$(dirname "$0")"; pwd -P)"
     done
 }
 [ -f "$SCRIPTPATH/is_reload" ] && rm "$SCRIPTPATH/is_reload"
+
+# allow rootless distrobox GUI
+xhost "+si:localuser:$USER"
 
 # ensure sxhkd is running
 pgrep -x sxhkd > /dev/null || sxhkd &
