@@ -90,24 +90,17 @@ install_android () {
     sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-    if ! command -v pixfetch > /dev/null; then
-        version=1.0.0
-        platform=aarch64-linux-android
-        dir=pixfetch-$version-$platform
+    if ! command -v pfetch > /dev/null; then
+        platform=android-aarch64
+        dir=pfetch-$platform
 
-        curl -LO https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
+        curl -LO https://github.com/Gobidev/pfetch-rs/releases/latest/download/$dir.tar.gz
         tar -xvf $dir.tar.gz
 
-        install -Dm755 $dir/pixfetch "$PREFIX/bin/pixfetch"
-        install -Dm644 $dir/README.md "$PREFIX/share/doc/pixfetch/README.md"
-        install -Dm644 $dir/LICENSE "$PREFIX/share/licenses/pixfetch/LICENSE"
-        install -Dm644 $dir/doc/pixfetch.1.gz "$PREFIX/share/man/man1/pixfetch.1.gz"
-        install -Dm644 $dir/completion/_pixfetch "$PREFIX/share/zsh/vendor-completions/_pixfetch"
-        install -Dm644 $dir/completion/pixfetch.bash "$PREFIX/share/bash-completion/completions/pixfetch"
-        install -Dm644 $dir/completion/pixfetch.fish "$PREFIX/share/fish/vendor_completions.d/pixfetch.fish"
+        install -Dm755 pfetch "$PREFIX/bin/pfetch"
 
-        rm -r $dir $dir.tar.gz
-        unset -v version platform dir
+        rm -r pfetch $dir.tar.gz
+        unset -v platform dir
     fi
 }
 
@@ -136,7 +129,7 @@ install_arch () {
         shellcheck pfetch-rs-bin nodejs npm exa bat tmux onefetch joshuto-bin lf go dprint \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
-    $aur -S --needed --noconfirm pixterm-rust autojump-rs pixfetch \
+    $aur -S --needed --noconfirm pixterm-rust autojump-rs \
         || [ "$is_root" = true ] || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
@@ -201,26 +194,6 @@ install_debian () {
         wget 'https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.deb' || exit 2
         sudo apt install ./nvim-linux64.deb
         rm ./nvim-linux64.deb
-    fi
-
-    if ! command -v pixfetch > /dev/null; then
-        version=1.0.0
-        platform=x86_64-unknown-linux-musl
-        dir=pixfetch-$version-$platform
-
-        curl -LO https://github.com/RubixDev/pixfetch/releases/download/v$version/$dir.tar.gz
-        tar -xvf $dir.tar.gz
-
-        sudo install -Dm755 $dir/pixfetch /usr/bin/pixfetch
-        sudo install -Dm644 $dir/README.md /usr/share/doc/pixfetch/README.md
-        sudo install -Dm644 $dir/LICENSE /usr/share/licenses/pixfetch/LICENSE
-        sudo install -Dm644 $dir/doc/pixfetch.1.gz /usr/share/man/man1/pixfetch.1.gz
-        sudo install -Dm644 $dir/completion/_pixfetch /usr/share/zsh/site-functions/_pixfetch
-        sudo install -Dm644 $dir/completion/pixfetch.bash /usr/share/bash-completion/completions/pixfetch
-        sudo install -Dm644 $dir/completion/pixfetch.fish /usr/share/fish/vendor_completions.d/pixfetch.fish
-
-        rm -r $dir $dir.tar.gz
-        unset -v version platform dir
     fi
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
