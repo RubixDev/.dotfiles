@@ -81,7 +81,7 @@ install_android () {
     pkg update -y
     pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
         nodejs exa bat tmux lf python || exit 2
-    cargo install pixterm dprint pfetch || exit 2
+    cargo install pixterm dprint || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         chsh -s zsh
