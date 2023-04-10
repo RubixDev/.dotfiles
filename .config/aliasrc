@@ -61,12 +61,6 @@ upd () {
     fi
     unset cargo_pkg_list
 
-    # Go on Debian
-    if command -v godeb > /dev/null; then
-        [ "$(go version | grep -Po '\d+\.\d+\.\d+')" = "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)" ] || \
-            godeb install "$(godeb list | grep -P '^\d+\.\d+\.\d+$' | tail -n 1)" || return 1
-    fi
-
     # Oh-my-zsh plugins and themes
     pwd="$(pwd)"
     for d in "$ZSH_CUSTOM"/*/*; do
@@ -130,6 +124,25 @@ lfcd () {
         # shellcheck disable=SC2164
         [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
     fi
+}
+
+function jo {
+    local cmd_file code
+    cmd_file=$(mktemp)
+    joshuto --output-file "$cmd_file" "$@"
+    code=$?
+
+	case "$code" in
+		# regular exit
+		0) ;;
+		# output contains current directory
+		101)
+            cd "$(<"$cmd_file")" || return 1
+			;;
+		# output selected files
+		102) ;;
+		*) return "$code" ;;
+	esac
 }
 
 rewg () {
@@ -207,23 +220,4 @@ def test(char):
             print(char + ' in ' + fontpath)
 
 test('$1')"
-}
-
-function jo {
-    local cmd cmd_file code
-    cmd_file=$(mktemp)
-    joshuto --output-file "$cmd_file" "$@"
-    code=$?
-
-	case "$code" in
-		# regular exit
-		0) ;;
-		# output contains current directory
-		101)
-            cd "$(<"$cmd_file")"
-			;;
-		# output selected files
-		102) ;;
-		*) return "$code" ;;
-	esac
 }
