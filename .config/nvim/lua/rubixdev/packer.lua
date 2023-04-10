@@ -94,7 +94,6 @@ return require('packer').startup {
         use {
             'saecki/crates.nvim',
             requires = { 'nvim-lua/plenary.nvim' },
-            disable = _G.is_android,
         }
 
         -- Treesitter
