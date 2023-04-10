@@ -138,7 +138,7 @@ install_arch () {
 
     if [ "$is_desktop" = true ]; then
         $aur -S --needed --noconfirm polybar sway-launcher-desktop bspwm sxhkd dunst \
-            alacritty picom nitrogen numlockx slock neovim-remote ly \
+            wezterm picom nitrogen numlockx slock neovim-remote ly \
             ttf-jetbrains-mono-nerd ttf-jetbrains-mono xorg xcursor-breeze \
             kvantum-theme-layan-git layan-gtk-theme-git kvantum qt5ct ttf-dejavu ttf-liberation \
             noto-fonts-cjk noto-fonts-emoji noto-fonts-extra tela-icon-theme-purple-git \
