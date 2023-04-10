@@ -51,12 +51,12 @@ utils.try_setup('mason-update-all')
 ----------------------
 local lspconfig = require('lspconfig')
 
-lspconfig.rust_analyzer.setup(external('rubixdev.lsp.configs.rust_analyzer'))
-lspconfig.vimls.setup(default_opts)
 lspconfig.bashls.setup(default_opts)
 lspconfig.lua_ls.setup(external('rubixdev.lsp.configs.lua_ls'))
 lspconfig.pylsp.setup(default_opts)
 if not _G.is_android then
+    lspconfig.rust_analyzer.setup(external('rubixdev.lsp.configs.rust_analyzer'))
+    lspconfig.vimls.setup(default_opts)
     lspconfig.dockerls.setup(default_opts)
     lspconfig.golangci_lint_ls.setup(default_opts)
     lspconfig.gopls.setup(default_opts)
@@ -73,19 +73,19 @@ if not _G.is_android then
     lspconfig.html.setup(default_opts)
     lspconfig.emmet_ls.setup(default_opts)
     lspconfig.jsonls.setup(default_opts)
-end
 
--- rush language server
-local util = require('lspconfig/util')
-local configs = require('lspconfig/configs')
-configs.rush = {
-    default_config = {
-        cmd = { 'rush-ls' },
-        filetypes = { 'rush' },
-        root_dir = util.root_pattern('.git', '.rush'),
-        single_file_support = true,
-        settings = {},
-        init_options = {},
-    },
-}
-configs.rush.setup { default_opts }
+    -- rush language server
+    local util = require('lspconfig/util')
+    local configs = require('lspconfig/configs')
+    configs.rush = {
+        default_config = {
+            cmd = { 'rush-ls' },
+            filetypes = { 'rush' },
+            root_dir = util.root_pattern('.git', '.rush'),
+            single_file_support = true,
+            settings = {},
+            init_options = {},
+        },
+    }
+    configs.rush.setup { default_opts }
+end

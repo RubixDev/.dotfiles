@@ -53,7 +53,7 @@ return require('packer').startup {
             'ur4ltz/surround.nvim',
             config = function() require('rubixdev.plugin.surround') end,
         }
-        use { 'fidian/hexmode' }
+        use { 'fidian/hexmode', disable = _G.is_android }
 
         -- GUI enhancements
         use {
@@ -83,17 +83,18 @@ return require('packer').startup {
         }
 
         -- Language support
-        use { 'fatih/vim-go', run = ':GoUpdateBinaries', disable = _G.is_android }
         use {
             'preservim/vim-markdown',
             requires = { 'godlygeek/tabular' },
             config = function() require('rubixdev.plugin.markdown') end,
+            disable = _G.is_android,
         }
-        use { 'jghauser/follow-md-links.nvim' }
-        use { 'baskerville/vim-sxhkdrc' }
+        use { 'jghauser/follow-md-links.nvim', disable = _G.is_android }
+        use { 'baskerville/vim-sxhkdrc', disable = _G.is_android }
         use {
             'saecki/crates.nvim',
             requires = { 'nvim-lua/plenary.nvim' },
+            disable = _G.is_android,
         }
 
         -- Treesitter
@@ -104,10 +105,10 @@ return require('packer').startup {
         }
         use { 'nvim-treesitter/nvim-treesitter-context' }
         use { 'p00f/nvim-ts-rainbow' }
-        use { 'nvim-treesitter/playground' }
-        use { 'smarthome-go/tree-sitter-hms' }
-        use { 'rush-rs/tree-sitter-rush' }
-        use { 'rush-rs/tree-sitter-asm' }
+        use { 'nvim-treesitter/playground', disable = _G.is_android }
+        use { 'smarthome-go/tree-sitter-hms', disable = _G.is_android }
+        use { 'rush-rs/tree-sitter-rush', disable = _G.is_android }
+        use { 'rush-rs/tree-sitter-asm', disable = _G.is_android }
 
         -- LSP setup
         use {
@@ -131,6 +132,7 @@ return require('packer').startup {
         use {
             'rmagatti/goto-preview',
             config = function() require('rubixdev.plugin.goto_preview') end,
+            disable = _G.is_android,
         }
         use {
             'weilbith/nvim-code-action-menu',
@@ -147,8 +149,8 @@ return require('packer').startup {
                 'hrsh7th/cmp-cmdline',
                 'hrsh7th/cmp-buffer',
                 'saadparwaiz1/cmp_luasnip',
-                { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim' },
-                { 'David-Kunz/cmp-npm', requires = 'nvim-lua/plenary.nvim' },
+                { 'petertriho/cmp-git', requires = 'nvim-lua/plenary.nvim', disable = _G.is_android },
+                { 'David-Kunz/cmp-npm', requires = 'nvim-lua/plenary.nvim', disable = _G.is_android },
             },
             config = function() require('rubixdev.plugin.cmp') end,
         }

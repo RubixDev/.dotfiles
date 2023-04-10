@@ -79,16 +79,14 @@ install_android () {
     want_deps || return
 
     pkg update -y
-    pkg install -y ripgrep fd neovim zsh rust fzf git onefetch curl wget shellcheck \
-        nodejs exa bat tmux python || exit 2
-    cargo install pixterm || exit 2
+    pkg install -y ripgrep fd neovim zsh fzf git curl wget exa bat tmux python || exit 2
 
     if [ "$(basename "$SHELL")" != "zsh" ]; then
         chsh -s zsh
     fi
 
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     if ! command -v pfetch > /dev/null; then
         platform=android-aarch64
@@ -247,14 +245,13 @@ link .config/aliasrc
 link .config/tmux/tmux.conf
 link .config/nvim/init.vim
 link .config/nvim/lua
-link .config/nvim/queries
-link .config/paru/paru.conf
 link .config/git/config
 link .config/python/pythonrc
 link .config/bpython/config
 link .config/pixfetch/config.toml
 link .config/dprint
 if [ "$is_desktop" = true ]; then
+    link .config/paru/paru.conf
     link .config/alacritty/alacritty.yml
     link .config/bspwm/bspwmrc
     link .config/sxhkd/sxhkdrc
