@@ -34,6 +34,10 @@ XF86Audio{Raise,Lower}Volume
 XF86AudioMute
     pamixer -t
 
+# invert primary screen
+super + alt + ctrl + {Up,Down}
+    xrandr --output "$(xrandr | grep -w primary | grep -oe '^[^ ]*')" --rotate {normal,inverted}
+
 #
 # bspwm hotkeys
 #
