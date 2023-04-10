@@ -40,18 +40,19 @@ upd () {
     # Package manager
     pwd="$(pwd)"
     if [ "$(uname -o)" = "Android" ]; then
-        pkg upgrade || return 1
+        pkg upgrade
+        apt autoremove
     elif command -v apt > /dev/null; then
         sudo apt update || return 1
         sudo apt upgrade || return 1
-        sudo apt autoremove || return 1
-        sudo apt autoclean || return 1
+        sudo apt autoremove
+        sudo apt autoclean
     else
         paru -Syu || return 1
     fi
 
     # Rust toolchains
-    command -v rustup > /dev/null && rustup update || return 1
+    { command -v rustup > /dev/null && rustup update; } || return 1
 
     # Cargo packages
     cargo_pkg_list=()
