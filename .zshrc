@@ -75,7 +75,7 @@ setopt extendedglob
 source ~/.config/aliasrc
 
 bindkey -v
-bindkey -s '^o' '^ulfcd\n'
+bindkey -s '^o' '^ujo\n'
 
 echo
 # run pfetch-rs
