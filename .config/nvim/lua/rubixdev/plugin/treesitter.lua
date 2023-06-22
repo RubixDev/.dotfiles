@@ -72,7 +72,7 @@ treesitter.setup {
     highlight = {
         enable = true,
         disable = {
-            'bash',
+            -- 'bash',
             'sxhkdrc',
         },
         additional_vim_regex_highlighting = false,

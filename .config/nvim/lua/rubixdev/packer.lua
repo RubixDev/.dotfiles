@@ -137,6 +137,7 @@ return require('packer').startup {
             'weilbith/nvim-code-action-menu',
             config = function() require('rubixdev.plugin.code_action_menu') end,
         }
+        use { 'tamago324/nlsp-settings.nvim' }
 
         -- Completion
         use {

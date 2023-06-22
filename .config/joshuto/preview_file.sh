@@ -157,27 +157,6 @@ handle_extension() {
     esac
 }
 
-handle_image() {
-	## Size of the preview if there are multiple options or it has to be
-	## rendered from vector graphics. If the conversion program allows
-	## specifying only one dimension while keeping the aspect ratio, the width
-	## will be used.
-	local DEFAULT_SIZE="40x30"
-
-	local mimetype="${1}"
-	case "${mimetype}" in
-		## Image
-		image/*)
-			# kitty +kitten icat --clear
-			kitty +kitten icat \
-				--transfer-mode file \
-				--place "${PREVIEW_WIDTH}x${PREVIEW_HEIGHT}@${PREVIEW_X_COORD}x${PREVIEW_Y_COORD}" \
-				"${FILE_PATH}"
-			exit 7
-			;;
-	esac
-}
-
 handle_mime() {
 	local mimetype="${1}"
 
@@ -229,7 +208,6 @@ handle_mime() {
 
         ## Image
         image/*)
-            ## Preview as text conversion
             command -v kitty > /dev/null && exit 5
             # img2txt --gamma=0.6 --width="${PREVIEW_WIDTH}" -- "${FILE_PATH}" && exit 4
             exiftool "${FILE_PATH}" && exit 5

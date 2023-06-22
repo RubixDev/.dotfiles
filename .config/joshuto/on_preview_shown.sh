@@ -38,7 +38,7 @@ case "$mimetype" in
         kitty_show "$TMP_FILE"
         ;;
     video/*)
-        ffmpegthumbnailer -i "$FILE_PATH" -o "$TMP_FILE" -s 0
+        ffmpegthumbnailer -i "$FILE_PATH" -o "$TMP_FILE" -s 0 &>/dev/null
         kitty_show "$TMP_FILE"
         ;;
 	*) kitty_clear ;;
