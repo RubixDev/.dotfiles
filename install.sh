@@ -124,7 +124,7 @@ install_arch () {
     fi
 
     $aur -Sy --needed --noconfirm base-devel fd ripgrep neovim zsh rustup fzf git curl wget \
-        shellcheck pfetch-rs-bin nodejs npm exa bat tmux onefetch joshuto-bin \
+        shellcheck pfetch-rs-bin nodejs npm exa bat tmux onefetch joshuto-bin git-delta \
         || [ "$is_root" = true ] || exit 2
     rustup default > /dev/null 2>&1 || { rustup default stable || exit 2; }
     $aur -S --needed --noconfirm pixterm-rust autojump-rs \
