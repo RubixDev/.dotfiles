@@ -25,6 +25,7 @@ xhost "+si:localuser:$USER"
 pgrep -x sxhkd > /dev/null || sxhkd &
 
 bspc rule -a launcher:launcher center=on state=floating sticky=on
+bspc rule -a steamwebhelper:steamwebhelper state=floating sticky=on
 bspc rule -a Zathura state=tiled # Do not start zathura floating
 
 bspc config border_width 2

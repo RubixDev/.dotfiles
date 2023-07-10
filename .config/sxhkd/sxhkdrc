@@ -2,17 +2,24 @@
 # wm independent hotkeys
 #
 
+Enter + Escape + Left
+    wezterm
+
 # terminal emulator
 super + Return
     wezterm
 
 # alternative terminal emulator
-super + shift + u
+super + shift + Return
     konsole
 
 # program launcher
 super + @space
     wezterm start --class='launcher' /usr/bin/sway-launcher-desktop
+
+# alternative program launcher
+super + shift + @space
+    krunner
 
 # color picker
 super + shift + c

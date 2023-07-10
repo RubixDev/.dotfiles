@@ -146,6 +146,9 @@ function jo {
 	esac
 }
 
+alias virtscron='touch ~/.local/state/bspwm_mode_virtual'
+alias virtscroff='rm ~/.local/state/bspwm_mode_virtual'
+
 rewg () {
     systemctl is-active wg-quick@wg0 > /dev/null && {
         sudo systemctl restart wg-quick@wg0
