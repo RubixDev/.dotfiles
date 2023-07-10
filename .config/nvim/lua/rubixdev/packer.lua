@@ -65,6 +65,10 @@ return require('packer').startup {
             'lukas-reineke/indent-blankline.nvim',
             config = function() require('rubixdev.plugin.indent_blankline') end,
         }
+        use {
+            'stevearc/dressing.nvim',
+            config = function() require('rubixdev.plugin.dressing') end,
+        }
 
         -- Fuzzy Finder
         use {
