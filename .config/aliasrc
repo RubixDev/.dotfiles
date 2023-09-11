@@ -5,7 +5,9 @@ alias cp='cp -iv'
 alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'
-if command -v exa > /dev/null; then
+if command -v eza > /dev/null; then
+    alias l='eza -lahg --icons --octal-permissions --git'
+elif command -v exa > /dev/null; then
     alias l='exa -lahg --icons --octal-permissions --git'
 else
     alias l='ls -lAh --color=auto'
