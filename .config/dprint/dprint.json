@@ -53,8 +53,11 @@
     "json5.tabWidth": 2
   },
 
-  "rustfmt": {
-    "max_width": 100
+  "exec": {
+    "commands": [{
+      "command": "rustfmt --edition 2021",
+      "exts": ["rs"]
+    }]
   },
 
   "sql": {
@@ -67,18 +70,23 @@
     "indentWidth": 2
   },
 
+  "sexpr": {
+    "indentWidth": 2
+  },
+
   "includes": ["**/*"],
   "excludes": ["**/target", "**/node_modules", "**/*-lock.json"],
   "plugins": [
-    "https://plugins.dprint.dev/typescript-0.79.0.wasm",
-    "https://plugins.dprint.dev/json-0.17.0.wasm",
-    "https://plugins.dprint.dev/markdown-0.15.1.wasm",
+    "https://plugins.dprint.dev/typescript-0.85.1.wasm",
+    "https://plugins.dprint.dev/json-0.17.4.wasm",
+    "https://plugins.dprint.dev/markdown-0.15.3.wasm",
     "https://plugins.dprint.dev/toml-0.5.4.wasm",
     "https://plugins.dprint.dev/dockerfile-0.3.0.wasm",
     "https://plugins.dprint.dev/sql-0.1.2.wasm",
-    "https://plugins.dprint.dev/rustfmt-0.6.2.json@886c6f3161cf020c2d75160262b0f56d74a521e05cfb91ec4f956650c8ca76ca",
     "https://plugins.dprint.dev/RubixDev/stylua-v0.1.0.wasm",
-    "https://plugins.dprint.dev/prettier-0.17.0.json@5e42cbabab9906ad32ffe1aa67f15824b1c39408840f0afeaddc495dd362e177",
-    "https://plugins.dprint.dev/RubixDev/ebnf-v0.1.1.wasm"
+    "https://plugins.dprint.dev/prettier-0.27.0.json@3557a62b4507c55a47d8cde0683195b14d13c41dda66d0f0b0e111aed107e2fe",
+    "https://plugins.dprint.dev/RubixDev/ebnf-v0.1.1.wasm",
+    "https://plugins.dprint.dev/RubixDev/sexpr-v0.1.2.wasm",
+    "https://plugins.dprint.dev/exec-0.4.3.json@42343548b8022c99b1d750be6b894fe6b6c7ee25f72ae9f9082226dd2e515072"
   ]
 }
