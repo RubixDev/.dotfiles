@@ -81,6 +81,7 @@ if not _G.is_android then
     lspconfig.html.setup(default_opts)
     lspconfig.emmet_ls.setup(default_opts)
     lspconfig.jsonls.setup(default_opts)
+    lspconfig.typst_lsp.setup(external('rubixdev.lsp.configs.typst'))
 
     -- rush language server
     local util = require('lspconfig/util')

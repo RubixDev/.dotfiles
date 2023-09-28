@@ -99,6 +99,7 @@ return require('packer').startup {
             'saecki/crates.nvim',
             requires = { 'nvim-lua/plenary.nvim' },
         }
+        use { 'kaarmu/typst.vim', ft = { 'typst' } }
 
         -- Treesitter
         use {
