@@ -7,7 +7,6 @@ require('dressing').setup {
         start_in_insert = true,
 
         -- These are passed to nvim_open_win
-        anchor = 'SW',
         border = 'rounded',
         relative = 'cursor',
 
@@ -64,7 +63,6 @@ require('dressing').setup {
 
         -- Options for built-in selector
         builtin = {
-            anchor = 'NW',
             border = 'rounded',
             relative = 'editor',
 
