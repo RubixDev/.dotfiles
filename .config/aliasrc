@@ -33,6 +33,7 @@ __updlog_trace () { printf '\033[36m> %s\033[0m\n' "$1"; }
 
 upd () {
     updaterc --no-exec || __updlog_warn 'skipping failed dotfiles update'
+    source "${ZDOTDIR:-$HOME}/.zshrc"
     updpkg || __updlog_warn 'skipping failed system package updates'
     updrust || __updlog_warn 'skipping failed Rust updates'
     updcargo || __updlog_warn 'skipping failed cargo updates'
