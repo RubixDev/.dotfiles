@@ -42,3 +42,4 @@ export PATH="$PATH:./node_modules/.bin" # project local node_modules
 export PATH="$PATH:$XDG_DATA_HOME/npm/bin" # global node_modules
 export PATH="$PATH:/usr/lib/emscripten"
 export PATH="$PATH:$HOME/.local/podman/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin"

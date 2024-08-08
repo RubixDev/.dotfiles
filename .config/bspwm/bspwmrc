@@ -50,7 +50,7 @@ dunst &
 nitrogen --restore &
 pgrep -x polybar > /dev/null || GIT_USERNAME=$(git config user.name) polybar -r &
 
-setxkbmap -layout 'us(us_de),de'
+setxkbmap -layout 'eu,de'
 setxkbmap -option 'grp:rctrl_toggle'
 setxkbmap -option 'ctrl:nocaps'
 numlockx on
