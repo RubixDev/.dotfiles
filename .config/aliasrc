@@ -153,7 +153,7 @@ alias sctl='sudo systemctl'
 alias sr='screen -r'
 alias sls='screen -ls'
 
-_paru_bin="$(command -v paru)"
+_paru_bin="${_paru_bin:-$(command -v paru)}"
 paru () {
     (
         unset CARGO_TARGET_DIR
