@@ -62,6 +62,12 @@ return require('packer').startup {
             config = function() require('rubixdev.plugin.lualine') end,
         }
         use {
+            'linrongbin16/lsp-progress.nvim',
+            config = function()
+                require('lsp-progress').setup()
+            end
+        }
+        use {
             'lukas-reineke/indent-blankline.nvim',
             config = function() require('rubixdev.plugin.indent_blankline') end,
         }
@@ -167,9 +173,6 @@ return require('packer').startup {
                 'rafamadriz/friendly-snippets',
             },
         }
-
-        -- Discord presence
-        use { 'andweeb/presence.nvim', disable = _G.is_android }
 
         -- Git
         use { 'tpope/vim-fugitive' }

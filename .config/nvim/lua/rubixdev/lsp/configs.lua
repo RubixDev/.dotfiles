@@ -66,8 +66,6 @@ if not _G.is_android then
     lspconfig.rust_analyzer.setup(external('rubixdev.lsp.configs.rust_analyzer'))
     lspconfig.vimls.setup(default_opts)
     lspconfig.dockerls.setup(default_opts)
-    lspconfig.golangci_lint_ls.setup(default_opts)
-    lspconfig.gopls.setup(default_opts)
     lspconfig.jdtls.setup(default_opts)
     lspconfig.kotlin_language_server.setup(default_opts)
     lspconfig.gdscript.setup(default_opts)
