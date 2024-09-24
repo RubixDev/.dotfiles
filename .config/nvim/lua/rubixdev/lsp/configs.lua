@@ -74,7 +74,7 @@ if not _G.is_android then
     lspconfig.ltex.setup(external('rubixdev.lsp.configs.ltex'))
     lspconfig.texlab.setup(external('rubixdev.lsp.configs.texlab'))
     lspconfig.svelte.setup(default_opts)
-    lspconfig.tsserver.setup(default_opts)
+    lspconfig.ts_ls.setup(default_opts)
     lspconfig.cssls.setup(default_opts)
     lspconfig.html.setup(default_opts)
     lspconfig.emmet_ls.setup(default_opts)
