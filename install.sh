@@ -238,6 +238,7 @@ link .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
 link .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
 link .bashrc
 link .config/env
+touch ~/.config/host-env
 link .config/aliasrc
 link .config/tmux/tmux.conf
 link .config/nvim/init.vim
