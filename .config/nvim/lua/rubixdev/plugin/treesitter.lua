@@ -1,6 +1,11 @@
 local treesitter = require('nvim-treesitter.configs')
 
-vim.filetype.add { extension = { ebnf = 'ebnf', hms = 'homescript', rush = 'rush' } }
+vim.filetype.add {
+    extension = { ebnf = 'ebnf', hms = 'homescript', rush = 'rush' },
+    pattern = {
+        ['.*%.component%.html'] = 'htmlangular',
+    },
+}
 
 require('nvim-treesitter.parsers').get_parser_configs().hms = {
     install_info = {
