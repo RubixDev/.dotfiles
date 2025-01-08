@@ -79,7 +79,7 @@ end
 local function format()
     local disabled_formatter = {
         svelte = true,
-        tsserver = true,
+        ts_ls = true,
         cssls = true,
         html = true,
         jsonls = true,
