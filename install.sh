@@ -248,6 +248,8 @@ link .config/python/pythonrc
 link .config/bpython/config
 link .config/pixfetch/config.toml
 link .config/dprint
+link .config/helix/config.toml
+link .config/helix/themes
 if [ "$is_desktop" = true ]; then
     link .config/paru/paru.conf
     link .config/alacritty/alacritty.yml

@@ -1,0 +1,9 @@
+inherits = "onedark"
+
+# "ui.bufferline" = { fg = "light-gray", bg = "light-black" }
+"ui.bufferline.active" = { fg = "light-black", bg = "green" }
+# "ui.bufferline.background" = { bg = "light-black" }
+
+"ui.statusline.normal" = { fg = "light-black", bg = "green", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "light-black", bg = "blue", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "light-black", bg = "purple", modifiers = ["bold"] }

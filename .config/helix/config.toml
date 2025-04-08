@@ -1,0 +1,84 @@
+theme = "onedark"
+
+[editor]
+line-number = "relative"
+cursorline = true
+cursorcolumn = true
+auto-format = false
+rulers = [120]
+bufferline = "multiple"
+color-modes = true
+default-line-ending = "lf"
+end-of-line-diagnostics = "hint"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.inline-diagnostics]
+cursor-line = "warning"
+
+[editor.statusline]
+left = [
+  "mode",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+  "diagnostics",
+]
+center = []
+right = [
+  "spinner",
+  "file-type",
+  "file-encoding",
+  "file-line-ending",
+  "selections",
+  "register",
+  "position",
+  "position-percentage",
+  "total-line-numbers",
+]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-progress-messages = true
+# display-inlay-hints = true
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+nbsp = "all"
+nnbsp = "all"
+newline = "none"
+
+[editor.indent-guides]
+render = true
+
+[keys.normal]
+tab = "move_parent_node_end"
+S-tab = "move_parent_node_start"
+
+[keys.normal.space]
+w = ":w"
+q = ":q"
+o = "file_picker"
+O = "file_picker_in_current_directory"
+f = ":format"
+
+[keys.normal.g]
+l = ["collapse_selection", "extend_to_line_end"]
+h = ["collapse_selection", "extend_to_line_start"]
+s = ["collapse_selection", "select_mode", "goto_first_nonwhitespace", "exit_select_mode"]
+
+[keys.insert]
+S-tab = "move_parent_node_start"
+C-c = "normal_mode"
+
+[keys.select]
+tab = "extend_parent_node_end"
+S-tab = "extend_parent_node_start"
+C-c = "normal_mode"
