@@ -249,6 +249,7 @@ link .config/bpython/config
 link .config/pixfetch/config.toml
 link .config/dprint
 link .config/helix/config.toml
+link .config/helix/languages.toml
 link .config/helix/themes
 if [ "$is_desktop" = true ]; then
     link .config/paru/paru.conf
