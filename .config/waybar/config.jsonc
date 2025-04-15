@@ -1,7 +1,7 @@
 // -*- mode: jsonc -*-
 {
     "layer": "top", // Waybar at top layer
-    "output": "HDMI-A-1",
+    "output": ["HEADLESS-1", "HDMI-A-1"],
     // "position": "bottom", // Waybar position (top|bottom|left|right)
     "height": 25, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
@@ -10,14 +10,17 @@
     "modules-left": [
         "hyprland/workspaces",
         "hyprland/submap",
+        "sway/workspaces",
+        "sway/mode",
         "custom/media"
     ],
     "modules-center": [
-        "hyprland/window"
+        "hyprland/window",
+        "sway/window"
     ],
     "modules-right": [
         "mpd",
-        "idle_inhibitor",
+        // "idle_inhibitor",
         "pulseaudio",
         "network",
         "power-profiles-daemon",
@@ -29,11 +32,13 @@
         "battery",
         "battery#bat2",
         "clock",
-        "tray",
-        "custom/power"
+        "tray"
     ],
     // Modules configuration
     "hyprland/workspaces": {
+        "all-outputs": true
+    },
+    "sway/workspaces": {
         "all-outputs": true
     },
     "keyboard-state": {
@@ -87,6 +92,8 @@
     },
     "clock": {
         // "timezone": "America/New_York",
+        "interval": 1,
+        "format": "{:%d.%m.%Y %H:%M:%S}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },
@@ -95,7 +102,7 @@
         "tooltip": false
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}% \uefc5"
     },
     "temperature": {
         // "thermal-zone": 2,
@@ -123,7 +130,18 @@
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [
+            "\udb80\udc7a",
+            "\udb80\udc7b",
+            "\udb80\udc7b",
+            "\udb80\udc7d",
+            "\udb80\udc7e",
+            "\udb80\udc7f",
+            "\udb80\udc80",
+            "\udb80\udc81",
+            "\udb80\udc82",
+            "\udb80\udc79"
+        ]
     },
     "battery#bat2": {
         "bat": "BAT2"
@@ -142,7 +160,7 @@
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
+        "format-ethernet": "{ifname} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
         "format-disconnected": "Disconnected ⚠",
