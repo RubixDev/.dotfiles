@@ -251,8 +251,6 @@ link .config/dprint
 link .config/helix/config.toml
 link .config/helix/languages.toml
 link .config/helix/themes
-link .config/kitty/kitty.conf
-link .config/hypr/hyprland.conf
 if [ "$is_desktop" = true ]; then
     link .config/paru/paru.conf
     link .config/alacritty/alacritty.yml
@@ -269,6 +267,9 @@ if [ "$is_desktop" = true ]; then
     link .config/BetterDiscord/themes/SimplyTransparent.theme.css
     link .config/joshuto
     link .config/wezterm
+    link .config/kitty/kitty.conf
+    link .config/hypr/hyprland.conf
+    link .config/waybar
 
     # XDG-MIME default apps
     link .config/mimeapps.list
