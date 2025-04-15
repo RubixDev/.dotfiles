@@ -26,7 +26,7 @@ export LLVM_SYS_140_PREFIX=/usr/lib/llvm14
 # shellcheck disable=SC2139
 alias wget="wget --hsts-file='$XDG_DATA_HOME/wget-hsts'"
 
-export EDITOR=nvim
+export EDITOR=helix
 procs="$(nproc)"
 export MAKEFLAGS="-j$procs"
 unset procs
