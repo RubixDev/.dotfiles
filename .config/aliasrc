@@ -202,6 +202,23 @@ function jo {
 alias virtscron='touch ~/.local/state/bspwm_mode_virtual'
 alias virtscroff='rm ~/.local/state/bspwm_mode_virtual'
 
+scrsingle () {
+    swaymsg output HEADLESS-1 resolution 1920x1200
+    swaymsg output HEADLESS-2 disable
+    wayvncctl -S /tmp/wayvnc-sock output-set HEADLESS-1
+}
+
+scrdouble () {
+    swaymsg output HEADLESS-1 resolution 2560x1440
+    swaymsg output HEADLESS-2 enable
+    wayvncctl -S /tmp/wayvnc-sock output-set HEADLESS-2
+}
+
+scrreload () {
+    wayvncctl output-set HEADLESS-2
+    wayvncctl output-set HEADLESS-1
+}
+
 rewg () {
     systemctl is-active wg-quick@wg0 > /dev/null && {
         sudo systemctl restart wg-quick@wg0
