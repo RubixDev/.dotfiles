@@ -270,6 +270,7 @@ if [ "$is_desktop" = true ]; then
     link .config/kitty/kitty.conf
     link .config/hypr/hyprland.conf
     link .config/waybar
+    link .config/sway/config
 
     # XDG-MIME default apps
     link .config/mimeapps.list
