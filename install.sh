@@ -235,7 +235,7 @@ link () {
 
 # Create symlinks
 link .zshrc "${ZDOTDIR:-$HOME}/.zshrc"
-link .p10k.zsh "${ZDOTDIR:-$HOME}/.p10k.zsh"
+link .config/oh-my-posh
 link .bashrc
 link .config/env
 touch ~/.config/host-env

@@ -1,0 +1,164 @@
+"$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json"
+version = 3
+
+[palette]
+black = "232"
+white = "7"
+gray = "238"
+# blue = "39"
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+newline = true
+leading_diamond = "░▒▓"
+trailing_diamond = ""
+
+[[blocks.segments]]
+type = "os"
+background = "p:white"
+foreground = "p:black"
+style = "diamond"
+# powerline_symbol = ""
+# leading_powerline_symbol = "░▒▓"
+template = " {{.Icon}} "
+
+[[blocks.segments]]
+type = "session"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+background = "240"
+foreground = "3"
+foreground_templates = [
+  "{{ if .Root }}9{{ end }}",
+  "{{ if .SSHSession }}6{{ end }}",
+]
+
+[[blocks.segments]]
+type = "path"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+background = "p:gray"
+foreground = "39"
+template = ' {{ if not .Writable }}{{ else if eq (replaceP "^//wsl.localhost/.*?/" .Location "/") .Env.HOME }}{{ else }}{{ end }} {{ .Path }} '
+
+[blocks.segments.properties]
+style = "powerlevel"
+max_width = 80
+edge_format = "<45><b>%s</b></>"
+display_root = true
+
+[blocks.segments.properties.mapped_locations]
+"~/Documents" = "󰈙"
+"~/Downloads" = ""
+"~/Pictures" = ""
+"~/Videos" = "󰕧"
+"~/uni" = "󰑴"
+"~/coding" = "󰅴"
+"~/coding/rust" = "󱘗"
+"~/coding/python" = "󰌠"
+"~/coding/js" = "󰌞"
+"~/coding/java" = "󰬷"
+"~/coding/kotlin" = "󱈙"
+"~/coding/ts" = "󰛦"
+"~/coding/minecraft" = "󰍳"
+
+[[blocks.segments]]
+type = "git"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+foreground = "black"
+background = "green"
+background_templates = [
+  "{{ if or (.Working.Changed) (.Staging.Changed) }}yellow{{ end }}",
+]
+template = " {{ .UpstreamIcon }} {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
+
+[blocks.segments.properties]
+fetch_status = true
+fetch_upstream_icon = true
+branch_icon = " "
+
+[[blocks]]
+type = "prompt"
+alignment = "right"
+overflow = "hide"
+filler = "{{ if .Overflow }}{{ else }}<p:gray>─</>{{ end }}"
+leading_diamond = ""
+trailing_diamond = "▓▒░"
+
+[[blocks.segments]]
+type = "status"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+foreground = "black"
+background = "green"
+foreground_templates = [
+  "{{ if .Error }}yellow{{ end }}",
+]
+background_templates = [
+  "{{ if .Error }}red{{ end }}",
+]
+
+[blocks.segments.properties]
+always_enabled = true
+status_template = "{{ if eq .Code 0 }}✔{{ else if eq .Code 1 }}✘{{ else }}{{ reason .Code }}{{ end }}"
+
+[[blocks.segments]]
+type = "executiontime"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+foreground = "black"
+background = "yellow"
+template = " {{ .FormattedMs }}  "
+
+[blocks.segments.properties]
+threshold = 1
+
+[[blocks.segments]]
+type = "text"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+foreground = "cyan"
+background = "p:gray"
+template = "{{ if gt .Jobs 0 }}  {{ end }}"
+
+[[blocks.segments]]
+type = "time"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+foreground = "black"
+background = "white"
+template = " {{ .CurrentDate | date .Format }}  "
+
+[blocks.segments.properties]
+time_format = "03:04:05 pm"
+
+[[blocks]]
+type = "prompt"
+alignment = "left"
+newline = true
+
+[[blocks.segments]]
+type = "status"
+style = "plain"
+foreground = "76"
+foreground_templates = ["{{ if gt .Code 0 }}196{{ end }}"]
+template = "❯ "
+
+[blocks.segments.properties]
+always_enabled = true
+
+[[blocks]]
+type = "rprompt"
+leading_diamond = ""
+trailing_diamond = "▓▒░"
+
+[[blocks.segments]]
+type = "battery"
+style = "diamond"
+leading_diamond = "<parentBackground,background></>"
+foreground = "green"
+background = "p:gray"
+foreground_templates = ["{{ if le .Percentage 20 }}red{{ end }}"]
+template = "{{ if not .Error }} {{ .Percentage }}% {{ if le .Percentage 10 }}󰁺{{ else if le .Percentage 20 }}󰁻{{ else if le .Percentage 30 }}󰁼{{ else if le .Percentage 40 }}󰁽{{ else if le .Percentage 50 }}󰁾{{ else if le .Percentage 60 }}󰁿{{ else if le .Percentage 70 }}󰂀{{ else if le .Percentage 80 }}󰂁{{ else if le .Percentage 90 }}󰂂{{ else }}󰁹{{ end }} {{ end }}"

@@ -1,10 +1,3 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 if [ -n "$DESKTOP_SESSION" ] && command -v gnome-keyring-daemon > /dev/null; then
   eval "$(gnome-keyring-daemon --start &> /dev/null)"
   export SSH_AUTH_SOCK
@@ -19,14 +12,8 @@ fi
 source ~/.config/env
 export HISTFILE="$XDG_STATE_HOME/zsh/history"
 
-if [ "$is_android" = true ]; then
-    if [ -n "$SSH_TTY" ]; then
-        ZSH_THEME="powerlevel10k/powerlevel10k"
-    else
-        ZSH_THEME="zish"
-    fi
-else
-    ZSH_THEME="powerlevel10k/powerlevel10k"
+if [ "$is_android " = true ] && [ -z "$SSH_TTY" ]; then
+    ZSH_THEME="zish"
 fi
 DISABLE_MAGIC_FUNCTIONS="true"
 
@@ -81,4 +68,4 @@ echo
 # run pfetch-rs
 pfetch
 
-[[ ! -f "${ZDOTDIR:-$HOME}/.p10k.zsh" ]] || source "${ZDOTDIR:-$HOME}/.p10k.zsh"
+eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/p10k.toml)"
