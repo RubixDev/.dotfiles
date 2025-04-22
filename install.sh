@@ -251,6 +251,8 @@ link .config/dprint
 link .config/helix/config.toml
 link .config/helix/languages.toml
 link .config/helix/themes
+link .config/nushell/env.nu
+link .config/nushell/config.nu
 if [ "$is_desktop" = true ]; then
     link .config/paru/paru.conf
     link .config/alacritty/alacritty.yml
