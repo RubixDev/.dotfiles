@@ -134,7 +134,7 @@ return require('packer').startup {
         use { 'ray-x/lsp_signature.nvim' }
         use { 'habamax/vim-godot', disable = _G.is_android }
         use {
-            'jose-elias-alvarez/null-ls.nvim',
+            'nvimtools/none-ls.nvim',
             requires = {
                 'nvim-lua/plenary.nvim',
             },

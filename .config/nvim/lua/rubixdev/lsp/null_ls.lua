@@ -7,7 +7,7 @@ utils.try_setup('null-ls', function(null_ls)
     null_ls.setup {
         on_attach = handlers.on_attach,
         sources = {
-            null_ls.builtins.code_actions.shellcheck.with { filter = not_android }, -- Code actions to disable shellcheck warnings
+            -- null_ls.builtins.code_actions.shellcheck.with { filter = not_android }, -- Code actions to disable shellcheck warnings
 
             null_ls.builtins.diagnostics.actionlint.with { filter = not_android },  -- GitHub Actions workflow
             null_ls.builtins.diagnostics.gitlint.with {
@@ -22,8 +22,8 @@ utils.try_setup('null-ls', function(null_ls)
             null_ls.builtins.diagnostics.trail_space,                       -- Warn at trailing spaces
             null_ls.builtins.diagnostics.zsh,                               -- Very basic zsh linting
 
-            null_ls.builtins.formatting.blue.with { filter = not_android }, -- Better python formatter
-            null_ls.builtins.formatting.dprint.with(require('rubixdev.lsp.dprint')),
+            -- null_ls.builtins.formatting.blue.with { filter = not_android }, -- Better python formatter
+            -- null_ls.builtins.formatting.dprint.with(require('rubixdev.lsp.dprint')),
             null_ls.builtins.formatting.shfmt.with {
                 -- Does not support zsh specific things, but enable it anyway
                 extra_filetypes = { 'bash', 'zsh' },
