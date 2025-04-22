@@ -49,7 +49,7 @@ button:hover {
     background-image: linear-gradient(0deg, @surface1, @mantle);
 }
 
-#workspaces button.focused {
+#workspaces button.focused, #workspaces button.active {
     background-image: linear-gradient(0deg, @mauve, @surface1);
     box-shadow: inset 0 -3px @text;
 }
