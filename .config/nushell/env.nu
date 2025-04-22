@@ -1,6 +1,10 @@
 ### Prompt
 oh-my-posh init nu --print | save /tmp/omp.nu --force
 
+### Completions
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+carapace _carapace nushell | save --force /tmp/carapace.nu
+
 ### Libs
 const libs_dir = ($nu.default-config-dir | path join lib)
 $env.NU_LIB_DIRS ++= [
@@ -21,6 +25,7 @@ def clone-lib [
 }
 
 clone-lib nu_scripts https://github.com/nushell/nu_scripts
+clone-lib git_aliases https://github.com/KamilKleina/git-aliases.nu
 
 ### Plugins
 $env.NU_PLUGIN_DIRS ++= [($env.CARGO_HOME? | default ~/.cargo | path join bin)]
