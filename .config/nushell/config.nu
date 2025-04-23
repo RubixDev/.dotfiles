@@ -54,13 +54,14 @@ alias ip = ip -c
 alias ipa = ip -br -c a
 alias li = pixterm -fa
 
-alias l = if (which eza | is-not-empty) {
-  eza -lahg --icons --octal-permissions --git
+let ls_cmd = if (which eza | is-not-empty) {
+  [eza -lahg --icons --octal-permissions --git]
 } else if (which exa | is-not-empty) {
-  exa -lahg --icons --octal-permissions --git
+  [exa -lahg --icons --octal-permissions --git]
 } else {
-  ^ls -lAh --color=auto
+  [ls -lAh --color=auto]
 }
+alias l = ^($ls_cmd | first) ...($ls_cmd | skip 1)
 
 alias dprinit = cp ~/.config/dprint/dprint.json dprint.json
 alias dprintg = dprint --config ($env.XDG_CONFIG_HOME | path join dprint/dprint.json)
@@ -218,6 +219,7 @@ if (which vivid | is-not-empty) {
 
 ### Plugins
 plugin use clipboard
+plugin use file
 
 ### Prompt
 source /tmp/omp.nu
@@ -226,3 +228,7 @@ $env.PROMPT_INDICATOR_VI_INSERT = ''
 
 ### Completions
 source /tmp/carapace.nu
+
+### Greeting
+print ''
+pfetch

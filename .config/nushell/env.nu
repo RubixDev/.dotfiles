@@ -38,4 +38,5 @@ def "plugin fetch" [name: string, url: string] {
 }
 
 plugin fetch clipboard https://github.com/FMotalleb/nu_plugin_clipboard
+plugin fetch file https://github.com/fdncred/nu_plugin_file
 
