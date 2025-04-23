@@ -62,6 +62,7 @@ display_root = true
 "~/coding/kotlin" = "󱈙"
 "~/coding/ts" = "󰛦"
 "~/coding/minecraft" = "󰍳"
+"~/coding/go" = ""
 
 [[blocks.segments]]
 type = "git"
