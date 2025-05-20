@@ -1,7 +1,7 @@
 [user]
 	name = RubixDev
-	email = silas.groh@t-online.de
-    signingkey = silas.groh@t-online.de
+	email = groh@rubixdev.de
+	signingkey = groh@rubixdev.de
 [pull]
 	rebase = false
 [init]
