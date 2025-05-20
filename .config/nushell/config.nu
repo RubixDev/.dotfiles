@@ -54,6 +54,11 @@ alias ip = ip -c
 alias ipa = ip -br -c a
 alias li = pixterm -fa
 
+def --wrapped --env mkcd [...rest] {
+  mkdir ...$rest
+  cd ($rest | last)
+}
+
 let ls_cmd = if (which eza | is-not-empty) {
   [eza -lahg --icons --octal-permissions --git]
 } else if (which exa | is-not-empty) {
