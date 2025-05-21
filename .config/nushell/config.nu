@@ -75,7 +75,17 @@ def editrc [] {
   if ('~/.dotfiles' | path type) != dir {
     error make { msg: 'No .dotfiles folder at ~/.dotfiles' }
   }
-  ^($env.config.buffer_editor? | default hx) ~/.dotfiles
+  ^$env.config.buffer_editor ~/.dotfiles
+}
+
+def gpgedit [file: string] {
+  let tmp_path = $"/tmp/__gpgedit-($file)-(random chars --length 10)"
+  if ($file | path exists) {
+    gpg -o $tmp_path --decrypt $file
+  }
+  ^$env.config.buffer_editor $tmp_path
+  gpg -o $file --default-recipient-self --encrypt $tmp_path
+  rm $tmp_path
 }
 
 alias con = ssh contabo
@@ -221,6 +231,8 @@ def upd [] {
 if (which vivid | is-not-empty) {
   $env.LS_COLORS = (vivid generate one-dark)
 }
+
+$env.EDITOR = $env.config.buffer_editor
 
 ### Plugins
 plugin use clipboard
