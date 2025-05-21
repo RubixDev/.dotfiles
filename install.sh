@@ -70,7 +70,7 @@ mkdir -p "${ZDOTDIR:-$HOME}"
 
 ########## Dependency Installation ##########
 want_deps () {
-    [ "$only_link" != true ] || return 0
+    [ "$only_link" != true ] || return 1
     prompt "Do you want to automatically install all dependencies?"
     return $?
 }
