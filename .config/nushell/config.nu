@@ -184,8 +184,11 @@ def 'upd rust' [] {
 def 'upd cargo' [] {
   if (which cargo | is-empty) { return }
   upd log info 'updating cargo packages'
-  let crates = (cargo install --list | lines | every 2 | parse -r '\A(?P<name>.*?) (?P<version>.*?)(?: \((?P<git>.*?)\))?:\z')
-  cargo install ...($crates | where git == '' | get name)
+  let crates = (cargo install --list | lines | every 2 | parse -r '\A(?P<name>.*?) (?P<version>.*?)(?: \((?:(?P<git>http.*?)|(?<path>/.*?))\))?:\z')
+  let non_git = ($crates | where git == '' | where path == '' | get name)
+  if ($non_git | is-not-empty) {
+    cargo install ...($non_git)
+  }
   for crate in ($crates | where git != '') {
     cargo install --git ($crate.git | url parse | reject fragment | url join)
   }
