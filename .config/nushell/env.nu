@@ -1,6 +1,3 @@
-### Prompt
-oh-my-posh init nu --print | save /tmp/omp.nu --force
-
 ### Completions
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
 carapace _carapace nushell | save --force /tmp/carapace.nu

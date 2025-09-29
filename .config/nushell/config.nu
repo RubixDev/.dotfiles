@@ -242,7 +242,7 @@ plugin use clipboard
 plugin use file
 
 ### Prompt
-source /tmp/omp.nu
+oh-my-posh init nu --config ~/.config/oh-my-posh/p10k.toml
 $env.PROMPT_INDICATOR_VI_NORMAL = ''
 $env.PROMPT_INDICATOR_VI_INSERT = ''
 
